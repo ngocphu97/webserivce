@@ -7,6 +7,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { ExploreModel, Search, countries } from 'src/app/explore/models';
 import { Country } from 'src/app/explore/models/country.model.';
 import { Book } from '../../models/book.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-table',
@@ -28,9 +29,15 @@ export class ProductTableComponent implements OnInit {
   displayConutries: Array<Country> = countries;
   dataSource: MatTableDataSource<any>;
 
-  displayedColumns: string[] = ['select', 'image', 'name', 'author', 'amount', 'action'];
+  distributor
+  translator
 
-  constructor(private snackBar: MatSnackBar) {
+  displayedColumns: string[] = [
+    'select', 'image', 'name', 'author', 'translator', 'language', 
+    'retailPrice', 'cost', 'inventory', 'amount', 'action',
+  ];
+
+  constructor(private router: Router) {
   }
 
   ngOnInit() {
@@ -90,13 +97,7 @@ export class ProductTableComponent implements OnInit {
     }
   }
 
-  openSnackBar(message: string, action: string): void {
-    this.snackBar.open(message, action, {
-      duration: 2000,
-    });
-  }
-
-  addBook() {
-
+  onSelectBookDetail(bookId: string) {
+    this.router.navigate([`/admin/books/${bookId}`]);
   }
 }

@@ -12,7 +12,6 @@
   width: 220px;
 }
 
-
 .box {
   display: block;
 }
@@ -24,4 +23,14 @@
   color: #000000;
   font-weight: bold;
   font-size: 20px;
+}
+
+.toolbar {
+  top: 0;
+  position: fixed;
+  width: 100%;
+}
+
+.content {
+  margin-top: 2rem;
 }

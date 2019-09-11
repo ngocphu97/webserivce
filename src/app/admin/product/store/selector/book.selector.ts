@@ -14,3 +14,8 @@ export const selectBookPending = createSelector(
 	selectBookState,
 	(state: BookState): boolean => state.pending
 );
+
+export const selectSelectedBook = createSelector(
+	selectBookState,
+	(state: BookState): Book => state.selectedBook
+);

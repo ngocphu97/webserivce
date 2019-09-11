@@ -23,12 +23,34 @@ export class AddProductFormComponent implements OnInit {
 
     this.formErrors = {
       name: {},
-      author: {}
+      author: {},
+      cost: {},
+      retailPrice: {},
+      amount: {},
+      inventory: {},
+      distributor: {},
+      language: {},
+      totalPage: {},
+      translator: {},
+      publishDate: {},
+      description: {},
     };
+
     this.form = this.formBuilder.group({
       name: [null, Validators.required],
       author: [null, Validators.required],
-      image: [null]
+      cost: [null, Validators.required],
+      retailPrice: [null, Validators.required],
+      amount: [null, Validators.required],
+      inventory: [null, Validators.required],
+      distributor: [null, Validators.required],
+      language: [null, Validators.required],
+      size: [null],
+      totalPage: [null, Validators.required],
+      translator: [null, Validators.required],
+      publishDate: [null, Validators.required],
+      description: [null, Validators.required],
+      image: [null],
     });
   }
 
@@ -50,6 +72,8 @@ export class AddProductFormComponent implements OnInit {
         image: 'https://www.uoduckstore.com/TDS%20Product%20Images/Matrix%20Parent%20Generic_1.jpg'
       })
     };
+
+    console.log(this.form.value);
 
     this.addBook.emit(this.form.value);
 

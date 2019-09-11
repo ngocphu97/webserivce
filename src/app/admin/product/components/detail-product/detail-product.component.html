@@ -1,0 +1,59 @@
+<mat-card>
+	<mat-card-header>
+		<mat-card-title>
+			<h1>{{selectedBook.name}}</h1>
+		</mat-card-title>
+		<mat-card-subtitle>
+			<h2>{{selectedBook.author}}</h2>
+		</mat-card-subtitle>
+
+		<mat-card-actions>
+			<button mat-raised-button color="primary">Edit</button>
+			<button mat-raised-button color="warn" (click)="openDialog()">Delete</button>
+		</mat-card-actions>
+	</mat-card-header>
+
+	<mat-card-content>
+		<div class="card-content">
+			<div class="book-cover">
+				<img mat-card-image class="book-cover-image" src="{{selectedBook.image}}" alt="Book cover">
+			</div>
+
+			<div class="book-detail">
+				<h4>Book description</h4>
+				<p>{{selectedBook.description}}</p>
+
+				<p class="border-bottom"><strong>Publish day</strong>: <span>{{selectedBook.publishDate}}</span></p>
+
+				<p class="border-bottom"><strong>Amount</strong>: <span>{{selectedBook.amount}}</span></p>
+
+				<p class="border-bottom"><strong>Distributor</strong>: <span>{{selectedBook.distributor}}</span></p>
+
+				<p class="border-bottom"><strong>Cost</strong>: <span>{{selectedBook.cost}}</span></p>
+
+				<p class="border-bottom"><strong>Inventory</strong>: <span>{{selectedBook.inventory}}</span></p>
+
+				<p class="border-bottom"><strong>Retail price</strong>: <span>{{selectedBook.retailPrice}}</span></p>
+
+				<p class="border-bottom"><strong>Language</strong>: <span>{{selectedBook.language}}</span></p>
+
+				<p class="border-bottom"><strong>Size</strong>: <span>{{selectedBook.size}}</span></p>
+
+				<p class="border-bottom"><strong>Total page</strong>: <span>{{selectedBook.totalPage}}</span></p>
+
+				<p class="border-bottom"><strong>Translator</strong>: <span>{{selectedBook.translator}}</span></p>
+
+				<div>
+					<p><strong>Reivews</strong>:</p>
+					<ul>
+						<li *ngFor="let review of selectedBook.reviews ">
+							<p>{{ review }}</p>
+						</li>
+					</ul>
+				</div>
+
+			</div>
+		</div>
+	</mat-card-content>
+
+</mat-card>

@@ -7,12 +7,14 @@ export interface BookState {
 	error: any | null;
 	pending: boolean;
 	bookList: Array<Book> | null;
+	selectedBook: Book | null
 }
 
 export const initialState: BookState = {
 	error: undefined,
 	pending: false,
 	bookList: undefined,
+	selectedBook: undefined
 };
 
 const bookReducer = createReducer(
@@ -50,6 +52,13 @@ const bookReducer = createReducer(
 		...state,
 		pending: false,
 		error: error,
+	})),
+
+	on(BookActions.getBookByIdSuccess, (state, { book }) => ({
+		...state,
+		pending: false,
+		error: false,
+		selectedBook: book
 	})),
 );
 

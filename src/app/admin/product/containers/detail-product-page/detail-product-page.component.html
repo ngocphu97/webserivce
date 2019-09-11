@@ -1,0 +1,3 @@
+<div *ngIf="selectedBook$ | async as selectedBook" class="book-detail">
+	<app-detail-product [selectedBook]="selectedBook" (deleteBook)="onDeleteBook($event)"></app-detail-product>
+</div>

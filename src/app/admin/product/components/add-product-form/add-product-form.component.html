@@ -26,12 +26,142 @@
 
 	<div>
 		<mat-form-field appearance="outline">
+			<mat-label>Cost</mat-label>
+			<input matInput autocomplete="off" tabindex="2" type="text" placeholder="Book author" formControlName="cost" />
+			<mat-error>
+				<span *ngIf="formErrors.cost.required">
+					Cost is required
+				</span>
+			</mat-error>
+		</mat-form-field>
+	</div>
+
+	<div>
+		<mat-form-field appearance="outline">
+			<mat-label>Retail price</mat-label>
+			<input matInput autocomplete="off" tabindex="2" type="text" placeholder="Book author"
+				formControlName="retailPrice" />
+			<mat-error>
+				<span *ngIf="formErrors.retailPrice.required">
+					Retail price is required
+				</span>
+			</mat-error>
+		</mat-form-field>
+	</div>
+
+	<div>
+		<mat-form-field appearance="outline">
+			<mat-label>Inventory</mat-label>
+			<input matInput autocomplete="off" tabindex="2" type="text" placeholder="Inventory"
+				formControlName="inventory" />
+			<mat-error>
+				<span *ngIf="formErrors.inventory.required">
+					Inventory is required
+				</span>
+			</mat-error>
+		</mat-form-field>
+	</div>
+	
+
+	<div>
+		<mat-form-field appearance="outline">
+			<mat-label>Amount</mat-label>
+			<input matInput autocomplete="off" tabindex="2" type="text" placeholder="Amount" formControlName="amount" />
+			<mat-error>
+				<span *ngIf="formErrors.amount.required">
+					Amount price is required
+				</span>
+			</mat-error>
+		</mat-form-field>
+	</div>
+
+	<div>
+		<mat-form-field appearance="outline">
+			<mat-label>Distributor</mat-label>
+			<input matInput autocomplete="off" tabindex="2" type="text" placeholder="Amount" formControlName="distributor" />
+			<mat-error>
+				<span *ngIf="formErrors.distributor.required">
+					Distributor is required
+				</span>
+			</mat-error>
+		</mat-form-field>
+	</div>
+
+	<div>
+		<mat-form-field appearance="outline">
+			<mat-label>Language</mat-label>
+			<input matInput autocomplete="off" tabindex="2" type="text" placeholder="Amount" formControlName="language" />
+			<mat-error>
+				<span *ngIf="formErrors.language.required">
+					Language is required
+				</span>
+			</mat-error>
+		</mat-form-field>
+	</div>
+
+	<div>
+		<mat-form-field appearance="outline">
+			<mat-label>Size</mat-label>
+			<input matInput autocomplete="off" tabindex="2" type="text" placeholder="Size" formControlName="size" />
+		</mat-form-field>
+	</div>
+
+	<div>
+		<mat-form-field appearance="outline">
+			<mat-label>Total page</mat-label>
+			<input matInput autocomplete="off" tabindex="2" type="text" placeholder="Amount" formControlName="totalPage" />
+			<mat-error>
+				<span *ngIf="formErrors.totalPage.required">
+					Total page is required
+				</span>
+			</mat-error>
+		</mat-form-field>
+	</div>
+
+	<div>
+		<mat-form-field appearance="outline">
+			<mat-label>Translator</mat-label>
+			<input matInput autocomplete="off" tabindex="2" type="text" placeholder="Amount" formControlName="translator" />
+			<mat-error>
+				<span *ngIf="formErrors.translator.required">
+					Translator is required
+				</span>
+			</mat-error>
+		</mat-form-field>
+	</div>
+
+	<div>
+		<mat-form-field appearance="outline">
+			<mat-label>Publish date</mat-label>
+			<input matInput autocomplete="off" tabindex="2" type="text" placeholder="Amount" formControlName="publishDate" />
+			<mat-error>
+				<span *ngIf="formErrors.publishDate.required">
+					Publish date is required
+				</span>
+			</mat-error>
+		</mat-form-field>
+	</div>
+
+	<div>
+		<mat-form-field appearance="outline">
+			<mat-label>Description</mat-label>
+			<textarea matInput placeholder="Amount"
+				formControlName="description"></textarea>
+			<mat-error>
+				<span *ngIf="formErrors.description.required">
+					Description is required
+				</span>
+			</mat-error>
+		</mat-form-field>
+	</div>
+
+	<div>
+		<mat-form-field appearance="outline">
 			<mat-label>Image</mat-label>
 			<input matInput autocomplete="off" tabindex="2" type="text" placeholder="Book image url"
 				formControlName="image" />
 		</mat-form-field>
 	</div>
-
 
 	<div>
 		<span fxFlex></span>

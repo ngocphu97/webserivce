@@ -7,6 +7,7 @@ import { map, catchError, exhaustMap } from 'rxjs/operators';
 import * as bookActions from '../actions'
 import { BookService } from '../../service';
 import { MatSnackBar } from '@angular/material';
+import { Book } from '../../models/book.model';
 
 @Injectable()
 export class BookEffect {
@@ -31,6 +32,32 @@ export class BookEffect {
 					return bookActions.addBookSuccess({ book: book })
 				}),
 				catchError(error => of(bookActions.getBookListFail({ error: error })))
+			)
+		})
+	));
+
+	getBookById$ = createEffect(() => this.actions$.pipe(
+		ofType(bookActions.getBookById),
+		map((action: any) => action.bookId),
+		exhaustMap((bookId) => {
+			return this.bookService.getBookById(bookId).pipe(
+				map((res: Book) => {
+					return bookActions.getBookByIdSuccess({ book: res })
+				}),
+				catchError(error => of(bookActions.getBookListFail({ error: error })))
+			)
+		})
+	));
+
+	deleteBookById$ = createEffect(() => this.actions$.pipe(
+		ofType(bookActions.deleteBook),
+		map((action: any) => action.book),
+		exhaustMap((book) => {
+			return this.bookService.deleteBookById(book.id).pipe(
+				map(() => {
+					return bookActions.deleteBookSuccess();
+				}),
+				catchError(error => of(bookActions.deleteBookError({ error: error })))
 			)
 		})
 	));

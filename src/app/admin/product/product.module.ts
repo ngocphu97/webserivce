@@ -22,7 +22,9 @@ import {
   MatCheckboxModule,
   MatChipsModule,
   MatSnackBarModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
+  MatDividerModule,
+  MatListModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -33,6 +35,7 @@ import { CONTAINERS } from './containers';
 import { reducer } from './store/reducers/book.reducer';
 import { BookEffect } from './store/effects/book.effect';
 import { SERVICES } from './service';
+import { DialogModule } from '@app/shared/dialog';
 
 const MAT_MODULES = [
   MatProgressSpinnerModule,
@@ -50,7 +53,9 @@ const MAT_MODULES = [
   MatCheckboxModule,
   MatChipsModule,
   MatSnackBarModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
+  MatDividerModule,
+  MatListModule
 ];
 
 @NgModule({
@@ -58,6 +63,7 @@ const MAT_MODULES = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    
 
     StoreModule.forFeature('book', reducer),
     EffectsModule.forFeature([BookEffect]),
@@ -66,6 +72,7 @@ const MAT_MODULES = [
     ProductRoutingModule,
 
     MAT_MODULES,
+    DialogModule
   ],
   providers: [
     ...SERVICES
