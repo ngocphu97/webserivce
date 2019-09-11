@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+@import '~@angular/material/theming';
+
+@import 'app/app.theming';
+@import 'styles/styles';
+
+@import 'themes/deeppurple-amber-theme';
+@import 'themes/default-theme';
+@import 'themes/light-theme';
+
+@include mat-core();
+
+body.default-theme {
+  @include angular-material-theme($default-theme);
+  @include app-theme($default-theme);
+}
+
+body.light-theme {
+  @include angular-material-theme($light-theme);
+  @include app-theme($light-theme);
+}
+
+body.goodjob-app-theme {
+  @include angular-material-theme($goodjob-app-theme);
+  @include app-theme($goodjob-app-theme);
+}

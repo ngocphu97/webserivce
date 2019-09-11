@@ -1,0 +1,26 @@
+.auth-page {
+  width: 100%;
+  height: 100%;
+  // background: url('/assets/images/background_1.jpg');
+  background: url('https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/B1eYNZGrripnnry82/on-the-table-at-library-blurred-background_srzsdgyye_thumbnail-full01.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.form {
+  display: block;
+  margin-top: 40px;
+}
+
+.auth-card {
+  width: 420px;
+  padding: 32px;
+  padding-bottom: 48px;
+}
+
+mat-progress-bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+}

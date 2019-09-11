@@ -1,0 +1,39 @@
+{
+  "books": [
+    {
+      "id": "1",
+      "name": "IT",
+      "author": "Stephen King",
+      "amount": "100",
+      "image": "https://prodimage.images-bn.com/pimages/9781982127794_p0_v3_s550x406.jpg"
+    },
+    {
+      "id": "2",
+      "name": "Sự im lặng của bầy cừu",
+      "amount": "100",
+      "author": "Thomas Harris",
+      "image": "https://i2.wp.com/triethocduongpho.net/wp-content/uploads/2018/12/su_im_lang_cua_bay_cuu__thomas_harris.jpg?fit=768%2C1244&ssl=1"
+    },
+    {
+      "name": "book3",
+      "author": "book3",
+      "amount": "100",
+      "image": "https://www.uoduckstore.com/TDS%20Product%20Images/Matrix%20Parent%20Generic_1.jpg",
+      "id": "HGKmLWa"
+    },
+    {
+      "name": "book 5",
+      "author": "book 5",
+      "amount": "100",
+      "image": "https://www.uoduckstore.com/TDS%20Product%20Images/Matrix%20Parent%20Generic_1.jpg",
+      "id": "gjnim2t"
+    },
+    {
+      "name": "book 6",
+      "author": "book 6",
+      "amount": "100",
+      "image": "https://www.uoduckstore.com/TDS%20Product%20Images/Matrix%20Parent%20Generic_1.jpg",
+      "id": "sEqiJhe"
+    }
+  ]
+}

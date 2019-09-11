@@ -1,0 +1,44 @@
+<form name="addProductForm" autocomplete="off" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+
+	<div>
+		<mat-form-field appearance="outline">
+			<mat-label>Name</mat-label>
+			<input matInput autocomplete="off" tabindex="1" type="text" placeholder="Book name" formControlName="name" />
+			<mat-error>
+				<span *ngIf="formErrors.name.required">
+					Name is required
+				</span>
+			</mat-error>
+		</mat-form-field>
+	</div>
+
+	<div>
+		<mat-form-field appearance="outline">
+			<mat-label>Author</mat-label>
+			<input matInput autocomplete="off" tabindex="2" type="text" placeholder="Book author" formControlName="author" />
+			<mat-error>
+				<span *ngIf="formErrors.author.required">
+					Author is required
+				</span>
+			</mat-error>
+		</mat-form-field>
+	</div>
+
+	<div>
+		<mat-form-field appearance="outline">
+			<mat-label>Image</mat-label>
+			<input matInput autocomplete="off" tabindex="2" type="text" placeholder="Book image url"
+				formControlName="image" />
+		</mat-form-field>
+	</div>
+
+
+	<div>
+		<span fxFlex></span>
+		<button mat-raised-button tabindex="3" color="accent" type="submit" class="action-button w-100"
+			[disabled]="form.invalid || pending">
+			Add
+		</button>
+	</div>
+
+</form>

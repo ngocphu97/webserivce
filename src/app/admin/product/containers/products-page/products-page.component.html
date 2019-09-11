@@ -1,0 +1,15 @@
+<!-- <div *ngIf="pending$ | async">
+	Loading
+</div> -->
+
+<ng-container *ngIf="(books$ | async) && (books$ | async).length === 0">
+	<div class="lonely-here">
+		<p>No book around here ...</p>
+	</div>
+</ng-container>
+
+<app-product-table 
+	*ngIf="(books$ | async) && (books$ | async).length > 0"
+	[pending]="pending$ | async" 
+	[books]="books$ | async">
+</app-product-table>

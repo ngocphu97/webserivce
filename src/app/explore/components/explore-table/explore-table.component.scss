@@ -1,0 +1,154 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  margin-top: 1.5rem;
+
+  .discover-field {
+    width: 50%;
+    margin-right: 1rem;
+  }
+
+  .countryfield,
+  .explore-btn {
+    margin-left: 1rem
+  }
+}
+
+.display-center {
+  margin: 0 14rem;
+}
+
+.filter-field {
+  margin-left: 0.5rem;
+  margin-top: 1rem;
+  width: 97%;
+}
+
+.table {
+  width: 100% !important;
+
+  td.mat-cell {
+    padding: 24px;
+  }
+
+  th.mat-header-cell {
+    padding: 24px;
+    font-weight: bolder;
+    font-size: 0.9rem;
+    white-space: pre-line;
+  }
+}
+
+.flag-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+.row {
+  cursor: pointer;
+
+  &:hover {
+    background: #f2f2f2 !important;
+  }
+}
+
+.progress-message {
+  text-align: center;
+  width: 100%;
+  margin: 1rem;
+  font-size: large;
+}
+
+.selected {
+  background: #f2f2f2 !important;
+}
+
+.thumnail {
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+}
+
+.example-additional-selection {
+  opacity: 0.75;
+  font-size: 0.75em;
+}
+
+.selection {
+  margin-bottom: 2rem;
+
+  .selection-title {
+    margin-bottom: 1rem;
+  }
+
+  .selection-filter {
+    padding: 1rem;
+    margin-left: 0;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+}
+
+.selected-row {
+  background: #f2f2f2 !important;
+}
+
+.result-overview {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+@media(max-width: 685px) {
+
+  .container {
+    display: block;
+
+    .discover-field,
+    .country-field {
+      width: 100%;
+    }
+
+    .custom-panel.mat-select-panel {
+      min-width: calc(100% + 0px) !important;
+    }
+
+    .explore-btn {
+      width: 100%;
+      margin: 0;
+    }
+  }
+
+  .display-center {
+    margin: 1rem 0.5rem;
+  }
+
+  .selection-filter {
+    padding: 4.5px !important;
+  }
+
+  .result-overview {
+    display: flex;
+    flex-direction: column-reverse;
+    margin-top: 1rem !important;
+  }
+}
+
+@media(max-width: 640px) {
+  .custom-panel.mat-select-panel {
+    min-width: calc(100% + 0px) !important;
+  }
+}
+
+@media(max-width: 1020px) {
+  .display-center {
+    margin: 1rem 0.5rem;
+  }
+}

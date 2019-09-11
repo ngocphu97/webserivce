@@ -1,0 +1,18 @@
+<div class="explore-page">
+  <mat-toolbar class="tool-bar mat-elevation-z1">
+    <span><img class="gudjob-logo" src="/assets/gudjob-logo-1.png" alt=""></span>
+  </mat-toolbar>
+
+  <div class="list-item">
+    <app-explore-table [exploredList]="exploredList$ | async" [pending]="pending$ | async"
+      (exploredKeyword)="onSearch($event)" (select)="onSelectInterest($event)">
+    </app-explore-table>
+  </div>
+
+  <ng-container *ngIf="(totalInterest$ | async) === 0">
+    <div class="lonely-here">
+      <p>No explore, please search to discover ...</p>
+    </div>
+  </ng-container>
+
+</div>

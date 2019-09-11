@@ -1,0 +1,14 @@
+:host {
+  display: block;
+  max-width: 480px;
+  min-width: 420px;
+}
+
+mat-dialog-content {
+  min-height: 72px;
+}
+
+mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+}

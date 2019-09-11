@@ -1,0 +1,30 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>Admin</span>
+    <span class="spacer"></span>
+    <div>
+      <button mat-icon-button>
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-nav-list>
+  <mat-list-item [routerLink]="['/admin/books']" routerLinkActive="active-link">
+    <a matLine routerLink="/admin">Overview</a>
+  </mat-list-item>
+
+  <mat-list-item [routerLink]="['/admin/users']" routerLinkActive="active-link">
+    Users
+  </mat-list-item>
+
+  <mat-list-item [routerLink]="['/admin/books']" routerLinkActive="active-link">
+    Books
+  </mat-list-item>
+
+  <mat-list-item [routerLink]="['/admin/account/settings']" routerLinkActive="active-link">
+    Settings
+  </mat-list-item>
+</mat-nav-list>

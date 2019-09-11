@@ -1,0 +1,19 @@
+<div class="auth-page" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="auth-card">
+    <mat-progress-bar mode="indeterminate"
+      *ngIf="pending$ | async"></mat-progress-bar>
+
+    <mat-card-content *ngIf="loggedInUser$ | async as user">
+
+      <h1 class="mat-h1">Lock</h1>
+
+      <app-unlock-screen-form
+        class="form"
+        [pending]="pending$ | async"
+        [user]="user"
+        (login)="onLogin($event)">
+      </app-unlock-screen-form>
+
+    </mat-card-content>
+  </mat-card>
+</div>

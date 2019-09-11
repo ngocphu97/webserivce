@@ -1,0 +1,58 @@
+<form name="loginForm"
+  autocomplete="off"
+  novalidate
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()">
+
+  <mat-form-field appearance="outline">
+    <mat-label>User name</mat-label>
+    <input matInput
+      autocomplete="off"
+      tabindex="1"
+      type="text"
+      placeholder="User name"
+      formControlName="username" />
+    <mat-icon matSuffix>account_circle</mat-icon>
+    <mat-error>
+      <span *ngIf="formErrors.username.required">
+        User name is required
+      </span>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Password</mat-label>
+    <input matInput
+      autocomplete="off"
+      tabindex="2"
+      type="password"
+      placeholder="Password"
+      formControlName="password" />
+    <mat-icon matSuffix>lock</mat-icon>
+    <mat-error>
+      <span *ngIf="formErrors.password.required">
+        Password is required
+      </span>
+    </mat-error>
+  </mat-form-field>
+
+  <a [routerLink]="['/forgot-password']">Forgot Password?</a>
+
+  <div>
+    <span fxFlex></span>
+    <button mat-raised-button
+      tabindex="3"
+      color="accent"
+      type="submit"
+      class="action-button w-100"
+      [disabled]="form.invalid || pending">
+      Login
+    </button>
+  </div>
+
+</form>
+
+<div class="text-center mt-32">
+  <span>Don't have an account? </span>
+  <a [routerLink]="[ '/register' ]">Create an account</a>
+</div>

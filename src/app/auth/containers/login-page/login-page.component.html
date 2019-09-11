@@ -1,0 +1,15 @@
+<div class="auth-page" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="auth-card">
+    <mat-progress-bar mode="indeterminate" *ngIf="pending$ | async"></mat-progress-bar>
+
+    <mat-card-content>
+
+      <h1 class="mat-h1 text-center">Login</h1>
+
+      <p class="mat-error" *ngIf="error$ | async as error">{{error.message}}</p>
+
+      <app-login-form class="form" [pending]="pending$ | async" (login)="onLogin($event)">
+      </app-login-form>
+    </mat-card-content>
+  </mat-card>
+</div>

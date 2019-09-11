@@ -1,0 +1,16 @@
+<h2 *ngIf="data.title" mat-dialog-title>
+  {{ data.title }}
+</h2>
+
+<mat-dialog-content>
+  {{ data.message }}
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button class="btn-rounded" mat-button [mat-dialog-close]="false">
+    Cancel
+  </button>
+  <button class="btn-rounded" mat-button [mat-dialog-close]="true">
+    Ok
+  </button>
+</mat-dialog-actions>
