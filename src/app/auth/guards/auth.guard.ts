@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   constructor(
     private router: Router,
     private store: Store<AuthState>,
-    @Inject(AUTH_CONFIGURATION) config: AuthConfiguration,
+    @Inject(AUTH_CONFIGURATION) config: AuthConfiguration
   ) {
     this.loginURI = config.loginURL ? config.loginURL : defaultAuthConfig.loginURL;
 
@@ -26,8 +26,11 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       distinctUntilChanged(),
       take(1),
       tap(isAuthenticated => {
+        console.log(isAuthenticated);
         if (!isAuthenticated) {
           this.router.navigate([this.loginURI]);
+        } else {
+          this.router.navigate(['/admin']);
         }
       })
     );

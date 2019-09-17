@@ -2,6 +2,14 @@
   <mat-toolbar-row>
 
     <span class="spacer"></span>
+    <div class="user-avatar" [matMenuTriggerFor]="menu"> 
+      <img src="https://image.freepik.com/free-photo/hair-style-street-fashion-beautiful-girl_1139-844.jpg" alt="">
+    </div>  
+
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Profile</button>
+      <button mat-menu-item (click)="onLogoutClicked()">Logout</button>
+    </mat-menu>
 
   </mat-toolbar-row>
 </mat-toolbar>

@@ -7,7 +7,7 @@ import { AuthActions } from '@app/auth';
 @Component({
   selector: 'app-admin-toolbar',
   templateUrl: './admin-toolbar.component.html',
-  styleUrls: ['./admin-toolbar.component.css']
+  styleUrls: ['./admin-toolbar.component.scss']
 })
 export class AdminToolbarComponent implements OnInit {
 
@@ -18,7 +18,7 @@ export class AdminToolbarComponent implements OnInit {
   ngOnInit() {
   }
 
-  onLogoutClicked(): void {
+  onLogoutClicked() {
     this.store.dispatch(AuthActions.logoutConfirmation());
   }
 

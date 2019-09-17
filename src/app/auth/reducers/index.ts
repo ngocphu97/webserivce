@@ -15,7 +15,7 @@ export function authReducer(state: AuthState | undefined, action: Action) {
   return combineReducers({
     [fromAuth.statusFeatureKey]: fromAuth.reducer,
     [fromLoginPage.loginPageFeatureKey]: fromLoginPage.reducer,
-    [fromResetPasswordPage.resetPasswordPageFeatureKey]: fromResetPasswordPage.reducer,
+    [fromResetPasswordPage.resetPasswordPageFeatureKey]: fromResetPasswordPage.resetPasswordReducer,
   })(state, action);
 }
 

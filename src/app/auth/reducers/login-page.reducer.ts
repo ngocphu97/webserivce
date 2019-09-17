@@ -6,7 +6,7 @@ import { LoginPageActions, AuthApiActions } from '../actions';
 export const loginPageFeatureKey = 'loginPage';
 
 export interface State {
-  error: HttpError | null;
+  error: HttpError | null | string;
   pending: boolean;
 }
 
@@ -38,6 +38,14 @@ export const reducer = createReducer(
   on(AuthApiActions.loginFailure, (state, { error }) => ({
     ...state,
     error,
+    pending: false,
+  })),
+
+  on(AuthApiActions.loginInvalid, (state, { error }) => ({
+    ...state,
+    error: {
+      message: error
+    },
     pending: false,
   }))
 );

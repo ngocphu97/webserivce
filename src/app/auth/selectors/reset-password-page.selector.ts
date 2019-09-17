@@ -17,3 +17,14 @@ export const selectResetPasswordPagePending = createSelector(
   selectResetPasswordPageState,
   fromResetPasswordPage.getPending
 );
+
+export const selectIsVaidResetPassword = createSelector(
+  selectResetPasswordPageState,
+  fromResetPasswordPage.getIsValidResetPassword
+);
+
+export const selectAdmin = createSelector(
+  selectResetPasswordPageState,
+  fromResetPasswordPage.getValidAdmin
+);
+

@@ -8,26 +8,33 @@ export const statusFeatureKey = 'status';
 export interface State {
   authToken: AuthToken;
   loggedInUser: UserProfile;
+  error: string;
 }
 
 export const initialState: State = {
   authToken: {
-    accessToken: '123',
-    expiresIn: 99999999999
+    accessToken: undefined,
+    expiresIn: undefined,
   },
-  loggedInUser: {
-    id: 'fcad7516-9fec',
-    username: 'ponyaim',
-    avatarUrl: './assets/images/dev.png'
-  }
+  loggedInUser: undefined,
+  error: undefined
 };
 
 export const reducer = createReducer(
   initialState,
 
-  on(AuthApiActions.loginSuccess, (state, { authToken }) => ({
+  on(AuthApiActions.loginSuccess, (state, { user }) => ({
     ...state,
-    authToken
+    loggedInUser: user,
+    authToken: {
+      accessToken: '12313212312313',
+      expiresIn: 9999
+    }
+  })),
+  
+  on(AuthApiActions.loginInvalid, (state, { error }) => ({
+    ...state,
+    error: error
   })),
 
   on(AuthActions.lock, (state) => ({

@@ -7,22 +7,48 @@ import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 
-import { Credential } from '../models';
+import { Credential, UserProfile } from '../models';
 import { AuthService } from '../services';
-import { LoginPageActions, AuthApiActions, AuthActions } from '../actions';
+import { LoginPageActions, AuthApiActions, AuthActions, ResetPasswordActions } from '../actions';
 import { LogoutConfirmationDialogComponent } from '../components';
 
 @Injectable()
 export class AuthEffects {
+  // login$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(LoginPageActions.login),
+  //     map(action => action.credential),
+  //     exhaustMap((auth: Credential) =>
+  //       this.authService.login(auth).pipe(
+  //         map(authToken => {
+  //           return AuthApiActions.loginSuccess({ authToken })
+  //         }),
+  //         catchError(error => of(AuthApiActions.loginFailure({ error })))
+  //       )
+  //     )
+  //   )
+  // );
+
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(LoginPageActions.login),
       map(action => action.credential),
       exhaustMap((auth: Credential) =>
-        this.authService.login(auth).pipe(
-          map(authToken => {
-            console.log(authToken);
-            return AuthApiActions.loginSuccess({ authToken })
+        this.authService.login().pipe(
+          map((res: Array<UserProfile>) => {
+            
+            const userArray = res.map((user) => {
+              return {
+                username: user.username,
+                password: user.password
+              };
+            });
+
+            if (userArray.some(user => user.username === auth.username && user.password === auth.password)) {
+              return AuthApiActions.loginSuccess({user: auth});
+            } else {
+              return AuthApiActions.loginInvalid({ error: 'User name or password incorrect' })
+            }
           }),
           catchError(error => of(AuthApiActions.loginFailure({ error })))
         )
@@ -80,10 +106,45 @@ export class AuthEffects {
     { dispatch: false }
   );
 
+  resetEmailPassword$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ResetPasswordActions.resetPasswordEmail),
+      map(action => action.email),
+      exhaustMap((email: string) =>
+        this.authService.getListAdmin().pipe(
+          map((adminList: Array<any>) => {
+            if (adminList.some(admin => admin.email === email )) {
+              const admin = adminList.find(admin => admin.email === email);
+              return ResetPasswordActions.resetPasswordEmailVaild({admin});
+            } else {
+              return ResetPasswordActions.resetPasswordEmailInvalid({ error: 'Email incorrect' })
+            }
+          }),
+          catchError(error => of(ResetPasswordActions.resetPasswordFailure({ error })))
+        )
+      )
+    )
+  );
+
+  resetPassword$ = createEffect(() => this.actions$.pipe(
+    ofType(ResetPasswordActions.resetPassword),
+    map(action => action.admin),
+    exhaustMap(admin => {
+      console.log('admin', admin);
+      return this.authService.resetPassword(admin).pipe(
+        map(res => {
+          return ResetPasswordActions.resetPasswordSuccess(res);
+        }),
+        catchError(error => of(ResetPasswordActions.resetPasswordFailure({ error })))
+      );
+    })
+  ));
+
   constructor(
     private router: Router,
     private dialog: MatDialog,
     private actions$: Actions,
     private authService: AuthService,
-  ) { }
+  ) { 
+  }
 }

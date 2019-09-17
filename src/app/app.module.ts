@@ -11,7 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 const authConfig: AuthConfiguration = {
   loginURL: 'login',
-  loginApiURL: 'auth/login',
+  loginApiURL: 'http://localhost:3000/auth',
   headerName: 'Authorization',
   skipWhenExpired: true,
   whitelistedDomains: [],

@@ -7,23 +7,39 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
   styleUrls: ['./forgot-password-from.component.scss', '../auth-from.scss']
 })
 export class ForgotPasswordFromComponent {
-  @Input() pending: boolean;
 
-  @Output() resetPassword: EventEmitter<string> = new EventEmitter();
+  @Input() pending: boolean;
+  @Input() isVaidResetPassword: boolean;
+
+  @Output() resetPasswordEmail: EventEmitter<string> = new EventEmitter();
+  @Output() resetPassword: EventEmitter<any> = new EventEmitter();
 
   form: FormGroup;
   emailControl: FormControl;
+  passwordControl: FormControl;
 
   constructor(private formBuilder: FormBuilder) {
     this.emailControl = new FormControl('', [Validators.required, Validators.email]);
+    this.passwordControl = new FormControl(null);
 
     this.form = this.formBuilder.group({
-      email: this.emailControl
+      email: this.emailControl,
+      password: this.passwordControl
     });
   }
 
   onSubmit(): void {
-    this.resetPassword.emit(this.emailControl.value);
+    if (this.emailControl.value && !this.passwordControl.value) {
+      this.resetPasswordEmail.emit(this.emailControl.value);
+    }
+
+    if (this.passwordControl.value) {
+      const resetPassword = {
+        email: this.emailControl.value,
+        password: this.passwordControl.value
+      }
+      this.resetPassword.emit(resetPassword);
+    }
   }
 
 }

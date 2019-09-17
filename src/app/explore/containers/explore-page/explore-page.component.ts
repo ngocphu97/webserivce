@@ -7,7 +7,6 @@ import * as fromStore from '../../store';
 import { ExploreModel, Search } from '../../models';
 import { ExploreService } from '../../store/services';
 
-
 @Component({
   selector: 'app-explore-page',
   templateUrl: './explore-page.component.html',

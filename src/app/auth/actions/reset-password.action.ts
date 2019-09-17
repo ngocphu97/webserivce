@@ -19,7 +19,7 @@ export const sendResetPasswordLinkFailure = createAction(
 
 export const resetPassword = createAction(
   '[RESET PASSWORD] reset password',
-  props<{ password: string }>()
+  props<{ admin: any }>()
 );
 
 export const resetPasswordSuccess = createAction(
@@ -31,3 +31,18 @@ export const resetPasswordFailure = createAction(
   '[RESET PASSWORD] reset password failure',
   props<{ error: HttpError }>()
 );
+
+export const resetPasswordEmail = createAction(
+  '[RESET PASSWORD] Email for reset password',
+  props<{ email: string }>()
+)
+
+export const resetPasswordEmailInvalid = createAction(
+  '[RESET PASSWORD] Email for reset password invalid',
+  props<{ error: string }>()
+)
+
+export const resetPasswordEmailVaild = createAction(
+  '[RESET PASSWORD] Email for reset password vaild',
+  props<{ admin: any }>()
+)

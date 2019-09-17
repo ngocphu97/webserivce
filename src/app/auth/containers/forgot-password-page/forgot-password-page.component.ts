@@ -1,25 +1,50 @@
 import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 import { AuthState } from '../../reducers';
 import { ResetPasswordActions } from '../../actions';
 import { ResetPasswordSelectors } from '../../selectors';
+import { DetroyableComponent } from '@app/core/destroyable';
 
 @Component({
   selector: 'app-forgot-password-page',
   templateUrl: './forgot-password-page.component.html',
   styleUrls: ['./forgot-password-page.component.scss', '../auth-page.scss']
 })
-export class ForgotPasswordPageComponent {
-  pending$: Observable<boolean> = this.store.pipe(select(ResetPasswordSelectors.selectResetPasswordPagePending));
+export class ForgotPasswordPageComponent extends DetroyableComponent {
 
-  constructor(
-    private store: Store<AuthState>
-  ) { }
+  protected componentDestroyed$: Subject<any>;
 
-  onResetPassword(email: string): void {
-    this.store.dispatch(ResetPasswordActions.sendResetPasswordLink({ email }));
+  pending$: Observable<boolean>;
+  isVaidResetPassword$: Observable<boolean>;
+  admin: any;
+
+  constructor(private store: Store<AuthState>) {
+    super();
+    this.pending$ = this.store.pipe(select(ResetPasswordSelectors.selectResetPasswordPagePending));
+    this.isVaidResetPassword$ = this.store.pipe(select(ResetPasswordSelectors.selectIsVaidResetPassword));
+    this.store.pipe(select(ResetPasswordSelectors.selectAdmin)).pipe().subscribe(admin => {
+      console.log(admin);
+      return this.admin = admin;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.componentDestroyed$.unsubscribe();
+  }
+
+  checkResetEmail(email: string) {
+    this.store.dispatch(ResetPasswordActions.resetPasswordEmail({ email }));
+  }
+
+  onResetPassword(resetPassword: any): void {
+    const updateAdmin = {
+      ...this.admin,
+      password: resetPassword.password
+    };
+
+    this.store.dispatch(ResetPasswordActions.resetPassword({ admin: updateAdmin }));
   }
 
 }

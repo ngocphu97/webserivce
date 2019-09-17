@@ -7,7 +7,7 @@ import {
   MatButtonModule,
   MatMenuModule,
   MatIconModule,
-  MatListModule
+  MatListModule,
 } from '@angular/material';
 
 import { AdminRoutingModule } from './admin-routing.module';
@@ -17,9 +17,9 @@ const MAT_MODULES = [
   MatSidenavModule,
   MatToolbarModule,
   MatButtonModule,
-  MatMenuModule,
   MatIconModule,
-  MatListModule
+  MatListModule,
+  MatMenuModule
 ];
 
 @NgModule({

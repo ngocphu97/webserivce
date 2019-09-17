@@ -22,12 +22,13 @@ export class LoginFormComponent implements OnInit {
     this.login = new EventEmitter();
 
     this.formErrors = {
-      username: {},
-      password: {}
+      username: { required: true },
+      password: { required: true }
     };
+
     this.form = this.formBuilder.group({
-      username: [null, Validators.required],
-      password: [null, Validators.required]
+      username: ['admin', Validators.required],
+      password: ['admin', Validators.required]
     });
   }
 
