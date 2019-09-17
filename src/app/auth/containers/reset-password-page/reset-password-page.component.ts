@@ -18,8 +18,9 @@ export class ResetPasswordPageComponent {
     private store: Store<AuthState>
   ) { }
 
-  onResetPassword(password: string): void {
-    this.store.dispatch(ResetPasswordActions.resetPassword({ password }));
+  onResetPassword(password): void {
+    console.log(password);
+    // this.store.dispatch(ResetPasswordActions.resetPassword({ password }));
   }
 
 }

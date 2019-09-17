@@ -8,12 +8,9 @@ import {
   ResetPasswordPageComponent
 } from './containers';
 
-import { LoginGuard } from './guards';
-
 const routes: Routes = [
   {
     path: 'login',
-    canActivate: [LoginGuard],
     component: LoginPageComponent
   },
   {
