@@ -2,6 +2,10 @@ var connection = require('../connection');
 
 function Todo() {
 
+  this.demo = (res) => {
+    res.send('Hello, route to "/todo" for magic stuff');
+  }
+
   this.get = (res) => {
     connection.acquire(function (err, con) {
       con.query('SELECT * FROM users', function (err, result) {

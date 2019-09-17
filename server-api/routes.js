@@ -2,6 +2,12 @@ var todo = require('./Model/user');
 
 module.exports = {
   configure: (app) => {
+
+    app.get('/', (req, res) => {
+      todo.demo(res);
+    });
+
+
     app.get('/todo/', (req, res) => {
       todo.get(res);
     });
