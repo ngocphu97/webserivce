@@ -1,31 +1,27 @@
-var todo = require('./Model/user');
+const books = require('./Model/books');
 
 module.exports = {
   configure: (app) => {
 
-    app.get('/', (req, res) => {
-      todo.demo(res);
+    app.get('/books', (req, res) => {
+      books.get(res);
+    })
+
+    app.post('/books', (req, res) => {
+      books.xxx(req.body, res);
+    })
+
+    app.get('/books/:id/', (req, res) => {
+      books.read(req.params, res);
     });
 
-
-    app.get('/todo/', (req, res) => {
-      todo.get(res);
+    app.put('/books/:id/', (req, res) => {
+      books.update(req.params, res);
     });
 
-    app.get('/todo/read/:id/', (req, res) => {
-      todo.read(res);
+    app.post('/books/upload', (req, res) => {
+      books.create(req, res);
     });
 
-    app.post('/todo/create', (req, res) => {
-      todo.create(req.body, res);
-    });
-
-    app.put('/todo/update', (req, res) => {
-      todo.update(req.body, res);
-    });
-
-    app.delete('/todo/delete/:id/', (req, res) => {
-      todo.delete(req.params.id, res);
-    });
   }
 };

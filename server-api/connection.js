@@ -10,7 +10,7 @@ function Connection() {
       host: 'localhost',
       user: 'root',
       password: '',
-      database: 'manageuser'
+      database: 'elibrary'
     });
   };
 
