@@ -24,18 +24,22 @@ import {
   MatSnackBarModule,
   MatSlideToggleModule,
   MatDividerModule,
-  MatListModule
+  MatListModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatDialogModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { COMPONENTS } from './components';
+import { COMPONENTS, DialogComponent } from './components';
 import { CONTAINERS } from './containers';
 
 import { reducer } from './store/reducers/book.reducer';
 import { BookEffect } from './store/effects/book.effect';
 import { SERVICES } from './service';
 import { DialogModule } from '@app/shared/dialog';
+import { MatFileUploadModule } from 'angular-material-fileupload';
 
 const MAT_MODULES = [
   MatProgressSpinnerModule,
@@ -55,7 +59,10 @@ const MAT_MODULES = [
   MatSnackBarModule,
   MatSlideToggleModule,
   MatDividerModule,
-  MatListModule
+  MatListModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatDialogModule
 ];
 
 @NgModule({
@@ -63,10 +70,10 @@ const MAT_MODULES = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    
 
     StoreModule.forFeature('book', reducer),
     EffectsModule.forFeature([BookEffect]),
+    MatFileUploadModule,
 
     FlexLayoutModule,
     ProductRoutingModule,
@@ -81,5 +88,8 @@ const MAT_MODULES = [
     ...CONTAINERS,
     ...COMPONENTS
   ],
+  entryComponents: [
+    DialogComponent
+  ]
 })
 export class ProductModule { }

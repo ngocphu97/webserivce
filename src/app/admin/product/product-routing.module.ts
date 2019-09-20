@@ -12,6 +12,10 @@ const routes: Routes = [
     component: fromContainers.AddProductPageComponent
   },
   {
+    path: 'edit-book/:bookId',
+    component: fromContainers.EditProductPageComponent
+  },
+  {
     path: ':bookId',
     component: fromContainers.DetailProductPageComponent
   }

@@ -8,7 +8,7 @@ export const getBookList = createAction(
 
 export const getBookListSuccess = createAction(
 	'[Book] Get Book List Success',
-	props<{ bookList: Array<Book> }>()
+	props<{ bookList: any }>()
 );
 
 export const getBookListFail = createAction(
@@ -46,6 +46,22 @@ export const getBookByIdFail = createAction(
 	props<{ error: any }>()
 );
 
+export const updateBookById = createAction(
+	'[Book] Update Book By Id',
+	props<{ book: Book }>()
+);
+
+export const updateBookByIdSuccess = createAction(
+	'[Book] Update Book By Id Success',
+	props<{ book: Book }>()
+);
+
+export const updateBookByIdFail = createAction(
+	'[Book] Update Book By Id Fail',
+	props<{ error: any }>()
+);
+
+
 export const deleteBook = createAction(
 	'[Book] Delete book',
 	props<{ book: Book }>()
@@ -59,6 +75,7 @@ export const deleteBookError = createAction(
 	'[Book] Delete book fail',
 	props<{ error: any }>()
 );
+
 
 export enum ExploreActionTypes {
 	GET_BOOK_LIST = '[Book] Get Book List',

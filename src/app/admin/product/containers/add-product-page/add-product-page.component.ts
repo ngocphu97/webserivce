@@ -4,6 +4,7 @@ import { Book } from '../../models/book.model';
 import { BookState } from '../../store/reducers';
 import { addBook } from '../../store/actions';
 import { MatSnackBar } from '@angular/material';
+import { BookService } from '../../service';
 
 @Component({
   selector: 'app-add-product-page',
@@ -20,7 +21,17 @@ export class AddProductPageComponent {
     private snackBar: MatSnackBar
   ) { }
 
-  onAddBook(book: Book) {
+  onAddBook(book) {
+
+    const book1 = {
+      ...book,
+      cost: parseFloat(book.cost),
+      inventory: parseFloat(book.inventory),
+      retailPrice: parseFloat(book.retailPrice),
+      totalPage: parseInt(book.totalPage),
+      review: '123'
+    }
+
     this.store.dispatch(addBook({ book: book }));
   }
 

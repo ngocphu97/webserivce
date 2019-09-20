@@ -8,7 +8,7 @@
 		</mat-card-subtitle>
 
 		<mat-card-actions>
-			<button mat-raised-button color="primary">Edit</button>
+			<button mat-raised-button color="primary" (click)="onEdit(selectedBook.id)">Edit</button>
 			<button mat-raised-button color="warn" (click)="openDialog()">Delete</button>
 		</mat-card-actions>
 	</mat-card-header>

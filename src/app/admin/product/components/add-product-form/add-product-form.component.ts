@@ -8,7 +8,7 @@ import { Book } from '../../models/book.model';
 @Component({
   selector: 'app-add-product-form',
   templateUrl: './add-product-form.component.html',
-  styleUrls: ['./add-product-form.component.css']
+  styleUrls: ['./add-product-form.component.scss']
 })
 export class AddProductFormComponent implements OnInit {
 
@@ -22,18 +22,15 @@ export class AddProductFormComponent implements OnInit {
     this.addBook = new EventEmitter<Book>();
 
     this.formErrors = {
-      name: {},
-      author: {},
-      cost: {},
-      retailPrice: {},
-      amount: {},
-      inventory: {},
-      distributor: {},
-      language: {},
-      totalPage: {},
-      translator: {},
-      publishDate: {},
-      description: {},
+      name: { required: true },
+      author: { required: true },
+      cost: { required: true },
+      retailPrice: { required: true },
+      amount: { required: true },
+      inventory: { required: true },
+      distributor: { required: true },
+      language: { required: true },
+      publishDate: { required: true }
     };
 
     this.form = this.formBuilder.group({
@@ -45,11 +42,11 @@ export class AddProductFormComponent implements OnInit {
       inventory: [null, Validators.required],
       distributor: [null, Validators.required],
       language: [null, Validators.required],
-      size: [null],
-      totalPage: [null, Validators.required],
-      translator: [null, Validators.required],
       publishDate: [null, Validators.required],
-      description: [null, Validators.required],
+      size: [null],
+      totalPage: [null],
+      translator: [null],
+      description: [null],
       image: [null],
     });
   }
@@ -72,8 +69,6 @@ export class AddProductFormComponent implements OnInit {
         image: 'https://www.uoduckstore.com/TDS%20Product%20Images/Matrix%20Parent%20Generic_1.jpg'
       })
     };
-
-    console.log(this.form.value);
 
     this.addBook.emit(this.form.value);
 

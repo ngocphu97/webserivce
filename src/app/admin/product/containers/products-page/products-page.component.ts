@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
+import { Book } from '../../models/book.model';
+
 import { BookState } from '../../store/reducers/book.reducer';
 import { getBookList } from '../../store/actions';
-
-import { Book } from '../../models/book.model';
 import * as fromSelector from '../../store/selector';
 
 @Component({

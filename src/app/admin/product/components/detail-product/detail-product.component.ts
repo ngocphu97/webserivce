@@ -1,8 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Book } from '../../models/book.model';
-import { MatDialog } from '@angular/material';
-import { ConfirmDialogComponent } from '@app/shared/dialog';
 import { Router } from '@angular/router';
+
+import { MatDialog } from '@angular/material';
+
+import { Book } from '../../models/book.model';
+import { ConfirmDialogComponent } from '@app/shared/dialog';
 
 @Component({
   selector: 'app-detail-product',
@@ -14,10 +16,9 @@ export class DetailProductComponent implements OnInit {
   @Input() selectedBook: Book;
   @Output() deleteBook = new EventEmitter<Book>();
 
-  constructor( public dialog: MatDialog) { }
+  constructor( public dialog: MatDialog, private router: Router) { }
 
   ngOnInit() {
-    console.log(this.selectedBook);
   }
 
   openDialog(): void {
@@ -36,6 +37,10 @@ export class DetailProductComponent implements OnInit {
 
   onDeleteBook() {
     this.deleteBook.emit(this.selectedBook);
+  }
+
+  onEdit(selectedBookId: string) {
+    this.router.navigate([`/admin/books/edit-book/${selectedBookId}`]);
   }
 
 }

@@ -58,7 +58,7 @@ const bookReducer = createReducer(
 		...state,
 		pending: false,
 		error: false,
-		selectedBook: book
+		selectedBook: book[0]
 	})),
 );
 

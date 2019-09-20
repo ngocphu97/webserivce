@@ -11,8 +11,8 @@ export class BookService {
 
   constructor(private http: HttpClient) { }
 
-  getBookList(): Observable<Array<Book>> {
-    return this.http.get<Array<Book>>(`${this.baseUrl}/books`);
+  getBookList(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/books`);
   }
 
   addBook(book: Book): Observable<any> {
@@ -25,5 +25,17 @@ export class BookService {
 
   deleteBookById(bookId: string): Observable<Book> {
     return this.http.delete<Book>(`${this.baseUrl}/books/${bookId}`);
+  }
+
+  updateBookById(book: Book): Observable<Book> {
+    return this.http.put<Book>(`${this.baseUrl}/books/${book.id}`, book);
+  }
+
+  upload(file) {
+    console.log(file);
+    this.http.post('/upload', file).pipe().subscribe(
+      x => console.log(x)
+    );
+    
   }
 }

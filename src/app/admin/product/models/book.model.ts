@@ -11,7 +11,7 @@ export interface Book {
 	totalPage: number;
 	translator: string;
 	publishDate: string;
-	reviews: Array<string>;
+	reviews?: string;
 	amount: number;
 	description: string;
 	image: string;
