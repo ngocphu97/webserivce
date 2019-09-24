@@ -1,67 +1,60 @@
 import { Action, createReducer, on } from '@ngrx/store';
+import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
 import * as BookActions from '../actions/book.action';
 import { Book } from '../../models/book.model';
 
-export interface BookState {
-	error: any | null;
-	pending: boolean;
-	bookList: Array<Book> | null;
-	selectedBook: Book | null
+export interface State extends EntityState<Book> {
+	selectedBookId: string | null;
 }
 
-export const initialState: BookState = {
-	error: undefined,
-	pending: false,
-	bookList: undefined,
-	selectedBook: undefined
-};
+export const adapter: EntityAdapter<Book> = createEntityAdapter<Book>();
+
+export const initialState: State = adapter.getInitialState({
+	selectedBookId: undefined
+});
 
 const bookReducer = createReducer(
 	initialState,
+
 	on(BookActions.getBookList, (state) => ({
 		...state,
 		error: null,
 		pending: true
 	})),
 
-	on(BookActions.getBookListSuccess, (state, { bookList }) => ({
-		...state,
-		error: null,
-		pending: false,
-		bookList: bookList
-	})),
+	on(BookActions.getBookById, (state, { bookId }) => {
+		return { ...state, selectedBookId: bookId };
+	}),
 
-	on(BookActions.getBookListFail, (state, { error }) => ({
-		...state,
-		pending: false,
-		error: error,
-	})),
+	on(BookActions.getBookListSuccess, (state, { bookList }) => {
+		return adapter.addAll(bookList, state);
+	}),
 
-	on(BookActions.addBookSuccess, (state, { book }) => ({
-		...state,
-		error: null,
-		pending: false,
-		bookList: [
-			...state.bookList,
-			book
-		]
-	})),
+	on(BookActions.addBookSuccess, (state, { book }) => {
+		return adapter.addOne(book, state);
+	}),
 
-	on(BookActions.addBookFail, (state, { error }) => ({
-		...state,
-		pending: false,
-		error: error,
-	})),
+	on(BookActions.deleteBookSuccess, (state, { bookId }) => {
+		return adapter.removeOne(bookId, state);
+	}),
 
-	on(BookActions.getBookByIdSuccess, (state, { book }) => ({
-		...state,
-		pending: false,
-		error: false,
-		selectedBook: book[0]
-	})),
 );
 
-export function reducer(state: BookState | undefined, action: Action) {
+export function reducer(state: State | undefined, action: Action) {
 	return bookReducer(state, action);
 }
+
+export const getSelectedBookId = (state: State) => state.selectedBookId;
+
+const {
+	selectIds,
+	selectEntities,
+	selectAll,
+	selectTotal,
+} = adapter.getSelectors();
+
+export const selectBookIds = selectIds;
+export const selectBookEntities = selectEntities;
+export const selectAllBooks = selectAll;
+export const selectBookTotal = selectTotal;

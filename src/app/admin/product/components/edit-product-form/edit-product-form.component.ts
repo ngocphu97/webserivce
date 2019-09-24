@@ -47,8 +47,6 @@ export class EditProductFormComponent implements OnInit, OnChanges {
     ).subscribe(() => {
       this.onEditBookFormValuesChanged();
     });
-
-    console.log(this.selectedBook);
   }
 
   ngOnChanges(changes: SimpleChanges) {

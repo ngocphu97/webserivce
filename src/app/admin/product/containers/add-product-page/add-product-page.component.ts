@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Book } from '../../models/book.model';
-import { BookState } from '../../store/reducers';
+import { State } from '../../store/reducers';
 import { addBook } from '../../store/actions';
 import { MatSnackBar } from '@angular/material';
-import { BookService } from '../../service';
 
 @Component({
   selector: 'app-add-product-page',
@@ -17,7 +15,7 @@ export class AddProductPageComponent {
   // error$ = this.store.pipe(select(LoginPageSelectors.selectLoginPageError));
 
   constructor(
-    private store: Store<BookState>,
+    private store: Store<State>,
     private snackBar: MatSnackBar
   ) { }
 

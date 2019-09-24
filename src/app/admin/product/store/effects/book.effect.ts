@@ -29,13 +29,15 @@ export class BookEffect {
 		ofType(bookActions.addBook),
 		map((action: any) => action.book),
 		exhaustMap((book) => {
-
-			console.log(book);
-
 			return this.bookService.addBook(book).pipe(
-				map(() => {
+				map((res) => {
 					this.openSnackBar('Add book success', 'success');
-					return bookActions.addBookSuccess({ book: book })
+					return bookActions.addBookSuccess({
+						book: {
+							...book,
+							id: res.insertId
+						}
+					})
 				}),
 				catchError(error => of(bookActions.getBookListFail({ error: error })))
 			)
@@ -61,7 +63,8 @@ export class BookEffect {
 		exhaustMap((book) => {
 			return this.bookService.deleteBookById(book.id).pipe(
 				map(() => {
-					return bookActions.deleteBookSuccess();
+					this.openSnackBar('Delete book success', 'success');
+					return bookActions.deleteBookSuccess({ bookId: book.id });
 				}),
 				catchError(error => of(bookActions.deleteBookError({ error: error })))
 			)
@@ -75,7 +78,7 @@ export class BookEffect {
 			return this.bookService.updateBookById(book).pipe(
 				map(() => {
 					this.openSnackBar('Update book success', 'success');
-					return bookActions.updateBookByIdSuccess({ book: book});
+					return bookActions.updateBookByIdSuccess({ book: book });
 				}),
 				catchError(error => of(bookActions.updateBookByIdFail({ error: error })))
 			)

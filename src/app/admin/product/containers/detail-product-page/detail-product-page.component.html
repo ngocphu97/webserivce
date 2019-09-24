@@ -1,3 +1,4 @@
-<div *ngIf="selectedBook$ | async as selectedBook" class="book-detail">
-	<app-detail-product [selectedBook]="selectedBook" (deleteBook)="onDeleteBook($event)"></app-detail-product>
+<div class="book-detail" *ngIf="selectedBook$ | async">
+	<app-detail-product [selectedBook]="selectedBook$ | async" (deleteBook)="onDeleteBook($event)">
+	</app-detail-product>
 </div>

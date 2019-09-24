@@ -1,21 +1,29 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-import { BookState } from '../reducers/book.reducer';
-import { Book } from '../../models/book.model';
+import * as fromReducer from '../reducers';
 
-export const selectBookState = createFeatureSelector<BookState>('book');
+export const selectBookState = createFeatureSelector<fromReducer.State>('book');
 
 export const selectBookList = createSelector(
 	selectBookState,
-	(state: BookState): Array<Book> => state.bookList
+	fromReducer.selectAllBooks
 );
 
-export const selectBookPending = createSelector(
+export const selectBookEntities = createSelector(
 	selectBookState,
-	(state: BookState): boolean => state.pending
+	fromReducer.selectBookEntities
 );
 
-export const selectSelectedBook = createSelector(
+export const selectSelectedBookId = createSelector(
 	selectBookState,
-	(state: BookState): Book => state.selectedBook
+	fromReducer.getSelectedBookId
+);
+
+export const selectCurrentBook = createSelector(
+	selectBookEntities,
+	selectSelectedBookId,
+	(bookEntities, bookId) => {
+		console.log(bookEntities);
+		return bookEntities[bookId]
+	}
 );

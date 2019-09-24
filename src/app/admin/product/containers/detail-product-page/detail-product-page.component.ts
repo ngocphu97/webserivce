@@ -5,9 +5,9 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { Book } from '../../models/book.model';
-import { BookState } from '../../store/reducers';
-import { getBookById, deleteBook } from '../../store/actions';
-import { selectSelectedBook } from '../../store/selector';
+import { State } from '../../store/reducers';
+import { deleteBook, getBookById, getBookList } from '../../store/actions';
+import { selectCurrentBook } from '../../store/selector';
 
 @Component({
   selector: 'app-detail-product-page',
@@ -16,20 +16,22 @@ import { selectSelectedBook } from '../../store/selector';
 })
 export class DetailProductPageComponent implements OnInit {
 
-  selectedBook$: Observable<Book>;
+  selectedBook$: Observable<any>;
 
   constructor(
-    private store: Store<BookState>,
+    private store: Store<State>,
     private route: ActivatedRoute,
     private router: Router
-  ) { }
-
-  ngOnInit() {
+  ) { 
     this.route.paramMap.subscribe(params => {
       const bookId = params.get('bookId').toString();
       this.store.dispatch(getBookById({ bookId }));
-      this.selectedBook$ = this.store.pipe(select(selectSelectedBook));
-    }).unsubscribe();
+    });
+    this.store.dispatch(getBookList());
+    this.selectedBook$ = this.store.pipe(select(selectCurrentBook));
+  }
+
+  ngOnInit() {
   }
 
   onDeleteBook(book: Book) {

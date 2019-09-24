@@ -68,7 +68,8 @@ export const deleteBook = createAction(
 );
 
 export const deleteBookSuccess = createAction(
-	'[Book] Delete book success'
+	'[Book] Delete book success',
+	props<{ bookId: string }>()
 );
 
 export const deleteBookError = createAction(

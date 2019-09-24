@@ -12,7 +12,7 @@ const routes: Routes = [
     component: fromContainers.AddProductPageComponent
   },
   {
-    path: 'edit-book/:bookId',
+    path: ':bookId/edit-book',
     component: fromContainers.EditProductPageComponent
   },
   {

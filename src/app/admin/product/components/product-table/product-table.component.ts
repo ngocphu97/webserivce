@@ -29,8 +29,8 @@ export class ProductTableComponent implements OnInit {
   displayConutries: Array<Country> = countries;
   dataSource: MatTableDataSource<any>;
 
-  distributor
-  translator
+  // distributor
+  // translator
 
   displayedColumns: string[] = [
     'select', 'image', 'name', 'author', 'translator', 'language', 

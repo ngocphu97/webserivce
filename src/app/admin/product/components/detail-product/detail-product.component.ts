@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material';
 
@@ -16,7 +15,8 @@ export class DetailProductComponent implements OnInit {
   @Input() selectedBook: Book;
   @Output() deleteBook = new EventEmitter<Book>();
 
-  constructor( public dialog: MatDialog, private router: Router) { }
+  constructor(public dialog: MatDialog) {
+  }
 
   ngOnInit() {
   }
@@ -38,9 +38,4 @@ export class DetailProductComponent implements OnInit {
   onDeleteBook() {
     this.deleteBook.emit(this.selectedBook);
   }
-
-  onEdit(selectedBookId: string) {
-    this.router.navigate([`/admin/books/edit-book/${selectedBookId}`]);
-  }
-
 }

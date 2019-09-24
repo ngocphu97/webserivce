@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { Book } from '../../models/book.model';
 
-import { BookState } from '../../store/reducers/book.reducer';
+import { State } from '../../store/reducers/book.reducer';
 import { getBookList } from '../../store/actions';
 import * as fromSelector from '../../store/selector';
 import { BookService } from '../../service';
@@ -16,18 +16,18 @@ import { BookService } from '../../service';
 })
 export class ProductsPageComponent {
 
-  books$: Observable<Array<Book>>;
+  books$: Observable<any>;
   pending$: Observable<boolean>;
 
   imageBlobUrl: any;
 
-  constructor(private store: Store<BookState>, private service: BookService) {
+  constructor(private store: Store<State>, private service: BookService) {
     this.store.dispatch(getBookList());
 
     this.books$ = this.store.pipe(select(fromSelector.selectBookList));
-    this.pending$ = this.store.pipe(select(fromSelector.selectBookPending));
+    // this.pending$ = this.store.pipe(select(fromSelector.selectBookPending));
 
-    this.demo();
+    // this.demo();
   }
 
   demo() {

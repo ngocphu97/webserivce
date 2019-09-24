@@ -1,22 +1,27 @@
-let express = require('express');
+const express = require('express');
 
-let bodyparser = require('body-parser');
-let cors = require('cors');
-let fileUpload = require('express-fileupload');
+const bodyparser = require('body-parser');
+const cors = require('cors');
+const fileUpload = require('express-fileupload');
 
-let connection = require('./connection');
-let routes = require('./routes');
+const connection = require('./connection');
+const api = require('./api');
 
-let app = express();
+const app = express();
 
 app.use(cors());
-app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({ extended: true }));
 app.use(fileUpload());
 
 connection.init();
-routes.configure(app);
+
+/**
+ * Setup Routes
+ */
+api(app);
 
 let server = app.listen(3000, function () {
   console.log('Server listening on port ' + server.address().port);
 });
+

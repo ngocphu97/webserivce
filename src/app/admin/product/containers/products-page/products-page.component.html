@@ -4,11 +4,7 @@
 	</div>
 </ng-container>
 
-<app-product-table 
-	*ngIf="(books$ | async) && (books$ | async).length > 0"
-	[pending]="pending$ | async" 
-	[books]="books$ | async">
-</app-product-table>
+<app-product-table [books]="books$ | async"></app-product-table>
 
 
 <!--  

@@ -36,9 +36,14 @@ function Books() {
 		queryDB(connection, response, bookQuery, reqeset.id);
 	};
 
-	this.updateBook = (field_data, response) => {
+	this.updateBook = (fieldData, response) => {
 		const bookQuery = 'update books set ? where id = ?';
-		queryDB(connection, response, bookQuery, [field_data, field_data.id]);
+		queryDB(connection, response, bookQuery, [fieldData, fieldData.id]);
+	};
+
+	this.deleteBook = (fieldData, response) => {
+		const bookQuery = 'delete from books where id = ?';
+		queryDB(connection, response, bookQuery, fieldData.id);
 	};
 
 	this.uploadBookCover = (request, response) => {
@@ -58,9 +63,9 @@ function Books() {
 		queryDB(connection, response, bookQuery, fieldData);
 	}
 
-	this.getBookCover = (req, response) => {
+	this.getBookCover = (request, response) => {
 		const bookQuery = 'select * from cover where bookId = ?';
-		queryDB(connection, response, bookQuery, req.bookId);
+		queryDB(connection, response, bookQuery, request.bookId);
 	}
 }
 
