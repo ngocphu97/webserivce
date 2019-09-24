@@ -1,0 +1,19 @@
+<input type="file" #file  (change)="onFilesAdded($event)" multiple />
+<div class="container" fxLayout="column" fxLayoutAlign="space-evenly stretch">
+	<h1 mat-dialog-title>Upload Files</h1>
+
+	<mat-dialog-content fxFlex>
+		<mat-list>
+			<mat-list-item *ngFor="let file of files">
+				<h4 mat-line>{{file.name}}</h4>
+			</mat-list-item>
+		</mat-list>
+	</mat-dialog-content>
+
+	<!-- This are the actions of the dialog, containing the primary and the cancel button-->
+	<mat-dialog-actions class="actions">
+		<button mat-raised-button color="primary" (click)="closeDialog()">
+			Upload
+		</button>
+	</mat-dialog-actions>
+</div>

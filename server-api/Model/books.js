@@ -1,76 +1,66 @@
-var connection = require('../connection');
+let connection = require('../connection');
+
+let queryDB = (connection, response, query, fieldData) => {
+	connection.acquire((error, connection) => {
+		if (error) {
+			response.send(error);
+		} else {
+			connection.query(query, fieldData, (error, result) => {
+				if (error) {
+					response.send(error);
+				} else {
+					connection.release();
+					response.send(result);
+				}
+			}, (error) => {
+				response.send(error);
+			});
+		}
+	});
+}
 
 function Books() {
 
-	this.get = (response) => {
-		connection.acquire((error, connection) => {
-			if (error) {
-				response.send(error)
-			} else {
-				connection.query('SELECT * FROM books', (error, result) => {
-					if (error) {
-						response.send(error)
-					} else {
-						connection.release();
-						response.send(result);
-					}
-				}, (error) => {
-					response.send(error)
-				});
-			}
-		});
+	this.getBooks = (response) => {
+		const bookQuery = 'SELECT * FROM books';
+		queryDB(connection, response, bookQuery, '');
 	};
 
-	this.xxx = (field_data, res) => {
-		console.log('vo day 1');
-		// connection.acquire((err, connection) => {
-		// 	connection.query('insert into books set ?', field_data, (err, result) => {
-		// 		if (err) {
-		// 			throw err
-		// 		} else {
-		// 			connection.release();
-		// 			res.send({ status: 0, message: 'Book created successfully' });
-		// 		}
-		// 	});
-		// });
+	this.createBook = (fieldData, response) => {
+		const bookQuery = 'insert into books set ?';
+		queryDB(connection, response, bookQuery, fieldData);
 	};
 
-	this.read = (reqeset, res) => {
-		connection.acquire(function (err, connection) {
-			connection.query('select * from books where id=?', reqeset.id, function (err, result) {
-				connection.release();
-				res.send(result);
-			});
-		});
+	this.getBookById = (reqeset, response) => {
+		const bookQuery = 'select * from books where id = ?';
+		queryDB(connection, response, bookQuery, reqeset.id);
 	};
 
-	this.update = (field_data, res) => {
-		connection.acquire(function (err, con) {
-			con.query('update books set ? where id = ?', [field_data, field_data.id], function (err, result) {
-				con.release();
-				if (err) {
-					res.send({ status: 1, message: 'Book update failed' });
-				} else {
-					res.send({ status: 0, message: 'Book updated successfully' });
-				}
-			});
-		});
+	this.updateBook = (field_data, response) => {
+		const bookQuery = 'update books set ? where id = ?';
+		queryDB(connection, response, bookQuery, [field_data, field_data.id]);
 	};
 
-	this.create = (req, res) => {
-		console.log('vo day');
-		if (!req.files || Object.keys(req.files).length === 0) {
+	this.uploadBookCover = (request, response) => {
+
+		if (!request.files || Object.keys(request.files).length === 0) {
 			return res.status(400).send('No files were uploaded.');
 		}
 
-		let sampleFile = req.files.image;
+		let sampleFile = request.files.image;
 
-		sampleFile.mv('D:/Projects/school/webserivce/server-api/images/filename.jpg', function (err) {
-			if (err)
-				return res.status(500).send(err);
+		const fieldData = {
+			bookId: 1,
+			photo: sampleFile.data
+		}
 
-			res.send('File uploaded!');
-		});
+		const bookQuery = 'insert into cover set ?';
+		queryDB(connection, response, bookQuery, fieldData);
+	}
+
+	this.getBookCover = (req, response) => {
+		const bookQuery = 'select * from cover where bookId = ?';
+		queryDB(connection, response, bookQuery, req.bookId);
 	}
 }
 

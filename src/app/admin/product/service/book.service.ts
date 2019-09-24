@@ -38,4 +38,8 @@ export class BookService {
     );
     
   }
+
+  getBookPhotoByBookId(bookId): Observable<any> {
+    return this.http.get(`${this.baseUrl}/books/photo/${bookId}`);
+  }
 }

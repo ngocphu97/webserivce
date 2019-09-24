@@ -1,26 +1,31 @@
-const books = require('./Model/books');
+let books = require('./model/books');
 
 module.exports = {
   configure: (app) => {
 
-    app.get('/books', (req, res) => {
-      books.get(res);
-    })
+    app.get('/books', (request, response) => {
+      books.getBooks(response);
+    });
 
-    app.post('/books', (req, res) => {
-      books.xxx(req.body, res);
-    })
+    app.get('/books/:id/', (request, response) => {
+      books.getBookById(request.params, response);
+    });
 
-    app.get('/books/:id/', (req, res) => {
-      books.read(req.params, res);
+    app.get('/books/photo/:bookId/', (request, response) => {
+      books.getBookCover(request.params, response);
+    });
+
+    app.post('/books/upload', (request, response) => {
+      console.log('vo day')
+      books.uploadBookCover(request, response);
+    });
+
+    app.post('/books', (request, response) => {
+      books.createBook(request.body, response);
     });
 
     app.put('/books/:id/', (req, res) => {
-      books.update(req.params, res);
-    });
-
-    app.post('/books/upload', (req, res) => {
-      books.create(req, res);
+      books.updateBook(req.body, res);
     });
 
   }
