@@ -47,7 +47,6 @@ export class AddProductFormComponent implements OnInit {
       totalPage: [null],
       translator: [null],
       description: [null],
-      image: [null],
     });
   }
 
@@ -64,11 +63,11 @@ export class AddProductFormComponent implements OnInit {
       return;
     }
 
-    if (!this.form.controls['image'].value) {
-      this.form.patchValue({
-        image: 'https://www.uoduckstore.com/TDS%20Product%20Images/Matrix%20Parent%20Generic_1.jpg'
-      })
-    };
+    // if (!this.form.controls['image'].value) {
+    //   this.form.patchValue({
+    //     image: 'https://www.uoduckstore.com/TDS%20Product%20Images/Matrix%20Parent%20Generic_1.jpg'
+    //   })
+    // };
 
     this.addBook.emit(this.form.value);
 

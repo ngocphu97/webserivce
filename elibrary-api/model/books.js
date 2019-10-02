@@ -17,12 +17,13 @@ let queryDB = (connection, response, query, fieldData) => {
 			});
 		}
 	});
+
 }
 
 function Books() {
 
 	this.getBooks = (response) => {
-		const bookQuery = 'SELECT * FROM books';
+		const bookQuery = 'select * from books left join cover on cover.bookId = books.id';
 		queryDB(connection, response, bookQuery, '');
 	};
 

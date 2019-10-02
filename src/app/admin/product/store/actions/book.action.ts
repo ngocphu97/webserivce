@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { Book } from '../../models/book.model';
+import { Book, AddBook } from '../../models/book.model';
 
 export const getBookList = createAction(
 	'[Book] Get Book List'
@@ -18,7 +18,7 @@ export const getBookListFail = createAction(
 
 export const addBook = createAction(
 	'[Book] Add New Book',
-	props<{ book: Book }>()
+	props<{ book: AddBook }>()
 );
 
 export const addBookSuccess = createAction(

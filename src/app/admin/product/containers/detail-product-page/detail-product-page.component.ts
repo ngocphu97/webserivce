@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Store, select } from '@ngrx/store';
@@ -14,7 +14,7 @@ import { selectCurrentBook } from '../../store/selector';
   templateUrl: './detail-product-page.component.html',
   styleUrls: ['./detail-product-page.component.scss']
 })
-export class DetailProductPageComponent implements OnInit {
+export class DetailProductPageComponent {
 
   selectedBook$: Observable<any>;
 
@@ -27,11 +27,9 @@ export class DetailProductPageComponent implements OnInit {
       const bookId = params.get('bookId').toString();
       this.store.dispatch(getBookById({ bookId }));
     });
+    
     this.store.dispatch(getBookList());
     this.selectedBook$ = this.store.pipe(select(selectCurrentBook));
-  }
-
-  ngOnInit() {
   }
 
   onDeleteBook(book: Book) {

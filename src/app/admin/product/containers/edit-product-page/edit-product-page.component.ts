@@ -34,7 +34,7 @@ export class EditProductPageComponent implements OnInit {
   ngOnInit() {
   }
 
-  onEditBook(book: Book) {
+  onEditBook(book: any) {
     this.store.dispatch(updateBookById({ book: book }));
   }
 

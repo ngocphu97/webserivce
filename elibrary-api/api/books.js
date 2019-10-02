@@ -5,7 +5,7 @@ const books = require('../model/books');
 
 const tryCall = ((request) => {
   try {
-    request
+    return request;
   } catch (error) {
     res.json({ error: error.message || error.toString() });
   }

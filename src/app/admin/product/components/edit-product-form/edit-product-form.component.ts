@@ -29,7 +29,7 @@ export class EditProductFormComponent implements OnInit, OnChanges {
       cost: [null, Validators.required],
       description: [null, Validators.required],
       distributor: [null, Validators.required],
-      image: [null, Validators.required],
+      image: [null],
       inventory: [null, Validators.required],
       language: [null, Validators.required],
       name: [null, Validators.required],
@@ -75,6 +75,12 @@ export class EditProductFormComponent implements OnInit, OnChanges {
     if (!this.form.valid) {
       return;
     }
+    
+    const date = new Date(this.form.controls['publishDate'].value);
+    this.form.patchValue({
+      publishDate: date
+    });
+    
     this.editBook.emit(this.form.value);
   }
 

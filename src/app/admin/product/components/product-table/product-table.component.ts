@@ -1,22 +1,17 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, SimpleChanges } from '@angular/core';
-import { FormControl } from '@angular/forms';
-
-import { MatSort, MatPaginator, MatInput, MatTableDataSource, MatSnackBar } from '@angular/material';
-import { SelectionModel } from '@angular/cdk/collections';
-
-import { ExploreModel, Search, countries } from 'src/app/explore/models';
-import { Country } from 'src/app/explore/models/country.model.';
-import { Book } from '../../models/book.model';
+import { Component, Input, ViewChild, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { SelectionModel } from '@angular/cdk/collections';
+import { MatSort, MatPaginator, MatInput, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-product-table',
   templateUrl: './product-table.component.html',
   styleUrls: ['./product-table.component.scss']
 })
-export class ProductTableComponent implements OnInit {
+export class ProductTableComponent {
 
-  @Input() books: Array<Book>;
+  @Input() books: Array<any>;
   @Input() pending: boolean;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -25,31 +20,42 @@ export class ProductTableComponent implements OnInit {
 
   selectedRowIndex: number = -1;
   interestList: Array<string> = [];
-  selection = new SelectionModel<ExploreModel>(true, []);
-  displayConutries: Array<Country> = countries;
+  selection = new SelectionModel<any>(true, []);
   dataSource: MatTableDataSource<any>;
-
-  // distributor
-  // translator
+  imageBlobUrl: any;
 
   displayedColumns: string[] = [
-    'select', 'image', 'name', 'author', 'translator', 'language', 
+    'select', 'name', 'author', 'translator', 'language',
     'retailPrice', 'cost', 'inventory', 'amount', 'action',
   ];
 
   constructor(private router: Router) {
   }
 
-  ngOnInit() {
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes && changes.books) {
+    if (changes.books) {
+
+      // this.books = this.books.map(book => {
+      //   return {
+      //     ...book,
+      //     image: this.convertImage(book.photo.data)
+      //   }
+      // })
+
       this.dataSource = new MatTableDataSource(this.books);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     }
   }
+
+  convertImage(image) {
+    let typedArray = new Uint8Array(image);
+    const stringChar = typedArray.reduce((data, byte) => data + String.fromCharCode(byte), '');
+    let base64String = btoa(stringChar);
+
+    return `data:image/jpg;base64,${base64String}`;
+  }
+
 
   applyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();

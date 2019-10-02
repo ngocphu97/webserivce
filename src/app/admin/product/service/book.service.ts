@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Book } from '../models/book.model';
+import { Book, AddBook } from '../models/book.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable()
@@ -15,7 +15,8 @@ export class BookService {
     return this.http.get(`${this.baseUrl}/books`);
   }
 
-  addBook(book: Book): Observable<any> {
+  addBook(book: AddBook): Observable<any> {
+    console.log(book);
     return this.http.post(`${this.baseUrl}/books`, book);
   }
 

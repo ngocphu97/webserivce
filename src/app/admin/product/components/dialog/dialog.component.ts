@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { BookService } from '../../service';
 import { MatDialogRef } from '@angular/material';
 
@@ -7,16 +7,15 @@ import { MatDialogRef } from '@angular/material';
   templateUrl: './dialog.component.html',
   styleUrls: ['./dialog.component.css']
 })
-export class DialogComponent implements OnInit {
+export class DialogComponent {
 
   file: any;
-
   uploadSuccessful = false
 
-  constructor(public dialogRef: MatDialogRef<DialogComponent>, public uploadService: BookService) { }
-
-  ngOnInit() {
-  }
+  constructor(
+    public dialogRef: MatDialogRef<DialogComponent>,
+    public uploadService: BookService
+  ) { }
 
   addFiles() {
     this.file.nativeElement.click();

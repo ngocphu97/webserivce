@@ -33,7 +33,7 @@
 						<mat-form-field class="full-width">
 							<!-- <input matInput placeholder="Publish day" formControlName="publishDate"> -->
 
-							<input matInput [matDatepicker]="picker" placeholder="Choose a date" >
+							<input matInput formControlName="publishDate" [matDatepicker]="picker" placeholder="Choose a date" >
 							<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 							<mat-datepicker #picker></mat-datepicker>
 

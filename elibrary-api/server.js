@@ -21,7 +21,7 @@ connection.init();
  */
 api(app);
 
-let server = app.listen(3000, function () {
+const server = app.listen(3000, function () {
   console.log('Server listening on port ' + server.address().port);
 });
 

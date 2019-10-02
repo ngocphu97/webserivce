@@ -19,31 +19,8 @@ export class ProductsPageComponent {
   books$: Observable<any>;
   pending$: Observable<boolean>;
 
-  imageBlobUrl: any;
-
   constructor(private store: Store<State>, private service: BookService) {
     this.store.dispatch(getBookList());
-
     this.books$ = this.store.pipe(select(fromSelector.selectBookList));
-    // this.pending$ = this.store.pipe(select(fromSelector.selectBookPending));
-
-    // this.demo();
   }
-
-  demo() {
-    this.service.getBookPhotoByBookId(1).pipe()
-      .subscribe(x => {
-        this.createImageFromBlob(x[0].photo.data);
-      });
-  }
-
-  createImageFromBlob(image) {
-    let TYPED_ARRAY = new Uint8Array(image);
-    const STRING_CHAR = TYPED_ARRAY.reduce((data, byte) => { return data + String.fromCharCode(byte); }, '');
-
-    let base64String = btoa(STRING_CHAR);
-
-    this.imageBlobUrl = `data:image/jpg;base64,${base64String}`;
-  }
-
 }

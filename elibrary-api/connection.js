@@ -1,4 +1,4 @@
-let mysql = require('mysql');
+const mysql = require('mysql');
 
 function Connection() {
 
