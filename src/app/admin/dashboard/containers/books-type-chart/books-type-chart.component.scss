@@ -1,0 +1,10 @@
+.detail {
+	transition: all 0.5s;
+	height: 0px;
+	background: red;
+
+	&.selected-item {
+		height: 100px;
+		display: block;
+	}
+}

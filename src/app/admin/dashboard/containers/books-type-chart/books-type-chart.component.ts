@@ -6,25 +6,28 @@ import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 
 am4core.useTheme(am4themes_animated);
 
-
 @Component({
   selector: 'app-books-type-chart',
   templateUrl: './books-type-chart.component.html',
-  styleUrls: ['./books-type-chart.component.css']
+  styleUrls: ['./books-type-chart.component.scss']
 })
 export class BooksTypeChartComponent implements OnInit, OnDestroy {
 
   chart: am4charts.XYChart;
+  series: am4charts.ColumnSeries;
+  selected: boolean = false;
+  chossingX: string;
 
   constructor(private zone: NgZone) { }
 
   ngOnInit() {
   }
 
-  
   ngAfterViewInit() {
     this.zone.runOutsideAngular(() => {
       let chart = am4core.create('chartdiv', am4charts.XYChart);
+
+
       chart.hiddenState.properties.opacity = 0;
 
       chart.paddingRight = 20;
@@ -111,13 +114,17 @@ export class BooksTypeChartComponent implements OnInit, OnDestroy {
       series.columns.template.tooltipY = 0;
       series.columns.template.strokeOpacity = 0;
 
+      series.columns.template.events.on('hit', this.onChartSelect, this);
+
       // as by default columns of the same series are of the same color, we add adapter which takes colors from chart.colors color set
       series.columns.template.adapter.add("fill", function (fill, target) {
         return chart.colors.getIndex(target.dataItem.index);
       });
 
       this.chart = chart;
+      this.series = series;
     });
+
   }
 
   ngOnDestroy() {
@@ -126,6 +133,15 @@ export class BooksTypeChartComponent implements OnInit, OnDestroy {
         this.chart.dispose();
       }
     });
+  }
+
+  onChartSelect(ev) {
+    const targetData = ev.target.dataItem;
+    console.log("ev.target.dataItem.categories.categoryX", targetData.categories.categoryX);
+    console.log("ev.target.dataItem.values.valueY.value", targetData.values.valueY.value);
+    this.selected = true;
+    this.chossingX = targetData.categories.categoryX;
+    console.log("Log Message: BooksTypeChartComponent -> onChartSelect -> this.selected: ", this.selected)
   }
 
 

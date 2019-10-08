@@ -29,12 +29,10 @@ export class ProductTableComponent {
     'retailPrice', 'cost', 'inventory', 'amount', 'action',
   ];
 
-  constructor(private router: Router) {
-  }
+  constructor(private router: Router) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.books) {
-
       // this.books = this.books.map(book => {
       //   return {
       //     ...book,
@@ -42,6 +40,7 @@ export class ProductTableComponent {
       //   }
       // })
 
+      console.log('Log Message: ProductTableComponent -> this.books', this.books);
       this.dataSource = new MatTableDataSource(this.books);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;

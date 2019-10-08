@@ -19,10 +19,10 @@ export class DetailProductComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.selectedBook) {
-      this.selectedBook = {
-        ...this.selectedBook,
-        image: this.convertImage(this.selectedBook.photo.data)
-      }
+      // this.selectedBook = {
+      //   ...this.selectedBook,
+      //   image: this.convertImage(this.selectedBook.photo.data)
+      // }
     }
   }
 

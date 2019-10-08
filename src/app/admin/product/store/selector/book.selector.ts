@@ -23,7 +23,6 @@ export const selectCurrentBook = createSelector(
 	selectBookEntities,
 	selectSelectedBookId,
 	(bookEntities, bookId) => {
-		console.log(bookEntities);
 		return bookEntities[bookId]
 	}
 );
