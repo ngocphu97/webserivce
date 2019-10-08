@@ -1,3 +1,31 @@
 .actions {
-	margin-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.social {
+  height: 100%;
+  padding: 1rem 0;
+  display: flex;
+
+  .social-button {
+    width: 100%;
+
+    .social-button__gg {
+      width: 98%;
+      height: 50px;
+      background: #d64c3f;
+    }
+
+    .social-button__fb {
+      width: 98%;
+      height: 50px;
+      background: #465892
+    }
+  }
+}
+
+hr {
+  border: 0;
+  border-bottom: 1px dashed #ccc;
+  background: #999;
 }

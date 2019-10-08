@@ -1,10 +1,32 @@
-.detail {
-	transition: all 0.5s;
-	height: 0px;
-	background: red;
+* {
+  transition: all .5s;
+}
 
-	&.selected-item {
-		height: 100px;
-		display: block;
-	}
+.chart-container {
+  display: flex;
+  height: 100%;
+}
+
+.detail {
+  height: 0px;
+  width: 0;
+  transition: all 350ms ease-in;
+  will-change: opacity;
+  z-index: 500;
+  visibility: hidden;
+  margin: 1rem;
+  padding: 1rem;
+
+  &.selected-item {
+    visibility: visible;
+    height: 100%;
+    width: 600px;
+    height: 500px;
+
+    .close-btn {
+      float: right;
+      width: 100%;
+      text-align: right;
+    }
+  }
 }

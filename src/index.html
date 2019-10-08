@@ -14,6 +14,9 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
 
+  <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-auth.js"></script>
+
   <style>
     #splash-screen {
       position: absolute;
@@ -232,6 +235,20 @@
       <div class="sk-child sk-circle12"></div>
     </div>
   </div>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyClLLg-psaYq_Wb4J45xxg4fro2PekLiVA",
+      authDomain: "gudjob-nnd-hnp-12345.firebaseapp.com",
+      databaseUrl: "https://gudjob-nnd-hnp-12345.firebaseio.com",
+      projectId: "gudjob-nnd-hnp-12345",
+      messagingSenderId: "172858425932",
+      appId: "1:172858425932:web:7969bda0fa3a2620a7eae9"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
   <app-root></app-root>
 </body>
 

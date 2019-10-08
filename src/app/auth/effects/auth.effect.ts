@@ -14,45 +14,37 @@ import { LogoutConfirmationDialogComponent } from '../components';
 
 @Injectable()
 export class AuthEffects {
-  // login$ = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(LoginPageActions.login),
-  //     map(action => action.credential),
-  //     exhaustMap((auth: Credential) =>
-  //       this.authService.login(auth).pipe(
-  //         map(authToken => {
-  //           return AuthApiActions.loginSuccess({ authToken })
-  //         }),
-  //         catchError(error => of(AuthApiActions.loginFailure({ error })))
-  //       )
-  //     )
-  //   )
-  // );
 
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(LoginPageActions.login),
       map(action => action.credential),
-      exhaustMap((auth: Credential) =>
-        this.authService.login().pipe(
-          map((res: Array<UserProfile>) => {
+      map((auth: Credential) => {
+        if (auth.email === 'admin@yopmail.com' && auth.password === 'admin') {
+          return AuthApiActions.loginSuccess({ user: auth });
+        } else {
+          return AuthApiActions.loginInvalid({ error: 'User name or password incorrect' })
+        }
+      })
+      // exhaustMap((auth: Credential) => 
+      //   this.authService.login().pipe(
+      //     // map((res: Array<UserProfile>) => {
             
-            const userArray = res.map((user) => {
-              return {
-                username: user.username,
-                password: user.password
-              };
-            });
+      //       // const userArray = res.map((user) => {
+      //       //   return {
+      //       //     username: user.username,
+      //       //     password: user.password
+      //       //   };
+      //       // });
 
-            if (userArray.some(user => user.username === auth.username && user.password === auth.password)) {
-              return AuthApiActions.loginSuccess({user: auth});
-            } else {
-              return AuthApiActions.loginInvalid({ error: 'User name or password incorrect' })
-            }
-          }),
-          catchError(error => of(AuthApiActions.loginFailure({ error })))
-        )
-      )
+      //       // if (userArray.some(user => user.username === auth.username && user.password === auth.password)) {
+      //       //   return AuthApiActions.loginSuccess({user: auth});
+      //       // } else {
+      //       //   return AuthApiActions.loginInvalid({ error: 'User name or password incorrect' })
+      //       // }
+      //     // }),
+      //     // catchError(error => of(AuthApiActions.loginFailure({ error })))
+      //   ))
     )
   );
 

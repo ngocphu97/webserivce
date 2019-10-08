@@ -37,11 +37,6 @@ export const reducer = createReducer(
     error: error
   })),
 
-  on(AuthActions.lock, (state) => ({
-    ...state,
-    authToken: undefined
-  })),
-
   on(AuthActions.logout, () => initialState)
 );
 

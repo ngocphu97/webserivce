@@ -26,11 +26,10 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       distinctUntilChanged(),
       take(1),
       tap(isAuthenticated => {
-        console.log(isAuthenticated);
         if (!isAuthenticated) {
           this.router.navigate([this.loginURI]);
         } else {
-          this.router.navigate(['/admin']);
+          return true;
         }
       })
     );

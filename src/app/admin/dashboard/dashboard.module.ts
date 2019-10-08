@@ -5,11 +5,16 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { CONTAINER_COMPONENTS } from './containers';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
+import { MatCardModule, MatButtonModule, MatIconModule } from '@angular/material';
+
 @NgModule({
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule
   ],
   declarations: [
     CONTAINER_COMPONENTS

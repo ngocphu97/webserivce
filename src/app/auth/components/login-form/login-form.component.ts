@@ -1,7 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { takeUntilDestroy } from '@app/core/destroyable';
 import { Credential } from '@app/auth';
 
 @Component({
@@ -10,56 +9,36 @@ import { Credential } from '@app/auth';
   styleUrls: ['./login-form.component.scss', '../auth-from.scss']
 })
 export class LoginFormComponent implements OnInit {
-  @Input() pending: boolean;
 
-  @Output() login: EventEmitter<Credential>;
+  @Input() pending: boolean;
+  @Output() loginUser: EventEmitter<Credential>;
 
   form: FormGroup;
-  formErrors: any;
+
+  get email() { return this.form.get('username'); }
+  get password() { return this.form.get('password'); }
 
   constructor(private formBuilder: FormBuilder) {
-
-    this.login = new EventEmitter();
-
-    this.formErrors = {
-      username: { required: true },
-      password: { required: true }
-    };
+    this.loginUser = new EventEmitter();
 
     this.form = this.formBuilder.group({
-      username: ['admin', Validators.required],
-      password: ['admin', Validators.required]
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
     });
   }
 
-  ngOnInit() {
-    this.form.valueChanges.pipe(
-      takeUntilDestroy(this)
-    ).subscribe(() => {
-      this.onLoginFormValuesChanged();
-    });
-  }
+  ngOnInit() { }
 
   onSubmit(): void {
     if (!this.form.valid) {
       return;
     }
-    this.login.emit(this.form.value);
+    this.loginUser.emit(this.form.value);
   }
 
-  private onLoginFormValuesChanged() {
-    for (const field in this.formErrors) {
-      if (!this.formErrors.hasOwnProperty(field)) {
-        continue;
-      }
+  loginGG() { }
 
-      this.formErrors[field] = {};
-      const control = this.form.get(field);
+  loginFB() { }
 
-      if (control && control.dirty && !control.valid) {
-        this.formErrors[field] = control.errors;
-      }
-    }
-  }
 
 }

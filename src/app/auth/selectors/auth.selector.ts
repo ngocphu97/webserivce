@@ -22,7 +22,6 @@ export const selectAuthToken = createSelector(
 export const selectIsAuthenticated = createSelector(
   selectAuthToken,
   (authToken: AuthToken): boolean => {
-    console.log('authToken', authToken);
     return authToken && AuthToken.isValid(authToken);
   }
 );

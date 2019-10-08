@@ -28,7 +28,6 @@ export class AuthService {
   }
 
   resetPassword(admin: any): Observable<any> {
-    console.log(admin);
     return this.http.put(`${this.config.loginApiURL}/${admin.id}`, { ...admin });
   }
 

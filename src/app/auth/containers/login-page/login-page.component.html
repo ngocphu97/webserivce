@@ -8,7 +8,7 @@
 
       <p class="mat-error" *ngIf="error$ | async as error">{{error.message}}</p>
 
-      <app-login-form class="form" [pending]="pending$ | async" (login)="onLogin($event)">
+      <app-login-form class="form" [pending]="pending$ | async" (loginUser)="onLogin($event)">
       </app-login-form>
     </mat-card-content>
   </mat-card>

@@ -1,8 +1,13 @@
-<div id="chartdiv" style="width: 100%; height: 500px"></div>
+<h2>Book statistics by category</h2>
 
+<div class="chart-container">
+  <div id="chartdiv" style="width: 100%; height: 500px"></div>
 
-<div class="detail" [ngClass]="{'selected-item': selected === true}">
-	<h3>Detail</h3>
+  <div class="detail" [ngClass]="{'selected-item mat-elevation-z8': selected}" [ngStyle]="{background: selectedColor}">
+    <button class="close-btn" (click)="close()" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+    <strong>{{ chossingCategory }}</strong> have value of <strong>{{ choogingValue }}</strong>
 
-	<p>{{ chossingX }}</p>
+  </div>
 </div>

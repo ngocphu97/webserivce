@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone, OnDestroy } from '@angular/core';
+import { Component, OnInit, NgZone, OnDestroy, ChangeDetectorRef } from '@angular/core';
 
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
@@ -15,10 +15,15 @@ export class BooksTypeChartComponent implements OnInit, OnDestroy {
 
   chart: am4charts.XYChart;
   series: am4charts.ColumnSeries;
-  selected: boolean = false;
-  chossingX: string;
+  selected: boolean;
+  chossingCategory: string;
+  choogingValue: number;
+  selectedColor: string;
 
-  constructor(private zone: NgZone) { }
+  constructor(
+    private zone: NgZone,
+    private cdRef: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
   }
@@ -26,7 +31,6 @@ export class BooksTypeChartComponent implements OnInit, OnDestroy {
   ngAfterViewInit() {
     this.zone.runOutsideAngular(() => {
       let chart = am4core.create('chartdiv', am4charts.XYChart);
-
 
       chart.hiddenState.properties.opacity = 0;
 
@@ -116,7 +120,6 @@ export class BooksTypeChartComponent implements OnInit, OnDestroy {
 
       series.columns.template.events.on('hit', this.onChartSelect, this);
 
-      // as by default columns of the same series are of the same color, we add adapter which takes colors from chart.colors color set
       series.columns.template.adapter.add("fill", function (fill, target) {
         return chart.colors.getIndex(target.dataItem.index);
       });
@@ -136,13 +139,17 @@ export class BooksTypeChartComponent implements OnInit, OnDestroy {
   }
 
   onChartSelect(ev) {
-    const targetData = ev.target.dataItem;
-    console.log("ev.target.dataItem.categories.categoryX", targetData.categories.categoryX);
-    console.log("ev.target.dataItem.values.valueY.value", targetData.values.valueY.value);
+    console.log(ev);
+    const targetData = ev.target.dataItem.dataContext;
     this.selected = true;
-    this.chossingX = targetData.categories.categoryX;
-    console.log("Log Message: BooksTypeChartComponent -> onChartSelect -> this.selected: ", this.selected)
+    this.selectedColor = ev.target.realFill.rgba;
+    this.chossingCategory = targetData.country;
+    this.choogingValue = targetData.visits;
+    this.cdRef.detectChanges();
   }
 
+  close() {
+    this.selected = false;
+  }
 
 }
