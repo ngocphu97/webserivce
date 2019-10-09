@@ -24,12 +24,39 @@ export class ProductTableComponent {
   dataSource: MatTableDataSource<any>;
   imageBlobUrl: any;
 
+  booksFake: Array<any> = [];
+
   displayedColumns: string[] = [
-    'select', 'name', 'author', 'translator', 'language',
+    'select', 'name', 'image', 'author', 'translator', 'language',
     'retailPrice', 'cost', 'inventory', 'amount', 'action',
   ];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) { 
+    // this.generateFakeDB();
+  }
+
+  generateFakeDB() {
+    for (let i = 0; i < 10; i++) {
+      const x = {
+        id: i,
+        name: "Book " + i,
+        author: "Author " + i,
+        cost: 100 + i,
+        retailPrice: 100 + i,
+        inventory: 100 + i,
+        distributor: "Distributor " + i,
+        language: "Viêt Nam",
+        size: "14 * 14",
+        totalPage: i,
+        translator: "Transaltor " + i,
+        publishDate: new Date(),
+        amount: 200 + i,
+        image: 'https://cdn.shopify.com/s/files/1/0221/1146/products/Order_of_the_Phoenix_Paperback_large.png?v=1548842107',
+        description: "Description "+ 1,
+      }
+      this.booksFake.push(x);
+    }
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.books) {
@@ -39,9 +66,7 @@ export class ProductTableComponent {
       //     image: this.convertImage(book.photo.data)
       //   }
       // })
-
-      console.log('Log Message: ProductTableComponent -> this.books', this.books);
-      this.dataSource = new MatTableDataSource(this.books);
+      this.dataSource = new MatTableDataSource(this.booksFake);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     }

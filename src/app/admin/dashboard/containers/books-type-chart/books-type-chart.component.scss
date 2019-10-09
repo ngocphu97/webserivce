@@ -17,12 +17,47 @@
     visibility: visible;
     height: 100%;
     width: 600px;
-    height: 500px;
-
-    .close-btn {
-      float: right;
-      width: 100%;
-      text-align: right;
-    }
+    height: 435px;
   }
+}
+
+.title {
+  color: #ffffff
+}
+
+.example-container {
+  height: 305px;
+  width: 550px;
+  overflow: auto;
+}
+
+table {
+  width: 800px;
+}
+
+td.mat-column-star {
+  width: 20px;
+  padding-right: 8px;
+}
+
+th.mat-column-position,
+td.mat-column-position {
+  padding-left: 8px;
+}
+
+.mat-table-sticky:first-child {
+  border-right: 1px solid #e0e0e0;
+}
+
+.mat-table-sticky:last-child {
+  border-left: 1px solid #e0e0e0;
+}
+
+tr:hover {
+  background: #efefef;
+  cursor: pointer;
+}
+
+.card{
+  overflow: hidden
 }

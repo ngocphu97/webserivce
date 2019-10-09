@@ -1,13 +1,68 @@
-<h2>Book statistics by category</h2>
+<mat-card class="card mat-elevation-z3">
+  <mat-card-header>
+    <mat-card-title>Thống kê sách theo thể loại</mat-card-title>
+  </mat-card-header>
 
-<div class="chart-container">
-  <div id="chartdiv" style="width: 100%; height: 500px"></div>
+  <div class="chart-container">
+    <div id="chartdiv" style="width: 100%; height: 500px"></div>
 
-  <div class="detail" [ngClass]="{'selected-item mat-elevation-z8': selected}" [ngStyle]="{background: selectedColor}">
-    <button class="close-btn" (click)="close()" mat-icon-button>
-      <mat-icon>close</mat-icon>
-    </button>
-    <strong>{{ chossingCategory }}</strong> have value of <strong>{{ choogingValue }}</strong>
+    <div class="detail" [ngClass]="{'selected-item mat-elevation-z8': selected}"
+      [ngStyle]="{background: selectedColor}">
+      <button class="close-btn" (click)="close()" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
 
+      <h3 class="title">Thể loại sách <strong>"{{ chossingCategory }}"</strong>
+        <br> - Còn <strong>"{{ choogingValue }}"</strong> cuốn.
+      </h3>
+
+      <div class="example-container mat-elevation-z2">
+        <table mat-table [dataSource]="dataSource">
+
+          <ng-container matColumnDef="name" sticky>
+            <th mat-header-cell *matHeaderCellDef> <strong>Tên sách</strong> </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="inventory">
+            <th mat-header-cell *matHeaderCellDef> <strong>Số lượng tồn</strong> </th>
+            <td mat-cell *matCellDef="let element"> {{element.inventory}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="amounts">
+            <th mat-header-cell *matHeaderCellDef> <strong>Số lượng nhập</strong> </th>
+            <td mat-cell *matCellDef="let element"> {{element.amounts}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="cost">
+            <th mat-header-cell *matHeaderCellDef> <strong>Giá nhập</strong> </th>
+            <td mat-cell *matCellDef="let element"> {{element.cost}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="star" stickyEnd>
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                  <mat-icon>edit</mat-icon>
+                  <span>Chi tiết</span>
+                </button>
+                <button mat-menu-item>
+                  <mat-icon>delete</mat-icon>
+                  <span>Xóa</span>
+                </button>
+              </mat-menu>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+      </div>
+    </div>
   </div>
-</div>
+</mat-card>

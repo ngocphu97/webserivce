@@ -5,7 +5,7 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { CONTAINER_COMPONENTS } from './containers';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { MatCardModule, MatButtonModule, MatIconModule } from '@angular/material';
+import { MatCardModule, MatButtonModule, MatIconModule, MatTableModule, MatMenuModule } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -14,7 +14,9 @@ import { MatCardModule, MatButtonModule, MatIconModule } from '@angular/material
     FlexLayoutModule,
     MatCardModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatTableModule,
+    MatMenuModule
   ],
   declarations: [
     CONTAINER_COMPONENTS

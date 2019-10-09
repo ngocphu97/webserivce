@@ -33,14 +33,16 @@ export class BookService {
   }
 
   upload(file) {
-    console.log(file);
     this.http.post('/upload', file).pipe().subscribe(
       x => console.log(x)
     );
-    
   }
 
   getBookPhotoByBookId(bookId): Observable<any> {
     return this.http.get(`${this.baseUrl}/books/photo/${bookId}`);
+  }
+
+  getBookCategories(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/categories`);
   }
 }

@@ -8,12 +8,12 @@ const routes: Routes = [
     component: AdminLayoutComponent,
     children: [
       {
-        path: '',
+        path: 'users',
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
         data: { animation: 'open' }
       },
       {
-        path: 'users',
+        path: '',
         loadChildren: () => import('./user/user.module').then(m => m.UserModule),
         data: { animation: 'closed' }
       },
