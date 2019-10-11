@@ -46,6 +46,22 @@ export const getBookByIdFail = createAction(
 	props<{ error: any }>()
 );
 
+export const getBookByCategoryId = createAction(
+  '[Book] Get Book Category Id',
+  props<{ categoryId: number }>()
+);
+
+export const getBookByCategoryIdSuccess = createAction(
+  '[Book] Get Book By Category Success',
+  props<{ book: Book }>()
+);
+
+export const getBookByCategoryIdFail = createAction(
+  '[Book] Get Book By Category Fail',
+  props<{ error: any }>()
+);
+
+
 export const updateBookById = createAction(
 	'[Book] Update Book By Id',
 	props<{ book: Book }>()

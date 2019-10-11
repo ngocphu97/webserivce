@@ -12,8 +12,8 @@ const tryCall = ((request) => {
 });
 
 router
-  .get('/', (_request, response) => {
-    tryCall(books.getBooks(response));
+  .get('/', (request, response) => {
+    tryCall(books.getBooks(request.query.categories, response));
   })
 
   .get('/:id/', (request, response) => {

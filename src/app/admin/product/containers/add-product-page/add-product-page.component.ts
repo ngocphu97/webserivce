@@ -11,9 +11,7 @@ import { addBook } from '../../store/actions';
 })
 export class AddProductPageComponent {
 
-  constructor(
-    private store: Store<State>
-  ) { }
+  constructor(private store: Store<State>) { }
 
   onAddBook(book) {
     this.store.dispatch(addBook({ book: book }));

@@ -33,7 +33,3 @@ export interface AddBook {
 	amount: number;
 	description: string;
 }
-
-
-
-

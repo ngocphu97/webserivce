@@ -71,9 +71,6 @@ const MAT_MODULES = [
     FormsModule,
     ReactiveFormsModule,
 
-    StoreModule.forFeature('book', [reducer]),
-    EffectsModule.forFeature([BookEffect]),
-
     MatFileUploadModule,
 
     FlexLayoutModule,
@@ -81,9 +78,6 @@ const MAT_MODULES = [
 
     MAT_MODULES,
     DialogModule
-  ],
-  providers: [
-    ...SERVICES
   ],
   declarations: [
     ...CONTAINERS,

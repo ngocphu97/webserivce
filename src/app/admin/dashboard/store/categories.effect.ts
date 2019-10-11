@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 import {  catchError, exhaustMap, map } from 'rxjs/operators';
 
 import * as fromActions from './categories.actions'
-import { BookService } from '../product/service';
+import { DashboardService } from '../services/dashboard.service';
 // import { MatSnackBar } from '@angular/material';
 
 @Injectable()
@@ -14,8 +14,7 @@ export class CategoriesEffect {
   getCategoriesList$ = createEffect(() => this.actions$.pipe(
     ofType(fromActions.getCategoriesList),
     exhaustMap(() => {
-      debugger;
-      return this.bookService.getBookCategories().pipe(
+      return this.service.getBookCategories().pipe(
         map((res: any) => {
           return fromActions.getCategoriesListSuccess({ categoriesList: res })
         }),
@@ -26,7 +25,7 @@ export class CategoriesEffect {
 
   constructor(
     private actions$: Actions,
-    private bookService: BookService,
+    private service: DashboardService,
     // private snackBar: MatSnackBar
   ) { }
 

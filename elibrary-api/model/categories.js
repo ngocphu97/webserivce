@@ -25,8 +25,8 @@ function Categories() {
 	this.getCategoriess = (response) => {
     const categoriesQuery = 'select * from 	categories';
 		queryDB(connection, response, categoriesQuery, '');
-	};
-
+  };
+  
 	this.createCategories = (fieldData, response) => {
     const categoriesQuery = 'insert into categories set ?';
 		queryDB(connection, response, categoriesQuery, fieldData);

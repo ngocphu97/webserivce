@@ -1,8 +1,12 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { createSelector } from '@ngrx/store';
 
 import * as fromReducer from '../reducers';
+import { AdminState, selectAdminState } from 'src/app/admin/reducers';
 
-export const selectBookState = createFeatureSelector<fromReducer.State>('book');
+export const selectBookState = createSelector(
+  selectAdminState,
+  (state: AdminState) => state.books
+);
 
 export const selectBookList = createSelector(
 	selectBookState,

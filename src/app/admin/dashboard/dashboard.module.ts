@@ -6,6 +6,7 @@ import { CONTAINER_COMPONENTS } from './containers';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MatCardModule, MatButtonModule, MatIconModule, MatTableModule, MatMenuModule } from '@angular/material';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { MatCardModule, MatButtonModule, MatIconModule, MatTableModule, MatMenuM
     MatButtonModule,
     MatIconModule,
     MatTableModule,
-    MatMenuModule
+    MatMenuModule,
+    HttpClientModule,
   ],
   declarations: [
     CONTAINER_COMPONENTS

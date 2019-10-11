@@ -1,8 +1,17 @@
 import { Component, OnInit, NgZone, OnDestroy, ChangeDetectorRef, Input } from '@angular/core';
 
+import { Observable } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
+
+import { selectCategoriesList } from '../../store/categories.selector';
+import { getCategoriesList } from '../../store/categories.actions';
+import { Categories } from '../../models/categories.model';
+import { getBookByCategoryId, getBookList } from '../../../product/store/actions';
+import { selectBookList } from '../../../product/store/selector/book.selector';
 
 am4core.useTheme(am4themes_animated);
 
@@ -13,7 +22,7 @@ am4core.useTheme(am4themes_animated);
 })
 export class BooksTypeChartComponent implements OnInit, OnDestroy {
 
-  @Input() categories: any;
+  categories$: Observable<Array<Categories>>;
 
   chart: am4charts.XYChart;
   series: am4charts.ColumnSeries;
@@ -35,61 +44,34 @@ export class BooksTypeChartComponent implements OnInit, OnDestroy {
     { inventory: 10, name: 'Neon', amounts: 201797, cost: 9000 },
   ];
 
-  displayedColumns =
-    ['name', 'inventory', 'amounts', 'cost', 'star'];
+  displayedColumns = ['name', 'inventory', 'amounts', 'cost', 'star'];
 
   constructor(
     private zone: NgZone,
-    private cdRef: ChangeDetectorRef
-  ) { }
+    private cdRef: ChangeDetectorRef,
+    private store: Store<any>
+  ) {
+    this.store.dispatch(getCategoriesList());
+    this.categories$ = this.store.pipe(select(selectCategoriesList));
+
+    this.store.dispatch(getBookList());
+    this.store.pipe(select(selectBookList)).pipe().subscribe(x => console.log(x));
+  }
 
   ngOnInit() { }
 
   ngAfterViewInit() {
-
-
-    console.log('Log Message: BooksTypeChartComponent -> categories', this.categories);
-
     this.zone.runOutsideAngular(() => {
       let chart = am4core.create('chartdiv', am4charts.XYChart);
 
       chart.hiddenState.properties.opacity = 0;
 
       chart.paddingRight = 20;
-      chart.data = [
-        {
-          type: "Văn học",
-          amounts: 23745
-        },
-        {
-          type: "Kinh tế",
-          amounts: 26235
-        },
-        {
-          type: "Kỹ năng sống",
-          amounts: 23725
-        },
-        {
-          type: "Ngoại ngữ",
-          amounts: 20725
-        },
-        {
-          type: "Sách giáo khoa - tham khảo",
-          amounts: 24725
-        },
-        {
-          type: "Sách thiếu nhi",
-          amounts: 23555
-        },
-        {
-          type: "Sách mới",
-          amounts: 26725
-        },
-        {
-          type: "Sách bán chạy",
-          amounts: 27725
+      this.initChartData().subscribe((data: any) => {
+        if (data && data.length > 0) {
+          chart.data = data;
         }
-      ];
+      });
 
       let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
       categoryAxis.renderer.grid.template.location = 0;
@@ -143,18 +125,36 @@ export class BooksTypeChartComponent implements OnInit, OnDestroy {
     });
   }
 
+  initChartData(): Observable<any> {
+    return new Observable((observer) => {
+      this.categories$.pipe().subscribe((categories: any) => {
+        categories = categories.map(category => {
+          return {
+            type: category.name,
+            amounts: category.id,
+            id: category.id
+          }
+        })
+        observer.next(categories);
+      });
+    })
+  }
+
   onChartSelect(ev) {
     const targetData = ev.target.dataItem.dataContext;
     this.selected = true;
     this.selectedColor = ev.target.realFill.rgba;
     this.chossingCategory = targetData.type;
     this.choogingValue = targetData.amounts;
+    const categoryId = targetData.id;
+
+    this.store.dispatch(getBookByCategoryId({ categoryId: categoryId }));
+
     this.cdRef.detectChanges();
   }
 
   close() {
     this.selected = false;
   }
-
 
 }
