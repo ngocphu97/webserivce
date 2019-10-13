@@ -27,6 +27,7 @@ const authConfig: AuthConfiguration = {
     AppRoutingModule,
     CoreModule,
     AuthModule.forRoot(authConfig),
+    
   ],
   declarations: [
     AppComponent

@@ -1,15 +1,20 @@
 .action {
   display: flex;
+  margin: 1.5rem;
+  justify-content: space-between;
+  align-items: center
 }
 
 .filter-field {
   margin-left: 0.5rem;
   margin-top: 1rem;
-  width: 97%;
+  width: 600px;
 }
 
 .table {
   width: 100% !important;
+  overflow-x:auto;
+  overflow-y: hidden;
 
   td.mat-cell {
     padding: 24px;
@@ -83,4 +88,19 @@ th.mat-sort-header-sorted {
 
 .data-table {
   margin: 1.5rem;
+}
+
+
+.quantity-indicator {
+  display: inline-block;
+  vertical-align: middle;
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  margin-right: 8px;
+  background: green;
+}
+
+.danger {
+  background: red;
 }

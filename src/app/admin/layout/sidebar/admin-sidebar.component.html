@@ -12,19 +12,23 @@
 </mat-toolbar>
 
 <mat-nav-list>
-  <mat-list-item [routerLink]="['/admin']" routerLinkActive="active-link">
-    <a matLine routerLink="/admin">Overview</a>
+
+  <mat-list-item class="item" routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+    Overview
   </mat-list-item>
 
-  <mat-list-item [routerLink]="['/admin/users']" routerLinkActive="active-link">
+  <mat-list-item class="item" [routerLink]="['/admin/users']" routerLinkActive="active"
+    [routerLinkActiveOptions]="{exact: true}">
     Users
   </mat-list-item>
 
-  <mat-list-item [routerLink]="['/admin/books']" routerLinkActive="active-link">
+  <mat-list-item class="item" [routerLink]="['/admin/books']" routerLinkActive="active"
+    [routerLinkActiveOptions]="{exact: true}">
     Books
   </mat-list-item>
 
-  <mat-list-item [routerLink]="['/admin/account/settings']" routerLinkActive="active-link">
+  <mat-list-item class="item" [routerLink]="['/admin/account/settings']" routerLinkActive="active"
+    [routerLinkActiveOptions]="{exact: true}">
     Settings
   </mat-list-item>
 </mat-nav-list>

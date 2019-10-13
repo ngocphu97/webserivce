@@ -1,0 +1,25 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.item {
+  border-bottom-right-radius: 30px !important;
+  border-top-right-radius: 30px !important;
+}
+
+.active {
+  background: rgb(0, 90, 240) !important;
+  border-bottom-right-radius: 30px;
+  border-top-right-radius: 30px;
+
+  .item-text {
+    color: white !important;
+  }
+}
+
+:host::ng-deep {
+  .mat-list-item-ripple.mat-ripple {
+    border-bottom-right-radius: 30px !important;
+    border-top-right-radius: 30px !important;
+  }
+}

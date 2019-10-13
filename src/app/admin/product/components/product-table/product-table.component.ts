@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, SimpleChanges } from '@angular/core';
+import { Component, Input, ViewChild, SimpleChanges, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { SelectionModel } from '@angular/cdk/collections';
@@ -9,9 +9,10 @@ import { MatSort, MatPaginator, MatInput, MatTableDataSource } from '@angular/ma
   templateUrl: './product-table.component.html',
   styleUrls: ['./product-table.component.scss']
 })
-export class ProductTableComponent {
+export class ProductTableComponent implements OnChanges {
 
   @Input() books: Array<any>;
+  @Input() categories: Array<any>;
   @Input() pending: boolean;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -27,11 +28,10 @@ export class ProductTableComponent {
   booksFake: Array<any> = [];
 
   displayedColumns: string[] = [
-    'select', 'name', 'image', 'author', 'translator', 'language',
-    'retailPrice', 'cost', 'inventory', 'amount', 'action',
+    'id', 'image', 'name', 'category', 'cost', 'inventory', 'amount', 'action'
   ];
 
-  constructor(private router: Router) { 
+  constructor(private router: Router) {
     // this.generateFakeDB();
   }
 
@@ -52,21 +52,38 @@ export class ProductTableComponent {
         publishDate: new Date(),
         amount: 200 + i,
         image: 'https://cdn.shopify.com/s/files/1/0221/1146/products/Order_of_the_Phoenix_Paperback_large.png?v=1548842107',
-        description: "Description "+ 1,
+        description: "Description " + 1,
       }
       this.booksFake.push(x);
     }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.books) {
-      // this.books = this.books.map(book => {
-      //   return {
-      //     ...book,
-      //     image: this.convertImage(book.photo.data)
-      //   }
-      // })
-      this.dataSource = new MatTableDataSource(this.booksFake);
+    if (changes.books && changes.categories) {
+      this.categories = this.categories.map(cat => {
+        return {
+          ...cat,
+          category_id: cat.id
+        }
+      })
+
+      this.books = this.books.map(book => {
+        this.categories.filter(cat => {
+          if (cat.id === book.category_id) {
+            return book = {
+              ...book,
+              categoryName: cat.name
+            }
+          }
+        });
+
+        return {
+          ...book,
+          image: 'https://cdn.shopify.com/s/files/1/0221/1146/products/Order_of_the_Phoenix_Paperback_large.png?v=1548842107'
+        }
+      })
+
+      this.dataSource = new MatTableDataSource(this.books);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     }
@@ -79,7 +96,6 @@ export class ProductTableComponent {
 
     return `data:image/jpg;base64,${base64String}`;
   }
-
 
   applyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -95,36 +111,6 @@ export class ProductTableComponent {
 
   stopPropagation(event): void {
     event.stopPropagation()
-  }
-
-  isAllSelected(): boolean {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  masterToggle(): void {
-    if (this.isAllSelected()) {
-      this.clearSelection();
-    } else {
-      this.dataSource.data.forEach(row => {
-        this.interestList.push(row.name);
-        this.selection.select(row)
-      });
-    }
-  }
-
-  clearSelection(): void {
-    this.selection.clear();
-    this.interestList = [];
-  }
-
-  checkboxLabel(row?: any): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-    } else {
-      return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
-    }
   }
 
   onSelectBookDetail(bookId: string) {

@@ -13,7 +13,11 @@ const tryCall = ((request) => {
 
 router
   .get('/', (request, response) => {
-    tryCall(books.getBooks(request.query.categories, response));
+    if (request.query) {
+      tryCall(books.getBooks(request.query.categories, response));
+    } else {
+      tryCall(books.getBooks(request, response));
+    }
   })
 
   .get('/:id/', (request, response) => {

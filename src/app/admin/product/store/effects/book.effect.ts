@@ -17,7 +17,6 @@ export class BookEffect {
 		exhaustMap(() => {
 			return this.bookService.getBookList().pipe(
 				map((res: any) => {
-					console.log(res);
 					return bookActions.getBookListSuccess({ bookList: res })
 				}),
 				catchError(error => of(bookActions.getBookListFail({ error: error })))
