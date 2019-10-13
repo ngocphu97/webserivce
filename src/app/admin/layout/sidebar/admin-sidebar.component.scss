@@ -1,25 +1,39 @@
+$bottom-right-radius: 30px;
+$top-right-radius: 30px;
+
 .spacer {
   flex: 1 1 auto;
 }
 
 .item {
-  border-bottom-right-radius: 30px !important;
-  border-top-right-radius: 30px !important;
+  border-bottom-right-radius: $bottom-right-radius;
+  border-top-right-radius: $top-right-radius;
 }
 
 .active {
   background: rgb(0, 90, 240) !important;
-  border-bottom-right-radius: 30px;
-  border-top-right-radius: 30px;
+  border-bottom-right-radius: $bottom-right-radius;
+  border-top-right-radius: $top-right-radius;
 
   .item-text {
     color: white !important;
   }
 }
 
+.material-icons {
+  margin-right: 1rem;
+  font-size: 20px;
+}
+
 :host::ng-deep {
   .mat-list-item-ripple.mat-ripple {
-    border-bottom-right-radius: 30px !important;
-    border-top-right-radius: 30px !important;
+    border-bottom-right-radius: $bottom-right-radius;
+    border-top-right-radius: $top-right-radius;
+  }
+
+  .active {
+    .mat-list-item-content {
+      color: white !important;
+    }
   }
 }

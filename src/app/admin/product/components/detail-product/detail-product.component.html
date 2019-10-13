@@ -1,50 +1,86 @@
-<mat-card>
-	<mat-card-header>
-		<mat-card-title>
-			<h1>{{selectedBook.name}}</h1>
-		</mat-card-title>
-		<mat-card-subtitle>
-			<h2>{{selectedBook.author}}</h2>
-		</mat-card-subtitle>
+<mat-vertical-stepper [linear]="'false'" #stepper class="book-detail">
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup" class="basic-info-form">
+      <ng-template matStepLabel><strong>Thông tin chung</strong></ng-template>
 
-		<mat-card-actions>
-			<a mat-raised-button color="primary" routerLink="./edit-book">Edit</a>
-			<button mat-raised-button color="warn" (click)="openDialog()">Delete</button>
-		</mat-card-actions>
-	</mat-card-header>
+      <mat-form-field>
+        <input matInput placeholder="Tên sách" formControlName="bookName">
+      </mat-form-field>
 
-	<mat-card-content>
-		<div class="card-content">
-			<div class="book-cover">
-				<img mat-card-image class="book-cover-image" src="{{selectedBook.image}}" alt="Book cover">
-			</div>
+      <mat-form-field class="example-full-width">
+        <textarea formControlName="description" matInput placeholder="Mô tả"></textarea>
+      </mat-form-field>
 
-			<div class="book-detail">
-				<h4>Book description</h4>
-				<p>{{selectedBook.description}}</p>
+      <mat-form-field class="example-chip-list" *ngIf="categories.length > 0">
+        <mat-chip-list #chipList>
+          <mat-chip *ngFor="let cat of categories" [selectable]="selectable" [removable]="removable"
+            (removed)="remove(cat)">
+            {{cat}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="Thể loại" [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+      </mat-form-field>
 
-				<p class="border-bottom"><strong>Publish day</strong>: <span>{{selectedBook.publishDate}}</span></p>
+      <mat-form-field>
+        <input matInput placeholder="Nhà phân phối" formControlName="distributor">
+      </mat-form-field>
 
-				<p class="border-bottom"><strong>Amount</strong>: <span>{{selectedBook.amount}}</span></p>
+      <mat-form-field>
+        <input matInput placeholder="Ngôn ngữ" formControlName="language">
+      </mat-form-field>
 
-				<p class="border-bottom"><strong>Distributor</strong>: <span>{{selectedBook.distributor}}</span></p>
+      <mat-form-field>
+        <input matInput placeholder="Người dịch" formControlName="translator">
+      </mat-form-field>
 
-				<p class="border-bottom"><strong>Cost</strong>: <span>{{selectedBook.cost}}</span></p>
+      <mat-form-field>
+        <input matInput placeholder="Ngày phát hành" formControlName="publishDate">
+      </mat-form-field>
 
-				<p class="border-bottom"><strong>Inventory</strong>: <span>{{selectedBook.inventory}}</span></p>
+      <div>
+        <button mat-raised-button color="primary" matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
 
-				<p class="border-bottom"><strong>Retail price</strong>: <span>{{selectedBook.retailPrice}}</span></p>
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup" class="data-form">
+      <ng-template matStepLabel>Số liệu sách</ng-template>
 
-				<p class="border-bottom"><strong>Language</strong>: <span>{{selectedBook.language}}</span></p>
+      <mat-form-field>
+        <input matInput placeholder="Số lượng" formControlName="amount" required>
+      </mat-form-field>
 
-				<p class="border-bottom"><strong>Size</strong>: <span>{{selectedBook.size}}</span></p>
+      <mat-form-field>
+        <input matInput placeholder="Số lượng tồn" formControlName="inventory" required>
+      </mat-form-field>
 
-				<p class="border-bottom"><strong>Total page</strong>: <span>{{selectedBook.totalPage}}</span></p>
+      <mat-form-field>
+        <span matPrefix>đ &nbsp;</span>
+        <input matInput placeholder="Giá nhập" formControlName="cost" required>
+      </mat-form-field>
 
-				<p class="border-bottom"><strong>Translator</strong>: <span>{{selectedBook.translator}}</span></p>
+      <mat-form-field>
+        <span matPrefix>đ &nbsp;</span>
+        <input matInput placeholder="Giá bán" formControlName="retailPrice" required>
+      </mat-form-field>
 
-			</div>
-		</div>
-	</mat-card-content>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
 
-</mat-card>
+  <mat-step>
+    <ng-template matStepLabel>Hình ảnh</ng-template>
+    <img src="{{selectedBook.image}}" alt="">
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+    </div>
+  </mat-step>
+
+</mat-vertical-stepper>

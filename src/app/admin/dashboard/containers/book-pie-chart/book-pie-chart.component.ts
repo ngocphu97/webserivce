@@ -14,7 +14,6 @@ am4core.useTheme(am4themes_animated);
 export class BookPieChartComponent implements OnInit, OnDestroy {
 
   chart: am4charts.PieChart;
-  chart1: am4charts.PieChart;
 
   constructor(private zone: NgZone) { }
 
@@ -24,7 +23,6 @@ export class BookPieChartComponent implements OnInit, OnDestroy {
   ngAfterViewInit() {
     this.zone.runOutsideAngular(() => {
       this.chart = this.buildChart('piechart');
-      this.chart = this.buildChart('piechart1');
     });
   }
 
@@ -41,38 +39,32 @@ export class BookPieChartComponent implements OnInit, OnDestroy {
     chart.hiddenState.properties.opacity = 0;
 
     chart.paddingRight = 20;
-    chart.data = [{
-      "country": "Lithuania",
-      "litres": 501.9
-    }, {
-      "country": "Czechia",
-      "litres": 301.9
-    }, {
-      "country": "Ireland",
-      "litres": 201.1
-    }, {
-      "country": "Germany",
-      "litres": 165.8
-    }, {
-      "country": "Australia",
-      "litres": 139.9
-    }, {
-      "country": "Austria",
-      "litres": 128.3
-    }, {
-      "country": "UK",
-      "litres": 99
-    }, {
-      "country": "Belgium",
-      "litres": 60
-    }, {
-      "country": "The Netherlands",
-      "litres": 50
-    }];
+    chart.data = [
+      {
+        "bookName": "Lithuania",
+        "searchTime": 1000
+      },
+      {
+        "bookName": "Lithuania",
+        "searchTime": 1000
+      },
+      {
+        "bookName": "Lithuania",
+        "searchTime": 1000
+      },
+      {
+        "bookName": "Lithuania",
+        "searchTime": 1000
+      },
+      {
+        "bookName": "Lithuania",
+        "searchTime": 1000
+      }
+    ];
 
     let pieSeries = chart.series.push(new am4charts.PieSeries());
-    pieSeries.dataFields.value = "litres";
-    pieSeries.dataFields.category = "country";
+    pieSeries.dataFields.value = "searchTime";
+    pieSeries.dataFields.category = "bookName";
     pieSeries.slices.template.stroke = am4core.color("#fff");
     pieSeries.slices.template.strokeWidth = 2;
     pieSeries.slices.template.strokeOpacity = 1;

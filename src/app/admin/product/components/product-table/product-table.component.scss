@@ -13,19 +13,22 @@
 
 .table {
   width: 100% !important;
-  overflow-x:auto;
+  overflow-x: auto;
   overflow-y: hidden;
 
-  td.mat-cell {
-    padding: 24px;
+  .row {
+    cursor: pointer;
+    height: 106px;
+
+    &:hover {
+      background: #f2f2f2 !important;
+    }
+
+    &.selected {
+      background: #f2f2f2 !important;
+    }
   }
 
-  th.mat-header-cell {
-    padding: 24px;
-    font-weight: bolder;
-    font-size: 0.9rem;
-    white-space: pre-line;
-  }
 }
 
 .flag-wrapper {
@@ -39,13 +42,6 @@ th.mat-sort-header-sorted {
   color: black;
 }
 
-.row {
-  cursor: pointer;
-
-  &:hover {
-    background: #f2f2f2 !important;
-  }
-}
 
 .progress-message {
   text-align: center;
@@ -88,8 +84,26 @@ th.mat-sort-header-sorted {
 
 .data-table {
   margin: 1.5rem;
-}
+  display: flex;
+  justify-content: flex-start;
 
+  .no-book {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: rgba(0, 0, 0, .38);
+
+    .material-icons {
+      font-size: 100px;
+    }
+  }
+
+  .book-detail {
+    width: 100%;
+  }
+}
 
 .quantity-indicator {
   display: inline-block;
@@ -103,4 +117,8 @@ th.mat-sort-header-sorted {
 
 .danger {
   background: red;
+}
+
+.book-list {
+  width: 100%;
 }

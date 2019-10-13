@@ -24,6 +24,7 @@ export class ProductTableComponent implements OnChanges {
   selection = new SelectionModel<any>(true, []);
   dataSource: MatTableDataSource<any>;
   imageBlobUrl: any;
+  selectedBook: any;
 
   booksFake: Array<any> = [];
 
@@ -32,30 +33,6 @@ export class ProductTableComponent implements OnChanges {
   ];
 
   constructor(private router: Router) {
-    // this.generateFakeDB();
-  }
-
-  generateFakeDB() {
-    for (let i = 0; i < 10; i++) {
-      const x = {
-        id: i,
-        name: "Book " + i,
-        author: "Author " + i,
-        cost: 100 + i,
-        retailPrice: 100 + i,
-        inventory: 100 + i,
-        distributor: "Distributor " + i,
-        language: "Viêt Nam",
-        size: "14 * 14",
-        totalPage: i,
-        translator: "Transaltor " + i,
-        publishDate: new Date(),
-        amount: 200 + i,
-        image: 'https://cdn.shopify.com/s/files/1/0221/1146/products/Order_of_the_Phoenix_Paperback_large.png?v=1548842107',
-        description: "Description " + 1,
-      }
-      this.booksFake.push(x);
-    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -102,6 +79,9 @@ export class ProductTableComponent implements OnChanges {
   }
 
   selectRow(row) {
+    this.selectedBook = row;
+    this.selectedRowIndex = row.id;
+    
     this.selection.toggle(row);
     if (this.selection.isSelected(row)) {
       return this.interestList.push(row.name);

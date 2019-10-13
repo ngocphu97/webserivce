@@ -96,7 +96,7 @@ export class BooksTypeChartComponent implements OnDestroy {
       categoryAxis.renderer.grid.template.location = 0;
       categoryAxis.dataFields.category = "type";
       categoryAxis.renderer.minGridDistance = 40;
-      categoryAxis.fontSize = 11;
+      categoryAxis.fontSize = 13;
 
       let axisBreak = valueAxis.axisBreaks.create();
       axisBreak.startValue = 2100;

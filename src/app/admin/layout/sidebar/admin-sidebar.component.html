@@ -13,22 +13,23 @@
 
 <mat-nav-list>
 
-  <mat-list-item class="item" routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-    Overview
-  </mat-list-item>
+  <a mat-list-item class="item" routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+    <i class="material-icons">multiline_chart</i> Overview
+  </a>
 
-  <mat-list-item class="item" [routerLink]="['/admin/users']" routerLinkActive="active"
+  <a mat-list-item class="item" [routerLink]="['/admin/users']" routerLinkActive="active"
     [routerLinkActiveOptions]="{exact: true}">
-    Users
-  </mat-list-item>
+    <i class="material-icons">perm_identity</i> Users
+  </a>
 
-  <mat-list-item class="item" [routerLink]="['/admin/books']" routerLinkActive="active"
+  <a mat-list-item class="item" [routerLink]="['/admin/books']" routerLinkActive="active"
     [routerLinkActiveOptions]="{exact: true}">
-    Books
-  </mat-list-item>
+    <i class="material-icons">menu_book</i> Books
+  </a>
 
-  <mat-list-item class="item" [routerLink]="['/admin/account/settings']" routerLinkActive="active"
+  <a mat-list-item class="item" [routerLink]="['/admin/account/settings']" routerLinkActive="active"
     [routerLinkActiveOptions]="{exact: true}">
-    Settings
-  </mat-list-item>
+    <i class="material-icons">widgets</i> Settings
+  </a>
+
 </mat-nav-list>
