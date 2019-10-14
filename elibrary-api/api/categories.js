@@ -16,6 +16,10 @@ router
     tryCall(categories.getCategoriess(response));
   })
 
+  .get('/getCategoryForAmount', (_request, response) => {
+    tryCall(categories.getCategoryForAmount(response));
+  })
+
   .get('/:id/', (request, response) => {
     tryCall(categories.getCategoriesById(request.params, response));
   })

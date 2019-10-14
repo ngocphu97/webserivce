@@ -20,6 +20,18 @@ router
     tryCall(books.getBookById(request.params, response));
   })
 
+  .get('/mostsearch/:num_days', (request, response) => {
+    tryCall(books.getMostSearchForTimeLine(request.params, response));
+  })
+
+  .get('/getLocationFromSKU/:sku', (request, response) => {
+    tryCall(books.getLocationFromSKU(request.params, response));
+  })
+
+  .get('/getForCategories/:categoryId/', (request, response) => {
+    tryCall(books.getBookByCategory(request.params, response));
+  })
+
   .get('/photo/:bookId/', (request, response) => {
     tryCall(books.getBookCover(request.params, response));
   })

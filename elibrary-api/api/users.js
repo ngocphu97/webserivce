@@ -16,4 +16,8 @@ router
     tryCall(users.getUsers(response));
   })
 
+  .post('/login', (request, response) => {
+    tryCall(users.login(request.body, response));
+  })
+
 module.exports = router;

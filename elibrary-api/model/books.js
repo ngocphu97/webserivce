@@ -27,7 +27,7 @@ function Books() {
     if (query) {
       bookQuery = `select * from books where category_id = ${query}`;
     } else {
-      bookQuery = `select * from books`;
+      bookQuery = `SELECT sku, name, author, cost, retailPrice, cover.photo  FROM books LEFT JOIN cover ON books.id = cover.bookId `;
     }
     queryDB(connection, response, bookQuery, '');
   };
@@ -40,6 +40,25 @@ function Books() {
   this.getBookById = (reqeset, response) => {
     const bookQuery = 'select * from books where id = ?';
     queryDB(connection, response, bookQuery, reqeset.id);
+  };
+
+  this.getMostSearchForTimeLine = (reqeset, response) => {
+    const bookQuery = 'SELECT sku, name, date_search, COUNT(sku) AS NumberOfSearch FROM history_search GROUP BY sku HAVING date_search > DATE_SUB(CURRENT_DATE(), INTERVAL ? DAY) ORDER BY COUNT(sku) DESC LIMIT 5';
+    queryDB(connection, response, bookQuery, reqeset.num_days);
+  };
+
+  this.getLocationFromSKU = (reqeset, response) => {
+    const bookQuery = 'SELECT sku, books.name, bl.name, x, y '
+                      +'FROM bookshelf_location_entity be '
+                      +'LEFT JOIN books ON be.book_id = books.id '
+                      +'LEFT JOIN booshelf_location bl ON be.bookshelf_id = bl.id '
+                      +'WHERE books.sku=?;';
+    queryDB(connection, response, bookQuery, reqeset.sku);
+  };
+
+  this.getBookByCategory = (reqeset, response) => {
+    const bookQuery = 'SELECT sku, name, author, cost, retailPrice, amount, inventory FROM `books` WHERE category_id = ?';
+    queryDB(connection, response, bookQuery, reqeset.categoryId);
   };
 
   this.updateBook = (fieldData, response) => {
@@ -75,4 +94,4 @@ function Books() {
   }
 }
 
-module.exports = new Books();	
+module.exports = new Books();
