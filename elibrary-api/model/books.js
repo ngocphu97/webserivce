@@ -27,7 +27,7 @@ function Books() {
     if (query) {
       bookQuery = `select * from books where category_id = ${query}`;
     } else {
-      bookQuery = `SELECT sku, name, author, cost, retailPrice, cover.photo  FROM books LEFT JOIN cover ON books.id = cover.bookId `;
+      bookQuery = `SELECT sku, name, author, cost, retailPrice, amount, inventory, distributor, language, size, totalPage, translator, publishDate, description, cover.photo  FROM books LEFT JOIN cover ON books.id = cover.bookId`;
     }
     queryDB(connection, response, bookQuery, '');
   };
@@ -76,6 +76,7 @@ function Books() {
     if (!request.files || Object.keys(request.files).length === 0) {
       return res.status(400).send('No files were uploaded.');
     }
+    //console.log(request.body.bookId)
 
     let sampleFile = request.files.image;
 

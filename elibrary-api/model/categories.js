@@ -9,8 +9,6 @@ let queryDB = (connection, response, query, fieldData) => {
 				if (error) {
 					response.send(error);
 				} else {
-          console.log("vo day")
-          console.log(result)
 					connection.release();
 					response.send(result);
 				}
@@ -25,13 +23,12 @@ let queryDB = (connection, response, query, fieldData) => {
 function Categories() {
 
 	this.getCategoriess = (response) => {
-    console.log("vo")
     const categoriesQuery = 'select * from 	categories';
 		queryDB(connection, response, categoriesQuery, '');
   };
 
   this.getCategoryForAmount = (response) => {
-    const categoriesQuery = 'SELECT categories.name, SUM(books.amount) AS NumberOfBooks FROM categories JOIN books ON categories.id = books.category_id GROUP BY categories.name';
+    const categoriesQuery = 'SELECT categories.name, SUM(books.amount) AS NumberOfBooks FROM categories LEFT JOIN books ON categories.id = books.category_id GROUP BY categories.name';
 		queryDB(connection, response, categoriesQuery, '');
   };
 
