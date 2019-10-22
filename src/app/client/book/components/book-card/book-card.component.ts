@@ -20,7 +20,6 @@ export class BookCardComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes.book) {
       if (this.book.photo) {
-        console.log('Log Message: BookCardComponent -> ngOnChanges -> this.book', this.book);
 
         this.book = {
           ...this.book,

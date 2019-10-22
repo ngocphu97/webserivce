@@ -7,6 +7,7 @@ import { Book } from '../../models/book.model';
 export interface State extends EntityState<Book> {
   selectedBookId: string | null;
   topBooks: Array<Book> | null;
+  loading: boolean | false;
 }
 
 export function selectBookId(book: Book): string {
@@ -19,7 +20,8 @@ export const adapter: EntityAdapter<Book> = createEntityAdapter<Book>({
 
 export const initialState: State = adapter.getInitialState({
   selectedBookId: undefined,
-  topBooks:  undefined
+  topBooks:  undefined,
+  loading: undefined
 });
 
 export const bookReducer = createReducer(
@@ -28,7 +30,7 @@ export const bookReducer = createReducer(
   on(BookActions.getBookList, (state) => ({
     ...state,
     error: null,
-    pending: true
+    loading: true
   })),
 
   on(BookActions.getBookById, (state, { bookId }) => {
@@ -38,7 +40,11 @@ export const bookReducer = createReducer(
   on(BookActions.getBookByCategoryId, x),
 
   on(BookActions.getBookListSuccess, (state, { bookList }) => {
-    return adapter.addAll(bookList, state);
+    const newstate = {
+      ...state,
+      loading: false,
+    }
+    return adapter.addAll(bookList, newstate);
   }),
 
   on(BookActions.addBookSuccess, (state, { book }) => {
@@ -64,7 +70,6 @@ function x(state, { categoryId }) {
 
   console.log(state, categoryId);
 
-
   return {
     ...state,
     x: categoryId
@@ -77,6 +82,7 @@ export function reducer(state: State | undefined, action: Action) {
 
 export const getSelectedBookId = (state: State) => state.selectedBookId;
 export const getSelectedTopSearch = (state: State) => state.topBooks;
+export const getSelectedLoading = (state: State) => state.loading;
 
 const {
   selectIds,

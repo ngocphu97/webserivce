@@ -1,10 +1,10 @@
 .landing {
   height: 100%;
-  margin-top: -2px;
-  padding: 1rem 300px;
 }
 
 .toolbar {
+  background: url('~/assets/images/landing_background.svg') center top / cover no-repeat !important;
+  height: 100px;
 
   .logo {
     display: flex;
@@ -34,4 +34,9 @@
   .spacer {
     flex: 1 1 auto;
   }
+ 
+}
+
+.content {
+  padding: 1rem;
 }

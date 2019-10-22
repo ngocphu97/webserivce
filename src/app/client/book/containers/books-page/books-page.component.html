@@ -4,14 +4,13 @@
   </h1>
 
   <p>
-    <mat-form-field appearance="outline">
-      <mat-label>Category</mat-label>
-      <mat-select>
-        <mat-option *ngFor="let cat of categories" [value]="cat.value">
-          {{cat.viewValue}}
-        </mat-option>
-      </mat-select>
+    <mat-form-field class="search-field">
+      <mat-label>Books</mat-label>
+      <input matInput placeholder="Search book name ...." #searchInput>
+      <mat-icon class="search-field-icon" matSuffix 
+      [routerLink]="['search']" [queryParams]="{ keyword: searchInput.value }">search</mat-icon>
     </mat-form-field>
+
   </p>
 
 </div>

@@ -35,3 +35,8 @@ export const selectTopSearch = createSelector(
   selectBookState,
   fromReducer.getSelectedTopSearch
 )
+
+export const selectLoading = createSelector(
+  selectBookState,
+  fromReducer.getSelectedLoading
+)

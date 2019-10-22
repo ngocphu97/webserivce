@@ -1,1 +1,31 @@
-<p>search-page works!</p>
+<div class="header">
+  <h1>
+    SEARCH
+  </h1>
+  <p>
+    <mat-form-field class="search-field">
+      <mat-label>Books</mat-label>
+      <input matInput placeholder="Search book name ...." #searchInput>
+      <mat-icon class="search-field-icon" matSuffix (click)="onSearch(searchInput.value)">search</mat-icon>
+    </mat-form-field>
+  </p>
+</div>
+
+
+
+<div class="loading" *ngIf="(loading$ | async)">
+  <mat-spinner></mat-spinner>
+  <p>Loading books ...</p>
+</div>
+
+<div class="loading" *ngIf="!(loading$ | async) && filterdBook.length === 0">
+  <p>No book match your search ...</p>
+</div>
+
+<div *ngIf="!(loading$ | async) && filterdBook.length > 0">
+  <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
+  <div class="card-container">
+    <app-book-card *ngFor="let book of filterdBook | paginate: { itemsPerPage: 9, currentPage: p }" class="card"
+      [book]="book"></app-book-card>
+  </div>
+</div>

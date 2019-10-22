@@ -1,3 +1,5 @@
+$blue: #28baba;
+
 .landing {
   height: 100%;
   margin-top: -2px;
@@ -11,12 +13,12 @@
     .title {
       margin-top: 0;
       font-size: 55px;
-      color: #ffffff;
+      color: $blue;
     }
 
     .intro {
       font-size: 45px;
-      color: #ffffff;
+      color: $blue;
       margin: 0;
     }
 

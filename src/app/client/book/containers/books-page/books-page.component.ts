@@ -1,36 +1,23 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable} from 'rxjs';
 import { selectBookList } from 'src/app/admin/product/store/selector';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-books-page',
   templateUrl: './books-page.component.html',
-  styleUrls: ['./books-page.component.css'],
+  styleUrls: ['./books-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BooksPageComponent implements OnInit {
+export class BooksPageComponent {
 
-  x = [1, 2, 3, 5, 6, 7, 8, 9, 0, 0, 1, 1];
   p: number = 1;
-  categories = [
-    { value: 'steak-0', viewValue: 'Steak' },
-    { value: 'pizza-1', viewValue: 'Pizza' },
-    { value: 'tacos-2', viewValue: 'Tacos' },
-    { value: 'tacos-2', viewValue: 'Tacos' },
-    { value: 'tacos-2', viewValue: 'Tacos' },
-    { value: 'tacos-2', viewValue: 'Tacos' }
-  ];
 
   books$: Observable<any>;
-  books: any;
 
-  constructor(private store: Store<any>) {
-
+  constructor(private store: Store<any>, private router: Router) {
     this.books$ = this.store.pipe(select(selectBookList));
-  }
-
-  ngOnInit() {
   }
 
 }
