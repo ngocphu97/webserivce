@@ -30,3 +30,8 @@ export const selectCurrentBook = createSelector(
 		return bookEntities[bookId]
 	}
 );
+
+export const selectTopSearch = createSelector(
+  selectBookState,
+  fromReducer.getSelectedTopSearch
+)

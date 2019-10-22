@@ -1,0 +1,66 @@
+.landing {
+  height: 100%;
+  margin-top: -2px;
+  background: url('~/assets/images/landing_background.svg') center top / cover no-repeat;
+  padding: 1rem 300px;
+
+  .content {
+    width: 50%;
+    float: left;
+
+    .title {
+      margin-top: 0;
+      font-size: 55px;
+      color: #ffffff;
+    }
+
+    .intro {
+      font-size: 45px;
+      color: #ffffff;
+      margin: 0;
+    }
+
+    .search-book {
+      margin: 4rem 0;
+    }
+
+
+  }
+
+  .intro-img {
+    width: 50%;
+    float: right;
+
+    img {
+      height: 745px;
+    }
+  }
+
+  .toolbar {
+
+    background: transparent !important;
+
+    .logo {
+      display: flex;
+      align-items: center;
+      color: #fff;
+      font-size: x-large;
+
+      .material-icons {
+        margin-right: 5px;
+      }
+    }
+
+    .navigate {
+      .link {
+        text-decoration: none;
+        color: #ffffff;
+        margin-right: 1rem;
+      }
+    }
+
+    .spacer {
+      flex: 1 1 auto;
+    }
+  }
+}

@@ -14,14 +14,14 @@
 
 			<mat-card-actions>
 				<button mat-raised-button color="primary" type="submit">Save</button>
-				<button mat-raised-button color="warn" (click)="openDialog()">Delete</button>
+				<button mat-raised-button color="warn">Delete</button>
 			</mat-card-actions>
 		</mat-card-header>
 
 		<mat-card-content *ngIf="selectedBook">
 			<div class="card-content">
 				<div class="book-cover">
-					<img mat-card-image class="book-cover-image" src="{{selectedBook.image}}" alt="Book cover">
+					<img mat-card-image class="book-cover-image" src="{{selectedBook.photo}}" alt="Book cover">
 				</div>
 
 				<div class="book-detail">

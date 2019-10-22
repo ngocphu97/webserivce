@@ -17,5 +17,9 @@ export class DashboardService {
   getBookByCategory(categoryId: number): Observable<any>{
     return this.http.get(`${this.baseUrl}/books?category=${categoryId}`);
   }
+  
+  getTopSearchByTime(time: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/books/mostsearch/${time}`);
+  } 
 
 }

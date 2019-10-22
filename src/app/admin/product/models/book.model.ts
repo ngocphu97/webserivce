@@ -1,5 +1,6 @@
 export interface Book {
-	id: number;
+  id: number;
+  sku: string;
 	name: string;
 	author: string;
 	cost: number; // giá gốc
@@ -14,11 +15,12 @@ export interface Book {
 	reviews?: string;
 	amount: number;
 	description: string;
-	image?: string;
+	photo?: string;
 }
 
 export interface AddBook {
-	name: string;
+  name: string;
+  sku: string;
 	author: string;
 	cost: number; // giá gốc
 	retailPrice: number; // giá bán lẻ

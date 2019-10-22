@@ -1,0 +1,32 @@
+<div class="header">
+  <h1>
+    WELCOME TO E LIBRARY
+  </h1>
+
+  <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Category</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let cat of categories" [value]="cat.value">
+          {{cat.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </p>
+
+</div>
+
+
+<div class="loading" *ngIf="(books$ | async).length === 0">
+  <mat-spinner></mat-spinner>
+  <p>Loading books ...</p>
+</div>
+
+
+<div *ngIf="(books$ | async).length > 0">
+  <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
+  <div class="card-container">
+    <app-book-card *ngFor="let book of (books$ | async) | paginate: { itemsPerPage: 9, currentPage: p }" class="card"
+      [book]="book"></app-book-card>
+  </div>
+</div>

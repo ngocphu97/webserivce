@@ -1,0 +1,21 @@
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title>{{book.name}}</mat-card-title>
+    <mat-card-subtitle>{{book.author}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content class="book-content">
+    <p class="book-image">
+      <img src="{{book.image}}" alt="Photo of a Shiba Inu">
+    </p>
+    <p class="book-description">
+      {{book.description}}
+    </p>
+  </mat-card-content>
+
+    <mat-card-actions class="book-actions">
+      <button mat-raised-button color='primary' class="action-btn" (click)="openDialog()">
+        See more <mat-icon class="btn-icon">check</mat-icon>
+      </button>
+    </mat-card-actions>
+
+</mat-card>

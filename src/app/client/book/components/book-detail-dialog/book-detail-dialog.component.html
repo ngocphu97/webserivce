@@ -1,0 +1,47 @@
+<h1 mat-dialog-title>{{data.name}}</h1>
+<div mat-dialog-content>
+
+  <mat-tab-group>
+    <mat-tab label="Book detail">
+      <p class="book-image">
+        <img src="{{data.image}}" alt="Photo of a Shiba Inu">
+      </p>
+      <p class="book-description">
+        {{data.description}}
+      </p>
+    </mat-tab>
+    <mat-tab label="Location">
+
+      <div class="book-location">
+
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 0 1200 1400">
+          <image width="1200" height="1400" xlink:href="assets/bookstoremap.png"></image>
+
+          <svg width="60" height="60" fill="red" [attr.x]="data.bookLocation.x" [attr.y]="data.bookLocation.y" viewBox="0 0 24 24">
+            <path
+              d="M12 2c3.86 0 7 3.14 7 7 0 5.25-7 13-7 13S5 14.25 5 9c0-3.86 3.14-7 7-7zm-1.53 12L17 7.41 15.6 6l-5.13 5.18L8.4 9.09 7 10.5l3.47 3.5z" />
+            <path fill="none" d="M0 0h24v24H0V0z" />
+          </svg>
+
+          <!-- <a>
+            <circle cx="600" cy="50" r="20" opacity="5" stroke="black" stroke-width="3" fill="red" />
+          </a> -->
+        </svg>
+
+        <!-- <mat-icon class="book-pin" color='warn'>where_to_vote</mat-icon> -->
+        <!-- <img class="book-map" src="assets/bookstoremap.png" alt=""> -->
+      </div>
+
+
+
+    </mat-tab>
+  </mat-tab-group>
+
+
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color='primary' (click)="onNoClick()">
+    OK <mat-icon class="btn-icon">check</mat-icon>
+  </button>
+</div>

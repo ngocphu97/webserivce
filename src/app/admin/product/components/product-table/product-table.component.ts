@@ -56,7 +56,7 @@ export class ProductTableComponent implements OnChanges {
 
         return {
           ...book,
-          image: 'https://cdn.shopify.com/s/files/1/0221/1146/products/Order_of_the_Phoenix_Paperback_large.png?v=1548842107'
+          image: book.photo ? this.convertImage(book.photo.data) : ''
         }
       })
 

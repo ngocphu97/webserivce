@@ -6,7 +6,7 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'admin'
+    redirectTo: 'client'
   },
   {
     path: 'admin',
@@ -14,9 +14,13 @@ const routes: Routes = [
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   },
   {
-    path: 'explore',
-    loadChildren: './explore/explore.module#ExploreModule'
+    path: 'client',
+    loadChildren: () => import('./client/client.module').then(m => m.ClientModule)
   },
+  // {
+  //   path: 'explore',
+  //   loadChildren: './explore/explore.module#ExploreModule'
+  // },
 ];
 
 @NgModule({

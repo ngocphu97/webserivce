@@ -22,12 +22,14 @@ let queryDB = (connection, response, query, fieldData) => {
 
 function Books() {
 
-  this.getBooks = (query, response) => {
+  this.getBooks = (request, response) => {
     let bookQuery = '';
-    if (query) {
-      bookQuery = `select * from books where category_id = ${query}`;
+    if (request && request.query.cover) {
+      bookQuery = `select * from books`;
     } else {
-      bookQuery = `SELECT sku, name, author, cost, retailPrice, cover.photo  FROM books LEFT JOIN cover ON books.id = cover.bookId `;
+      // bookQuery = `SELECT sku, name, author, category_id, distributor, language, publishDate, cost, retailPrice, cover.photo FROM books LEFT JOIN cover ON books.id = cover.bookId `;
+
+      bookQuery = `SELECT *, cover.photo FROM books LEFT JOIN cover ON books.id = cover.bookId`;
     }
     queryDB(connection, response, bookQuery, '');
   };

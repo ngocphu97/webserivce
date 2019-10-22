@@ -1,0 +1,37 @@
+.landing {
+  height: 100%;
+  margin-top: -2px;
+  padding: 1rem 300px;
+}
+
+.toolbar {
+
+  .logo {
+    display: flex;
+    align-items: center;
+    font-size: x-large;
+
+    .material-icons {
+      margin-right: 5px;
+    }
+  }
+
+  .navigate {
+    display: flex;
+    align-items: center;
+
+    .search {
+      height: 64px;
+      width: 450px;
+    }
+
+    .link {
+      text-decoration: none;
+      margin-right: 1rem;
+    }
+  }
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+}

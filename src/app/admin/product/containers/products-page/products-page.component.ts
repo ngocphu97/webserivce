@@ -5,9 +5,8 @@ import { Observable } from 'rxjs';
 import { State } from '../../store/reducers/book.reducer';
 import { getBookList } from '../../store/actions';
 import * as fromBooksSelector from '../../store/selector';
-import * as fromCategoriesSelector from '../../../dashboard/store/categories.selector';
-import { BookService } from '../../service';
-import { getCategoriesList } from 'src/app/admin/dashboard/store/categories.actions';
+import * as fromCategoriesSelector from '../../../dashboard/store/category/category.selector';
+import { getCategoriesList } from 'src/app/admin/dashboard/store/category/category.actions';
 
 @Component({
   selector: 'app-products-page',
@@ -21,8 +20,7 @@ export class ProductsPageComponent {
   pending$: Observable<boolean>;
 
   constructor(
-    private store: Store<State>,
-    private service: BookService
+    private store: Store<State>
   ) {
     this.store.dispatch(getBookList());
     this.books$ = this.store.pipe(select(fromBooksSelector.selectBookList));

@@ -6,12 +6,20 @@ import { Book } from '../../models/book.model';
 
 export interface State extends EntityState<Book> {
   selectedBookId: string | null;
+  topBooks: Array<Book> | null;
 }
 
-export const adapter: EntityAdapter<Book> = createEntityAdapter<Book>();
+export function selectBookId(book: Book): string {
+  return book.sku;
+}
+
+export const adapter: EntityAdapter<Book> = createEntityAdapter<Book>({
+  selectId: selectBookId
+});
 
 export const initialState: State = adapter.getInitialState({
-  selectedBookId: undefined
+  selectedBookId: undefined,
+  topBooks:  undefined
 });
 
 export const bookReducer = createReducer(
@@ -41,6 +49,15 @@ export const bookReducer = createReducer(
     return adapter.removeOne(bookId, state);
   }),
 
+  on(BookActions.getTopSearchBooksByTimeSuccess, (state, { topBooks }) => {
+    return {
+      ...state,
+      topBooks: topBooks
+    }
+  }),
+
+  
+
 );
 
 function x(state, { categoryId }) {
@@ -59,6 +76,7 @@ export function reducer(state: State | undefined, action: Action) {
 }
 
 export const getSelectedBookId = (state: State) => state.selectedBookId;
+export const getSelectedTopSearch = (state: State) => state.topBooks;
 
 const {
   selectIds,

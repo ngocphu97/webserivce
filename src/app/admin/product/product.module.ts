@@ -83,6 +83,8 @@ const MAT_MODULES = [
   ],
   entryComponents: [
     DialogComponent
-  ]
+  ],
+  providers: [],
+
 })
 export class ProductModule { }

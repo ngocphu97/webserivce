@@ -15,6 +15,14 @@ export class BookService {
     return this.http.get(`${this.baseUrl}/books`);
   }
 
+  getBookTopSearch(numTime: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/books/mostsearch/${numTime}`);
+  }
+
+  getBookListWithCover(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/books?cover=1`);
+  }
+
   addBook(book: AddBook): Observable<any> {
     console.log(book);
     return this.http.post(`${this.baseUrl}/books`, book);

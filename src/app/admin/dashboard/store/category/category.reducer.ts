@@ -1,8 +1,8 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
-import * as CategoriesActions from './categories.actions';
-import { Categories } from '../models/categories.model';
+import * as CategoriesActions from './category.actions';
+import { Categories } from '../../models/categories.model';
 
 export interface State extends EntityState<Categories> {
   selectedCategoriesId: number | null;

@@ -93,6 +93,21 @@ export const deleteBookError = createAction(
 	props<{ error: any }>()
 );
 
+export const getTopSearchBooksByTime = createAction(
+  '[Book] Get top search book',
+  props<{ time: number }>()
+);
+
+export const getTopSearchBooksByTimeSuccess = createAction(
+  '[Book] Get top search book success',
+  props<{ topBooks: Array<Book> }>()
+);
+
+export const getTopSearchBooksByTimeFail = createAction(
+  '[Book] Get top search book fail',
+  props<{ error: any }>()
+);
+
 
 export enum ExploreActionTypes {
 	GET_BOOK_LIST = '[Book] Get Book List',

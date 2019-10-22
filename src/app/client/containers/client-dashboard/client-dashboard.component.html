@@ -1,0 +1,38 @@
+<!-- <div>
+  <a routerLink="./search" routerLinkActive="router-link-active">search</a>
+  <a routerLink="./detail/123" routerLinkActive="router-link-active">detail</a>
+  <a routerLink="./location/123" routerLinkActive="router-link-active">location</a>
+</div> -->
+
+<div class="landing">
+
+  <mat-toolbar class="toolbar">
+    <mat-toolbar-row>
+      <span class="logo">
+        <i class="material-icons">style</i> E Library
+      </span>
+      <span class="spacer"></span>
+      <div class="navigate">
+        <a mat-icon-button color="primary" class="link" routerLink="./books">
+          <mat-icon>library_books</mat-icon>
+        </a>
+        <button mat-icon-button color="primary">
+          <mat-icon>vpn_key</mat-icon>
+        </button>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div class="content">
+    <h1 class="title">Wellcome to E Library</h1>
+    <p class="intro">Read a Book for </p>
+    <p class="intro">Open your mind !</p>
+
+    <div class="search-book">
+      <app-search></app-search>
+    </div>
+  </div>
+  <p class="intro-img">
+    <img src="https://likealyzer.com/static/home/landing_graphic.svg?37th8-b" alt="">
+  </p>
+</div>

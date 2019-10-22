@@ -1,8 +1,14 @@
-import { Component, OnInit, NgZone, OnDestroy } from '@angular/core';
+import { Component, NgZone, OnDestroy } from '@angular/core';
+
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
+
+import { selectTopSearch } from 'src/app/admin/product/store/selector';
+import { getTopSearchBooksByTime } from 'src/app/admin/product/store/actions';
 
 am4core.useTheme(am4themes_animated);
 
@@ -11,13 +17,14 @@ am4core.useTheme(am4themes_animated);
   templateUrl: './book-pie-chart.component.html',
   styleUrls: ['./book-pie-chart.component.css']
 })
-export class BookPieChartComponent implements OnInit, OnDestroy {
+export class BookPieChartComponent implements OnDestroy {
 
   chart: am4charts.PieChart;
+  topBooks$: Observable<any>;
 
-  constructor(private zone: NgZone) { }
-
-  ngOnInit() {
+  constructor(private zone: NgZone, private store: Store<any>) {
+    this.store.dispatch(getTopSearchBooksByTime({ time: 30 }));
+    this.topBooks$ = this.store.pipe(select(selectTopSearch));
   }
 
   ngAfterViewInit() {
@@ -39,29 +46,18 @@ export class BookPieChartComponent implements OnInit, OnDestroy {
     chart.hiddenState.properties.opacity = 0;
 
     chart.paddingRight = 20;
-    chart.data = [
-      {
-        "bookName": "Lithuania",
-        "searchTime": 1000
-      },
-      {
-        "bookName": "Lithuania",
-        "searchTime": 1000
-      },
-      {
-        "bookName": "Lithuania",
-        "searchTime": 1000
-      },
-      {
-        "bookName": "Lithuania",
-        "searchTime": 1000
-      },
-      {
-        "bookName": "Lithuania",
-        "searchTime": 1000
-      }
-    ];
 
+    this.topBooks$.pipe().subscribe(books => {
+      if(books) {
+        chart.data = books.map(book => {
+          return {
+            bookName: book.name,
+            searchTime: book.NumberOfSearch
+          }
+        });
+      }
+    })
+    
     let pieSeries = chart.series.push(new am4charts.PieSeries());
     pieSeries.dataFields.value = "searchTime";
     pieSeries.dataFields.category = "bookName";

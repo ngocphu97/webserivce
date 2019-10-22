@@ -7,12 +7,12 @@ import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 
-import { selectCategoriesList } from '../../store/categories.selector';
-import { getCategoriesList } from '../../store/categories.actions';
 import { Categories } from '../../models/categories.model';
 import { getBookList } from '../../../product/store/actions';
-import { selectBookList } from '../../../product/store/selector/book.selector';
 import { Book } from 'src/app/admin/product/models';
+import { getCategoriesList } from '../../store/category/category.actions';
+import { selectCategoriesList } from '../../store/category/category.selector';
+import * as fromBooksSelector from '../../../product/store/selector';
 
 am4core.useTheme(am4themes_animated);
 
@@ -35,6 +35,7 @@ export class BooksTypeChartComponent implements OnDestroy {
   selectedColor: string;
 
   dataSource = [];
+  bookData = [];
   displayedColumns = ['name', 'inventory', 'amounts', 'cost', 'star'];
 
   constructor(
@@ -42,19 +43,28 @@ export class BooksTypeChartComponent implements OnDestroy {
     private cdRef: ChangeDetectorRef,
     private store: Store<any>
   ) {
+    this.store.dispatch(getBookList());
+    this.books$ = this.store.pipe(select(fromBooksSelector.selectBookList));
+
+    this.books$.pipe().subscribe((books: any) => {
+      if (books && books.length > 0) {
+        this.bookData = books.map((book: any) => {
+          return {
+            category_id: book.category_id,
+            amount: book.amount
+          }
+        })
+      }
+    });
+
     this.store.dispatch(getCategoriesList());
     this.categories$ = this.store.pipe(select(selectCategoriesList));
-
-    this.store.dispatch(getBookList());
-    this.books$ = this.store.pipe(select(selectBookList));
   }
 
   ngAfterViewInit() {
     this.zone.runOutsideAngular(() => {
 
       let chart = am4core.create('chartdiv', am4charts.XYChart);
-      let bookData = [];
-
       chart.hiddenState.properties.opacity = 0;
       chart.paddingRight = 20;
 
@@ -63,20 +73,11 @@ export class BooksTypeChartComponent implements OnDestroy {
       valueAxis.strictMinMax = true;
       valueAxis.renderer.minGridDistance = 30;
 
-      this.books$.pipe().subscribe((books: any) => {
-        bookData = books.map((book: any) => {
-          return {
-            category_id: book.category_id,
-            amount: book.amount
-          }
-        })
-      });
-
       this.initChartData().subscribe((categories: any) => {
         if (categories && categories.length > 0) {
           chart.data = categories.map((cat: any) => {
             let sum = 0;
-            bookData
+            this.bookData
               .filter(book => book.category_id === cat.id)
               .forEach(book => {
                 sum = sum + book.amount
@@ -87,7 +88,6 @@ export class BooksTypeChartComponent implements OnDestroy {
               amounts: sum
             }
           });
-
           valueAxis.max = Math.max(...chart.data.map(x => x.amounts)) + 50;
         }
       });
@@ -134,6 +134,8 @@ export class BooksTypeChartComponent implements OnDestroy {
         this.chart.dispose();
       }
     });
+    
+
   }
 
   initChartData(): Observable<any> {
@@ -142,7 +144,7 @@ export class BooksTypeChartComponent implements OnDestroy {
         categories = categories.map(category => {
           return {
             type: category.name,
-            amounts: category.id,
+            amounts: 0,
             id: category.id
           }
         })
@@ -167,6 +169,7 @@ export class BooksTypeChartComponent implements OnDestroy {
         this.dataSource = books
           .filter(book => book.category_id === id)
           .map(book => {
+            console.log(book);
             return {
               inventory: book.inventory,
               name: book.name,

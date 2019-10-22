@@ -9,8 +9,6 @@ let queryDB = (connection, response, query, fieldData) => {
 				if (error) {
 					response.send(error);
 				} else {
-          console.log("vo day")
-          console.log(result)
 					connection.release();
 					response.send(result);
 				}
@@ -25,7 +23,6 @@ let queryDB = (connection, response, query, fieldData) => {
 function Categories() {
 
 	this.getCategoriess = (response) => {
-    console.log("vo")
     const categoriesQuery = 'select * from 	categories';
 		queryDB(connection, response, categoriesQuery, '');
   };

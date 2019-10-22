@@ -1,7 +1,7 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { createSelector } from '@ngrx/store';
 
-import * as fromReducer from './categories.reducer';
-import { selectAdminState, AdminState } from '../../reducers';
+import * as fromReducer from './category.reducer';
+import { selectAdminState, AdminState } from '../../../reducers';
 
 export const selectCategoriesState = createSelector(
   selectAdminState,

@@ -4,8 +4,9 @@ import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import {  catchError, exhaustMap, map } from 'rxjs/operators';
 
-import * as fromActions from './categories.actions'
-import { DashboardService } from '../services/dashboard.service';
+import * as fromActions from './category.actions'
+import { DashboardService } from '../../services/dashboard.service';
+
 // import { MatSnackBar } from '@angular/material';
 
 @Injectable()
