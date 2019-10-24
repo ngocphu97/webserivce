@@ -6,10 +6,7 @@ import { BooksResolve } from './service/book.resolve';
 const routes: Routes = [
   {
     path: '',
-    component: fromContainers.ProductsPageComponent,
-    resolve: {
-      booksResolve: BooksResolve
-    }  
+    component: fromContainers.ProductsPageComponent
   },
   {
     path: 'add-book',

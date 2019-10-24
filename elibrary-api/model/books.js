@@ -50,13 +50,7 @@ function Books() {
     if (request && request.query.cover) {
       bookQuery = `select * from books`;
     } else {
-<<<<<<< HEAD
-      // bookQuery = `SELECT sku, name, author, category_id, distributor, language, publishDate, cost, retailPrice, cover.photo FROM books LEFT JOIN cover ON books.id = cover.bookId `;
-
-      bookQuery = `SELECT *, cover.photo FROM books LEFT JOIN cover ON books.id = cover.bookId`;
-=======
       bookQuery = `SELECT sku, name, author, cost, retailPrice, amount, inventory, distributor, language, size, totalPage, translator, publishDate, description, cover.photo  FROM books LEFT JOIN cover ON books.id = cover.bookId`;
->>>>>>> longdt
     }
     queryDB(connection, response, bookQuery, '');
   };
@@ -130,6 +124,8 @@ function Books() {
       bookId: 1,
       photo: sampleFile.data
     }
+
+    // upload book to google fire base
 
     const bookQuery = 'insert into cover set ?';
     queryDB(connection, response, bookQuery, fieldData);
