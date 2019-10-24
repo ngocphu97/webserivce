@@ -28,7 +28,7 @@ function Categories() {
   };
 
   this.getCategoryForAmount = (response) => {
-    const categoriesQuery = 'SELECT categories.name, SUM(books.amount) AS NumberOfBooks FROM categories JOIN books ON categories.id = books.category_id GROUP BY categories.name';
+    const categoriesQuery = 'SELECT categories.name, SUM(books.amount) AS NumberOfBooks FROM categories LEFT JOIN books ON categories.id = books.category_id GROUP BY categories.name';
 		queryDB(connection, response, categoriesQuery, '');
   };
 

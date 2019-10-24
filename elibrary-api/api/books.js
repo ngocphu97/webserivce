@@ -20,6 +20,11 @@ router
     }
   })
 
+  //http://localhost:3000/books/search?searchKey=Nhung&page=2
+  .get('/search', (request, response) => {
+    tryCall(books.searchBooks(request.query, response));
+  })
+
   .get('/:id/', (request, response) => {
     tryCall(books.getBookById(request.params, response));
   })
@@ -34,6 +39,10 @@ router
 
   .get('/getForCategories/:categoryId/', (request, response) => {
     tryCall(books.getBookByCategory(request.params, response));
+  })
+
+  .get('/getRelateBook/:sku', (request, response) => {
+    tryCall(books.getRelateBook(request.params, response));
   })
 
   .get('/photo/:bookId/', (request, response) => {
