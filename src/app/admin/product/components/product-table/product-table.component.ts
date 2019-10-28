@@ -14,6 +14,7 @@ export class ProductTableComponent implements OnChanges {
   @Input() books: Array<any>;
   @Input() categories: Array<any>;
   @Input() pending: boolean;
+  @Input() filter: string = '';
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -32,8 +33,7 @@ export class ProductTableComponent implements OnChanges {
     'id', 'image', 'name', 'category', 'cost', 'inventory', 'amount', 'action'
   ];
 
-  constructor(private router: Router) {
-  }
+  constructor(private router: Router) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.books && changes.categories) {
@@ -63,6 +63,10 @@ export class ProductTableComponent implements OnChanges {
       this.dataSource = new MatTableDataSource(this.books);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
+    }
+
+    if (changes.filter) {
+      this.dataSource.filter = this.filter.trim().toLowerCase();
     }
   }
 

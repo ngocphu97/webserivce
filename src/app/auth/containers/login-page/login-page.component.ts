@@ -16,9 +16,7 @@ export class LoginPageComponent implements OnDestroy {
   pending$ = this.store.pipe(select(LoginPageSelectors.selectLoginPagePending));
   error$ = this.store.pipe(select(LoginPageSelectors.selectLoginPageError));
 
-  constructor(
-    private store: Store<AuthState>
-  ) { }
+  constructor(private store: Store<AuthState>) { }
 
   onLogin(credential: Credential) {
     this.store.dispatch(LoginPageActions.login({ credential }));

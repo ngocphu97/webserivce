@@ -9,6 +9,11 @@ const routes: Routes = [
     children: [
       {
         path: '',
+        pathMatch: 'full',
+        redirectTo: 'books'
+      },
+      {
+        path: 'overview',
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
         data: { animation: 'open' }
       },

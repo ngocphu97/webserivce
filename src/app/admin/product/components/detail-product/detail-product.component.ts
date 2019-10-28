@@ -32,7 +32,7 @@ export class DetailProductComponent implements OnChanges {
 
   constructor(
     public dialog: MatDialog,
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
   ) {
     this.firstFormGroup = this._formBuilder.group({
       bookName: [''],

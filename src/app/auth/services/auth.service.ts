@@ -11,14 +11,6 @@ export class AuthService {
     @Inject(AUTH_CONFIGURATION) private config: AuthConfiguration
   ) { }
 
-  // public login(credential: Credential): Observable<any> {
-  //   return this.http.post(this.config.loginApiURL, credential);
-  // }
-
-  /**
-   * 
-   * Login fucntion is mock login with fake data from mock json server
-   */
   public login(): Observable<any> {
     return this.http.get(this.config.loginApiURL);
   }

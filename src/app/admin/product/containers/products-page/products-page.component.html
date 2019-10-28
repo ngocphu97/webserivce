@@ -1,13 +1,39 @@
-<ng-container *ngIf="(books$ | async) && (books$ | async).length === 0">
-	<div class="lonely-here">
-		<p>No book around here ...</p>
-	</div>
+<div class="action">
+  <h1> Book management </h1>
+
+  <mat-form-field class="filter-field" appearance="outline">
+    <mat-label>Search book</mat-label>
+    <input matInput (keyup)="applyFilter($event)">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <span>
+    <button mat-mini-fab color="primary" (click)="openCreateDialog()">
+      <i class="material-icons">add</i>
+    </button>
+  </span>
+
+</div>
+
+<ng-container *ngIf="(books$ | async) 
+                      && (books$ | async).length > 0 
+                      && (categories$ | async) 
+                      && (categories$ | async).length > 0; 
+                      else lonely">
+  <app-product-table [books]="books$ | async" [categories]="categories$ | async" [filter]="filterValue">
+  </app-product-table>
 </ng-container>
 
-<app-product-table 
-  *ngIf="(books$ | async) && (books$ | async).length > 0 && (categories$ | async) && (categories$ | async).length > 0" 
-  [books]="books$ | async"
-  [categories]="categories$ | async">
-</app-product-table>
+<ng-template #lonely>
+  <div *ngIf="loading$ | async; else empty" class="loading">
+    <mat-spinner></mat-spinner>
+    <div>Loading books</div>
+  </div>
 
+  <ng-template #empty>
+    <div class="d-flex" l10nTranslate>
+      No books around here
+    </div>
+  </ng-template>
 
+</ng-template>

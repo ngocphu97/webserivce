@@ -5,17 +5,20 @@
 
 <img *ngIf="previewImage && !uploadedImageUrl" src="{{previewImage}}" alt="">
 
-
 <h3>Uploaded url</h3>
 <img *ngIf="uploadedImageUrl" src="{{uploadedImageUrl}}" alt="">
 
-<button mat-raised-button (click)="uploadImageToFirebase()">
+<button mat-raised-button type="button" (click)="uploadImageToFirebase()">
   Lưu lại
 </button>
 
 <div class="mt-3 mb-3">
   <p *ngIf="uploadingImages.length === 0"><strong> Chưa có hình, hãy chọn hình đăng </strong></p>
   <p *ngIf="uploadingImages.length > 0"><strong> Hình đang được chọn</strong></p>
+
+  <mat-progress-bar class="example-margin" 
+  [color]="'priamry'" [mode]="'determinate'" [bufferValue]="uploadProcess">
+  </mat-progress-bar>
 
   <div class="upload-process" *ngIf="uploadProcess > 0">
 
@@ -37,10 +40,4 @@
     </div>
     <br>
   </div>
-
-  <!-- <perfect-scrollbar style="max-height: 600px;">
-    <div class="border" #previewImage>
-    </div>
-  </perfect-scrollbar> -->
-
 </div>

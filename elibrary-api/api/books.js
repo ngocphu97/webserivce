@@ -57,6 +57,10 @@ router
     tryCall(books.uploadBookCover(request, response));
   })
 
+  .post('/uploadcover', (request, response) => {
+    tryCall(books.uploadBookCoverPhoto(request.body, response));
+  })
+
   .put('/:id/', (request, response) => {
     tryCall(books.updateBook(request.body, response))
   })

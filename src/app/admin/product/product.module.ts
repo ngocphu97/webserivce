@@ -25,12 +25,12 @@ import {
   MatDialogModule,
   MatStepperModule,
   MatChipsModule,
-  MatRippleModule,
+  MatRippleModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { COMPONENTS, DialogComponent } from './components';
+import { COMPONENTS, DialogComponent, AddProductFormComponent } from './components';
 import { CONTAINERS } from './containers';
 
 import { DialogModule } from '@app/shared/dialog';
@@ -61,6 +61,7 @@ const MAT_MODULES = [
   MatStepperModule,
   MatChipsModule,
   MatRippleModule,
+  MatProgressBarModule
 ];
 
 @NgModule({
@@ -82,7 +83,8 @@ const MAT_MODULES = [
     ...COMPONENTS
   ],
   entryComponents: [
-    DialogComponent
+    DialogComponent,
+    AddProductFormComponent
   ],
   providers: [],
 

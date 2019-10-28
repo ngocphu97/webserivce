@@ -24,7 +24,6 @@ export class BookService {
   }
 
   addBook(book: AddBook): Observable<any> {
-    console.log(book);
     return this.http.post(`${this.baseUrl}/books`, book);
   }
 
@@ -40,6 +39,10 @@ export class BookService {
     return this.http.put<Book>(`${this.baseUrl}/books/${book.id}`, book);
   }
 
+  addBookCover(photo: string, sku: string, bookId: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/books/uploadcover`, { photo, sku, bookId });
+  }
+  
   upload(file) {
     this.http.post('/upload', file).pipe().subscribe(
       x => console.log(x)

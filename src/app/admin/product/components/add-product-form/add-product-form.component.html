@@ -1,178 +1,149 @@
-<form name="addProductForm" autocomplete="off" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+<h1 mat-dialog-title>Add book</h1>
 
-	<div class="form-row">
-		<div class="input">
-			<mat-form-field appearance="outline">
-				<mat-label>Name</mat-label>
-				<input matInput autocomplete="off" tabindex="1" type="text" placeholder="Book name" formControlName="name" />
-				<mat-error>
-					<span *ngIf="formErrors.name.required">
-						Name is required
-					</span>
-				</mat-error>
-			</mat-form-field>
-		</div>
+<div mat-dialog-content>
+  <form name="addProductForm" autocomplete="off" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+      <div class="input">
+        <mat-form-field>
+          <mat-label>Tên sách</mat-label>
+          <input matInput autocomplete="off" tabindex="1" type="text" formControlName="name" />
+          <mat-error>
+            <span *ngIf="formErrors.name.required">
+              Nhập tên sách
+            </span>
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-		<div class="input">
-			<mat-form-field appearance="outline">
-				<mat-label>Author</mat-label>
-				<input matInput autocomplete="off" tabindex="2" type="text" placeholder="Book author"
-					formControlName="author" />
-				<mat-error>
-					<span *ngIf="formErrors.author.required">
-						Author is required
-					</span>
-				</mat-error>
-			</mat-form-field>
-		</div>
+      <div class="input">
+        <mat-form-field>
+          <mat-label>Thể loại sách</mat-label>
+          <mat-select formControlName="category_id">
+            <mat-option *ngFor="let category of data.categories" [value]="category.id">
+              {{category.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-		<div class="input">
-			<mat-form-field appearance="outline">
-				<mat-label>Cost</mat-label>
-				<input matInput autocomplete="off" tabindex="2" type="text" placeholder="Book author" formControlName="cost" />
-				<mat-error>
-					<span *ngIf="formErrors.cost.required">
-						Cost is required
-					</span>
-				</mat-error>
-			</mat-form-field>
-		</div>
+      <div class="input">
+        <mat-form-field>
+          <mat-label>SKU</mat-label>
+          <input matInput autocomplete="off" tabindex="1" type="text"  formControlName="sku" />
+          <mat-error>
+            <span *ngIf="formErrors.name.required">
+              Nhập mã SKU
+            </span>
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-	</div>
+      <div class="input">
+        <mat-form-field>
+          <mat-label>Tác giả</mat-label>
+          <input matInput autocomplete="off" tabindex="2" type="text" formControlName="author" />
+          <mat-error>
+            <span *ngIf="formErrors.author.required">
+              Nhập tên tác giả
+            </span>
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-	<div class="form-row">
-		<div class="input">
-			<mat-form-field appearance="outline">
-				<mat-label>Retail price</mat-label>
-				<input matInput autocomplete="off" tabindex="2" type="text" placeholder="Book author"
-					formControlName="retailPrice" />
-				<mat-error>
-					<span *ngIf="formErrors.retailPrice.required">
-						Retail price is required
-					</span>
-				</mat-error>
-			</mat-form-field>
-		</div>
+      <div class="input">
+        <mat-form-field>
+          <mat-label>Giá nhập</mat-label>
+          <input matInput autocomplete="off" tabindex="2" type="text" formControlName="cost" />
+          <mat-error>
+            <span *ngIf="formErrors.cost.required">
+              Nhập giá nhập
+            </span>
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-		<div class="input">
-			<mat-form-field appearance="outline">
-				<mat-label>Inventory</mat-label>
-				<input matInput autocomplete="off" tabindex="2" type="text" placeholder="Inventory"
-					formControlName="inventory" />
-				<mat-error>
-					<span *ngIf="formErrors.inventory.required">
-						Inventory is required
-					</span>
-				</mat-error>
-			</mat-form-field>
-		</div>
+    </div>
 
-		<div class="input">
-			<mat-form-field appearance="outline">
-				<mat-label>Amount</mat-label>
-				<input matInput autocomplete="off" tabindex="2" type="text" placeholder="Amount" formControlName="amount" />
-				<mat-error>
-					<span *ngIf="formErrors.amount.required">
-						Amount price is required
-					</span>
-				</mat-error>
-			</mat-form-field>
-		</div>
+    <div class="form-row">
+      <div class="input">
+        <mat-form-field>
+          <mat-label>Giá bán lẻ</mat-label>
+          <input matInput autocomplete="off" tabindex="2" type="text" formControlName="retailPrice" />
+          <mat-error>
+            <span *ngIf="formErrors.retailPrice.required">
+              Nhập giá bán lẻ
+            </span>
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-	</div>
+      <div class="input">
+        <mat-form-field>
+          <mat-label>Số lượng nhập</mat-label>
+          <input matInput autocomplete="off" tabindex="2" type="text" formControlName="amount" />
+          <mat-error>
+            <span *ngIf="formErrors.amount.required">
+              Nhập số lượng nhập
+            </span>
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-	<div class="form-row">
-		<div class="input">
-			<mat-form-field appearance="outline">
-				<mat-label>Distributor</mat-label>
-				<input matInput autocomplete="off" tabindex="2" type="text" placeholder="Amount"
-					formControlName="distributor" />
-				<mat-error>
-					<span *ngIf="formErrors.distributor.required">
-						Distributor is required
-					</span>
-				</mat-error>
-			</mat-form-field>
-		</div>
+    </div>
 
-		<div class="input">
-			<mat-form-field appearance="outline">
-				<mat-label>Language</mat-label>
-				<input matInput autocomplete="off" tabindex="2" type="text" placeholder="Amount" formControlName="language" />
-				<mat-error>
-					<span *ngIf="formErrors.language.required">
-						Language is required
-					</span>
-				</mat-error>
-			</mat-form-field>
-		</div>
+    <div class="form-row">
+      <div class="input">
+        <mat-form-field>
+          <mat-label>Nhà cung cấp</mat-label>
+          <input matInput autocomplete="off" tabindex="2" type="text" formControlName="distributor" />
+          <mat-error>
+            <span *ngIf="formErrors.distributor.required">
+              Nhập nhà cung cấp
+            </span>
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-		<div class="input">
-			<mat-form-field appearance="outline">
-				<mat-label>Publish date</mat-label>
-				<input matInput autocomplete="off" tabindex="2" type="text" placeholder="Amount"
-					formControlName="publishDate" />
-				<mat-error>
-					<span *ngIf="formErrors.publishDate.required">
-						Publish date is required
-					</span>
-				</mat-error>
-			</mat-form-field>
+      <div class="input">
+        <mat-form-field>
+          <mat-label>Ngôn ngữ</mat-label>
+          <input matInput autocomplete="off" tabindex="2" type="text" formControlName="language" />
+        </mat-form-field>
+      </div>
 
-		</div>
+      <div class="input">
+        <mat-form-field>
+          <mat-label>Ngày xuất bản</mat-label>
+          <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="publishDate">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error>
+            <span *ngIf="formErrors.publishDate.required">
+              Nhập ngày xuất bản 
+            </span>
+          </mat-error>
 
-	</div>
+        </mat-form-field>
+      </div>
+    </div>
 
-	<div class="form-row">
-		<div class="input">
-			<mat-form-field appearance="outline">
-				<mat-label>Total page</mat-label>
-				<input matInput autocomplete="off" tabindex="2" type="text" placeholder="Amount" formControlName="totalPage" />
+    <div class="form-row">
+      <div class="input">
+        <mat-form-field>
+          <mat-label>Mô tả sách</mat-label>
+          <textarea matInput placeholder="Mô tả" formControlName="description"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
 
-			</mat-form-field>
-		</div>
+    <div>
+      <app-upload (coverURL)="onCoverURL($event)"></app-upload>
+    </div>
 
-		<div class="input">
-			<mat-form-field appearance="outline">
-				<mat-label>Translator</mat-label>
-				<input matInput autocomplete="off" tabindex="2" type="text" placeholder="Amount" formControlName="translator" />
-			</mat-form-field>
-		</div>
+  </form>
+</div>
 
-		<div class="input">
-			<mat-form-field appearance="outline">
-				<mat-label>Size</mat-label>
-				<input matInput autocomplete="off" tabindex="2" type="text" placeholder="Size" formControlName="size" />
-			</mat-form-field>
-		</div>
-
-	</div>
-
-	<div class="form-row">
-		<div class="input">
-			<mat-form-field appearance="outline">
-				<mat-label>Description</mat-label>
-				<textarea matInput placeholder="Amount" formControlName="description"></textarea>
-			</mat-form-field>
-		</div>
-	</div>
-
-	<div>
-		<!-- <mat-form-field appearance="outline">
-			<mat-label>Image</mat-label>
-			<input matInput autocomplete="off" tabindex="2" type="text" placeholder="Book image url"
-				formControlName="image" />
-		</mat-form-field> -->
-
-		<app-upload></app-upload>
-	</div>
-
-	<div>
-		<span fxFlex></span>
-		<button mat-raised-button tabindex="3" color="accent" type="submit" class="action-button w-100"
-			[disabled]="form.invalid">
-			Add
-		</button>
-	</div>
-
-</form>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-raised-button (click)="onSubmit()" color="primary" [disabled]="form.invalid">Save</button>
+</div>

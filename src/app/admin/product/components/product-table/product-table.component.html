@@ -1,25 +1,4 @@
-<div class="action">
-
-  <h1>
-    Book management
-
-  </h1>
-
-  <mat-form-field class="filter-field" appearance="outline">
-    <mat-label>Search book</mat-label>
-    <input matInput (keyup)="applyFilter($event.target.value)">
-    <mat-icon matSuffix>search</mat-icon>
-  </mat-form-field>
-
-  <span> <a routerLink="./add-book" mat-raised-button color="primary">Add book</a></span>
-
-</div>
-
 <div class="display-center mat-elevation-z1 data-table">
-  <div *ngIf="pending">
-    <mat-progress-bar mode="query"></mat-progress-bar>
-  </div>
-
   <div class="book-list">
     <mat-table matSort [dataSource]="dataSource" class="table">
 
@@ -83,7 +62,7 @@
       </mat-row>
     </mat-table>
 
-    <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
   </div>
 
   <div class="book-detail">

@@ -36,12 +36,17 @@ export class BookEffect {
     ofType(bookActions.addBook),
     map((action: any) => action.book),
     exhaustMap((book) => {
-      return this.bookService.addBook(book).pipe(
+      const addBook = { ...book };
+      delete addBook.photo;
+      return this.bookService.addBook(addBook).pipe(
         map((res) => {
+          console.log('Log Message: BookEffect -> res', res);
+          this.bookService.addBookCover(book.photo, book.sku, res.insertId).subscribe(res => console.log(res));
           this.openSnackBar('Add book success', 'success');
+
           return bookActions.addBookSuccess({
             book: {
-              ...book,
+              ...addBook,
               id: res.insertId
             }
           })
@@ -50,6 +55,21 @@ export class BookEffect {
       )
     })
   ));
+
+  // addBookCover$ = createEffect(() => this.actions$.pipe(
+  //   ofType(bookActions.addBookCover),
+  //   map((action: any) => action),
+  //   exhaustMap((action) => {
+  //     return this.bookService.addBookCover(action.photo, action.sku).pipe(
+  //       map((res) => {
+  //         console.log('Log Message: BookEffect -> res', res);
+  //         this.openSnackBar('Add book success', 'success');
+  //         return bookActions.addBookCoverSuccess();
+  //       }),
+  //       catchError(error => of(bookActions.getBookListFail({ error: error })))
+  //     )
+  //   })
+  // ));
 
   getBookById$ = createEffect(() => this.actions$.pipe(
     ofType(bookActions.getBookById),

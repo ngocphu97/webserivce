@@ -26,6 +26,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       distinctUntilChanged(),
       take(1),
       tap(isAuthenticated => {
+        console.log('Log Message: AuthGuard -> isAuthenticated', isAuthenticated);
         if (!isAuthenticated) {
           this.router.navigate([this.loginURI]);
         } else {

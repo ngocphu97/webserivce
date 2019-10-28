@@ -1,6 +1,6 @@
 .book-detail {
   width: 100%;
-  height: 537px;
+  height: 645px;
   overflow-y: auto;
   border-left: 1px solid rgba(0, 0, 0, .10)
 }
@@ -9,4 +9,12 @@
 .data-form {
   display: flex;
   flex-direction: column;
+}
+
+.book-cover-container {
+  text-align: center
+}
+
+.book-cover-container .book-cover {
+  width: 500px;
 }

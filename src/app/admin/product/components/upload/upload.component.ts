@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { BookService } from '../../service';
 import { DialogComponent } from '../dialog/dialog.component';
@@ -11,6 +11,8 @@ declare const firebase: any;
   styleUrls: ['./upload.component.css']
 })
 export class UploadComponent {
+
+  @Output() coverURL = new EventEmitter<string>();
 
   previewImage = null;
   uploadMode = false;
@@ -38,16 +40,13 @@ export class UploadComponent {
     reader.onload = () => {
       this.previewImage = reader.result;
       this.uploadingImages.push(this.previewImage);
-      // this.addBtn(this.previewImage);
       this.uploadImages.push(image.target.files[0]);
     };
     reader.readAsDataURL(image.target.files[0]);
   }
 
   uploadImageToFirebase() {
-    console.log(this.uploadImages[0].name);
     this.uploadImages.forEach(uploadImage => {
-      console.log('uploading .... ', uploadImage);
 
       const metadata = {
         contentType: 'image/jpeg'
@@ -63,24 +62,19 @@ export class UploadComponent {
 
       uploadTask.then((snapshot) => {
         snapshot.ref.getDownloadURL().then((url) => {
-          this.uploadedImageUrl = url;
+          if (url) {
+            this.uploadedImageUrl = url;
+            this.uploadSuccess = true;
+            this.coverURL.emit(url);
+          }
         });
-      });
-
-      // uploadTask.snapshot.ref.getDownloadURL()
-      //   .then((downloadURL) => {
-      //     console.log('Log Message: UploadComponent -> uploadImageToFirebase -> downloadURL', downloadURL);
-      //     this.uploadSuccess = true;
-      //     this.uploadImg(downloadURL);
-      //   })
-      //   .catch((err) => {
-      //     console.log('err', 'loi server', err);
-      //   });
+      }).catch((err) => {
+        this.uploadSuccess = true;
+      });;
     });
   }
 
   catchUploadProcess(snapshot): number {
-    console.log((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
     return this.uploadProcess = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
   }
 
@@ -103,9 +97,5 @@ export class UploadComponent {
 
   selectUploadMode() {
     this.uploadMode = true;
-  }
-
-  uploadImg(url) {
-    console.log('Log Message: UploadComponent -> uploadImg -> url', url);
   }
 }

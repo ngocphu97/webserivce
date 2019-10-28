@@ -108,6 +108,20 @@ export const getTopSearchBooksByTimeFail = createAction(
   props<{ error: any }>()
 );
 
+export const addBookCover = createAction(
+  '[Book] Add book cover',
+  props<{ photo: string, sku: string }>()
+);
+
+export const addBookCoverSuccess = createAction(
+  '[Book] Add book cover success',
+);
+
+export const addBookCoverFail = createAction(
+  '[Book] Add book cover fail',
+  props<{ error: any }>()
+);
+
 
 export enum ExploreActionTypes {
 	GET_BOOK_LIST = '[Book] Get Book List',
