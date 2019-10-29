@@ -6,6 +6,7 @@ let queryDB = (connection, response, query, fieldData) => {
       response.send(error);
     } else {
       connection.query(query, fieldData, (error, result) => {
+        console.log('Log Message: queryDB -> fieldData', fieldData);
         if (error) {
           response.send(error);
         } else {
@@ -45,10 +46,10 @@ let querySearch = (connection, response, query, fieldData, page) => {
 
 function Books() {
 
-  this.getBooks = (query, response) => {
+  this.getBooks = (request, response) => {
     let bookQuery = '';
-    if (query) {
-      bookQuery = `select * from books where category_id = ${query}`;
+    if (request && request.query.cover) {
+      bookQuery = `select * from books`;
     } else {
       bookQuery = `SELECT sku, name, author, cost, retailPrice, amount, inventory, distributor, language, size, totalPage, translator, publishDate, description, cover.photo  FROM books LEFT JOIN cover ON books.id = cover.bookId`;
     }
@@ -115,7 +116,7 @@ function Books() {
   this.uploadBookCover = (request, response) => {
 
     if (!request.files || Object.keys(request.files).length === 0) {
-      return res.status(400).send({mess : ''});
+      return res.status(400).send({ mess: '' });
     }
 
     let sampleFile = request.files.image;
@@ -127,6 +128,11 @@ function Books() {
 
     const bookQuery = 'insert into cover set ?';
     queryDB(connection, response, bookQuery, fieldData);
+  }
+
+  this.uploadBookCoverPhoto = (request, response) => {
+    const bookQuery = 'insert into book_cover set photo = ?, sku = ?, book_id = ?';
+    queryDB(connection, response, bookQuery, [request.photo, request.sku, request.bookId]);
   }
 
   this.getBookCover = (request, response) => {

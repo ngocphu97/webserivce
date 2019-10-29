@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "mock:server": "json-server --watch mock/db.json"
+    "mock:server": "node ./elibrary-api/server.js",
+    "start:server": "concurrently — kill-others \"npm run mock:server\" \"npm run start\""
   },
   "private": true,
   "dependencies": {
@@ -35,6 +36,7 @@
     "json-server": "^0.15.1",
     "ngrx-store-freeze": "^0.2.4",
     "ngrx-store-localstorage": "^7.0.1",
+    "ngx-pagination": "^4.1.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"

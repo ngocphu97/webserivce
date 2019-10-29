@@ -13,7 +13,11 @@ const tryCall = ((request) => {
 
 router
   .get('/', (request, response) => {
-    tryCall(books.getBooks(request.query.categories, response));
+    if (request.query) {
+      tryCall(books.getBooks(request.query.categories, response));
+    } else {
+      tryCall(books.getBooks(request, response));
+    }
   })
 
   //http://localhost:3000/books/search?searchKey=Nhung&page=2
@@ -51,6 +55,10 @@ router
 
   .post('/upload', (request, response) => {
     tryCall(books.uploadBookCover(request, response));
+  })
+
+  .post('/uploadcover', (request, response) => {
+    tryCall(books.uploadBookCoverPhoto(request.body, response));
   })
 
   .put('/:id/', (request, response) => {

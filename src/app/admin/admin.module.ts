@@ -10,7 +10,7 @@ import {
   MatMenuModule,
   MatIconModule,
   MatListModule,
-  MatSnackBarModule,
+  MatSnackBarModule
 } from '@angular/material';
 
 import { AdminRoutingModule } from './admin-routing.module';
@@ -18,7 +18,7 @@ import { AdminLayoutComponent, AdminToolbarComponent, AdminSidebarComponent } fr
 import { BookService } from './product/service';
 import { adminReducer } from './reducers';
 import { EffectsModule } from '@ngrx/effects';
-import { CategoriesEffect } from './dashboard/store/categories.effect';
+import { CategoriesEffect } from './dashboard/store/category/category.effect';
 import { BookEffect } from './product/store/effects/book.effect';
 import { DashboardService } from './dashboard/services/dashboard.service';
 
@@ -29,7 +29,7 @@ const MAT_MODULES = [
   MatIconModule,
   MatListModule,
   MatMenuModule,
-  MatSnackBarModule
+  MatSnackBarModule,
 ];
 
 @NgModule({

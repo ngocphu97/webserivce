@@ -1,9 +1,12 @@
 <mat-card class="card mat-elevation-z3">
   <mat-card-header>
-    <mat-card-title>Thống kê sách theo thể loại</mat-card-title>
+    <mat-card-title>
+      <strong>Thống kê sách theo thể loại</strong>
+    </mat-card-title>
   </mat-card-header>
 
-  <div class="chart-container">
+
+  <div class="chart-container"> 
     <div id="chartdiv"></div>
 
     <div class="detail" [ngClass]="{'selected-item mat-elevation-z8': selected}"
@@ -12,11 +15,12 @@
         <mat-icon>close</mat-icon>
       </button>
 
-      <h3 class="title">Thể loại sách <strong>"{{ chossingCategory }}"</strong>
-        <br> - Còn <strong>"{{ choogingValue }}"</strong> cuốn.
+      <h3 class="title"><strong>"{{ chossingCategory }}"</strong> - <strong>"{{ choogingValue }}"</strong> cuốn.
       </h3>
 
-      <div class="example-container mat-elevation-z2">
+      <strong *ngIf="dataSource.length === 0">Hiện tại không có sách thuộc thể loại này</strong>
+
+      <div *ngIf="dataSource.length > 0" class="example-container mat-elevation-z2">
         <table mat-table [dataSource]="dataSource">
 
           <ng-container matColumnDef="name" sticky>
