@@ -18,6 +18,11 @@ export const selectCategoriesList = createSelector(
   fromReducer.selectAllCat
 );
 
+export const selectCategoriesForAmount = createSelector(
+  selectCategoriesState,
+  fromReducer.getSelectedCategoryForAmount
+);
+
 export const selectSelectedCategoriesId = createSelector(
   selectCategoriesState,
   fromReducer.getSelectedCategoriesId
@@ -30,3 +35,4 @@ export const selectCurrentCategories = createSelector(
     return categoriesEntities[catId]
   }
 );
+

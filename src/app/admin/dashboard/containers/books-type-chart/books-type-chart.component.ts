@@ -10,8 +10,8 @@ import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import { Categories } from '../../models/categories.model';
 import { getBookList } from '../../../product/store/actions';
 import { Book } from 'src/app/admin/product/models';
-import { getCategoriesList } from '../../store/category/category.actions';
-import { selectCategoriesList } from '../../store/category/category.selector';
+import { getCategoriesList, getCategoryForAmount } from '../../store/category/category.actions';
+import { selectCategoriesList, selectCategoriesForAmount } from '../../store/category/category.selector';
 import * as fromBooksSelector from '../../../product/store/selector';
 
 am4core.useTheme(am4themes_animated);
@@ -25,6 +25,7 @@ export class BooksTypeChartComponent implements OnDestroy {
 
   categories$: Observable<Array<Categories>>;
   books$: Observable<Array<Book>>;
+  categoriesForAmount$: Observable<Array<any>>;
   books: any;
 
   chart: am4charts.XYChart;
@@ -43,6 +44,9 @@ export class BooksTypeChartComponent implements OnDestroy {
     private cdRef: ChangeDetectorRef,
     private store: Store<any>
   ) {
+    this.store.dispatch(getCategoryForAmount());
+    this.categoriesForAmount$ = this.store.pipe(select(selectCategoriesForAmount));
+
     this.store.dispatch(getBookList());
     this.books$ = this.store.pipe(select(fromBooksSelector.selectBookList));
 
@@ -73,21 +77,16 @@ export class BooksTypeChartComponent implements OnDestroy {
       valueAxis.strictMinMax = true;
       valueAxis.renderer.minGridDistance = 30;
 
-      this.initChartData().subscribe((categories: any) => {
-        if (categories && categories.length > 0) {
-          chart.data = categories.map((cat: any) => {
-            let sum = 0;
-            this.bookData
-              .filter(book => book.category_id === cat.id)
-              .forEach(book => {
-                sum = sum + book.amount
-              });
-
+      this.categoriesForAmount$.pipe().subscribe((categories: any) => {
+        if(categories) {
+          categories = categories.map(category => {
             return {
-              ...cat,
-              amounts: sum
+              type: category.name,
+              amounts: category.NumberOfBooks
             }
           });
+
+          chart.data = categories;
           valueAxis.max = Math.max(...chart.data.map(x => x.amounts)) + 50;
         }
       });
@@ -134,18 +133,18 @@ export class BooksTypeChartComponent implements OnDestroy {
         this.chart.dispose();
       }
     });
-    
+
 
   }
 
   initChartData(): Observable<any> {
     return new Observable((observer) => {
-      this.categories$.pipe().subscribe((categories: any) => {
+      this.categoriesForAmount$.pipe().subscribe((categories: any) => {
         categories = categories.map(category => {
+          console.log('category', category);
           return {
             type: category.name,
-            amounts: 0,
-            id: category.id
+            amounts: category.NumberOfBooks
           }
         })
         observer.next(categories);

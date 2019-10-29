@@ -24,6 +24,19 @@ export class CategoriesEffect {
     })
   ));
 
+  getCategoriesForAmount$ = createEffect(() => this.actions$.pipe(
+    ofType(fromActions.getCategoryForAmount),
+    exhaustMap(() => {
+      return this.service.getCategoryForAmount().pipe(
+        map((res: any) => {
+          console.log(res);
+          return fromActions.getCategoryForAmountSuccess({ categoryForAmountList: res })
+        }),
+        catchError(error => of(fromActions.getCategoriesListFail({ error: error })))
+      );
+    })
+  ));
+
   constructor(
     private actions$: Actions,
     private service: DashboardService,

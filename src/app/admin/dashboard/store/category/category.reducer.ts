@@ -6,12 +6,14 @@ import { Categories } from '../../models/categories.model';
 
 export interface State extends EntityState<Categories> {
   selectedCategoriesId: number | null;
+  categoryForAmountList: Array<any> | null;
 }
 
 export const adapter: EntityAdapter<Categories> = createEntityAdapter<Categories>();
 
 export const initialState: State = adapter.getInitialState({
-  selectedCategoriesId: null
+  selectedCategoriesId: null,
+  categoryForAmountList: null
 });
 
 export const categoriesReducer = createReducer(
@@ -27,6 +29,14 @@ export const categoriesReducer = createReducer(
     return adapter.addAll(categoriesList, state);
   }),
 
+  on(CategoriesActions.getCategoryForAmountSuccess, (state, { categoryForAmountList }) => {
+    const newState = {
+      ...state,
+      categoryForAmountList: categoryForAmountList
+    }
+    return newState;
+  }),
+
 );
 
 export function reducer(state: State | undefined, action: Action) {
@@ -34,6 +44,7 @@ export function reducer(state: State | undefined, action: Action) {
 }
 
 export const getSelectedCategoriesId = (state: State) => state.selectedCategoriesId;
+export const getSelectedCategoryForAmount = (state: State) => state.categoryForAmountList;
 
 const {
   selectIds,

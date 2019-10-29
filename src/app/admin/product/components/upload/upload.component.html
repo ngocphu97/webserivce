@@ -16,7 +16,7 @@
   <p *ngIf="uploadingImages.length === 0"><strong> Chưa có hình, hãy chọn hình đăng </strong></p>
   <p *ngIf="uploadingImages.length > 0"><strong> Hình đang được chọn</strong></p>
 
-  <mat-progress-bar class="example-margin" 
+  <mat-progress-bar class="example-margin"
   [color]="'priamry'" [mode]="'determinate'" [bufferValue]="uploadProcess">
   </mat-progress-bar>
 
@@ -40,4 +40,6 @@
     </div>
     <br>
   </div>
+
+
 </div>
