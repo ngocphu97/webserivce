@@ -17,16 +17,26 @@
     </mat-toolbar-row>
   </mat-toolbar>
 
-  <div class="content">
-    <h1 class="title">Wellcome to E Library</h1>
-    <p class="intro">Read a Book for </p>
-    <p class="intro">Open your mind !</p>
+  <div>
+    <div class="content">
+      <h1 class="title">Wellcome to E Library</h1>
+      <p class="intro">Read a Book for </p>
+      <p class="intro">Open your mind !</p>
 
-    <div class="search-book">
-      <app-search></app-search>
+      <div class="search-book">
+        <app-search></app-search>
+
+        <h3 class="most-search-title">Sách đề xuất</h3>
+        <div class="most-search">
+          <app-most-search class="search" *ngFor="let book of topSearchBooks$ | async" [book]="book"></app-most-search>
+        </div>
+      </div>
     </div>
+    <p class="intro-img">
+      <img src="assets/images/landing_graphic.svg" alt="">
+    </p>
   </div>
-  <p class="intro-img">
-    <img src="assets/images/landing_graphic.svg" alt="">
-  </p>
+
+
+
 </div>

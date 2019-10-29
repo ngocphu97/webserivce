@@ -20,7 +20,6 @@ router
     }
   })
 
-  //http://localhost:3000/books/search?searchKey=Nhung&page=2
   .get('/search', (request, response) => {
     tryCall(books.searchBooks(request.query, response));
   })

@@ -1,0 +1,24 @@
+.most-search-book-card {
+  width: 100px;
+  box-shadow: none !important;
+  border: 1px solid transparent;
+  transition: box-shadow 0.3s ease-in-out;
+
+  .book-name {
+    width: 100px;
+    font-size: x-small;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid #ffbb45;
+  }
+}
+
+:host::ng-deep.mat-card-header-text {
+  margin: 0 !important;
+}
