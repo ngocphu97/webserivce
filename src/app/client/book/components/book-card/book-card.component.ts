@@ -11,10 +11,16 @@ export class BookCardComponent implements OnInit, OnChanges {
 
 
   @Input() book: any;
+  starCount: number = 5;
+  rating: number = 3;
+  ratingArr = [];
 
   constructor(private dialog: MatDialog) { }
 
   ngOnInit() {
+    for (let index = 0; index < this.starCount; index++) {
+      this.ratingArr.push(index);
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -62,6 +68,19 @@ export class BookCardComponent implements OnInit, OnChanges {
     let base64String = btoa(stringChar);
 
     return `data:image/jpg;base64,${base64String}`;
+  }
+
+
+  onClick(rating: number) {
+    console.log(rating);
+  }
+
+  showIcon(index: number) {
+    if (this.rating >= index + 1) {
+      return 'star';
+    } else {
+      return 'star_border';
+    }
   }
 
 }

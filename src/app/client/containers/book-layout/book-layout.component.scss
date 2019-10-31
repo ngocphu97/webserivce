@@ -9,10 +9,12 @@
   .logo {
     display: flex;
     align-items: center;
-    font-size: x-large;
+    font-size: medium;
+    color: #ffffff;
 
     .material-icons {
       margin-right: 5px;
+      color: #ffffff !important;
     }
   }
 
@@ -28,6 +30,7 @@
     .link {
       text-decoration: none;
       margin-right: 1rem;
+      color: #ffffff !important;
     }
   }
 

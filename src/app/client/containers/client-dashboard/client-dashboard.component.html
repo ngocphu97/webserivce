@@ -19,9 +19,9 @@
 
   <div>
     <div class="content">
-      <h1 class="title">Wellcome to E Library</h1>
-      <p class="intro">Read a Book for </p>
-      <p class="intro">Open your mind !</p>
+      <h1 class="title">Chào mừng đến E Library</h1>
+      <p class="intro">Đọc sách hay </p>
+      <p class="intro">Mở mang đầu óc !</p>
 
       <div class="search-book">
         <app-search></app-search>
@@ -30,13 +30,26 @@
         <div class="most-search">
           <app-most-search class="search" *ngFor="let book of topSearchBooks$ | async" [book]="book"></app-most-search>
         </div>
+
+        <h3 class="most-search-title">Sách Thiếu Nhi</h3>
+        <div class="most-search">
+          <app-most-search class="search" *ngFor="let book of topSearchBooks$ | async" [book]="book"></app-most-search>
+        </div>
+
+        <h3 class="most-search-title">Sách Văn Học</h3>
+        <div class="most-search">
+          <app-most-search class="search" *ngFor="let book of topSearchBooks$ | async" [book]="book"></app-most-search>
+        </div>
+
+        <h3 class="most-search-title">Sách Kinh Tế</h3>
+        <div class="most-search">
+          <app-most-search class="search" *ngFor="let book of topSearchBooks$ | async" [book]="book"></app-most-search>
+        </div>
       </div>
     </div>
-    <p class="intro-img">
+    <!-- <p class="intro-img">
       <img src="assets/images/landing_graphic.svg" alt="">
-    </p>
+    </p> -->
   </div>
-
-
 
 </div>

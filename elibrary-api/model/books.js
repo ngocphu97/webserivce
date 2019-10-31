@@ -6,7 +6,6 @@ let queryDB = (connection, response, query, fieldData) => {
       response.send(error);
     } else {
       connection.query(query, fieldData, (error, result) => {
-        console.log('Log Message: queryDB -> fieldData', fieldData);
         if (error) {
           response.send(error);
         } else {

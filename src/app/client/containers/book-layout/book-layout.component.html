@@ -1,4 +1,5 @@
 <div class="landing">
+
   <mat-toolbar class="toolbar">
     <mat-toolbar-row>
       <span class="logo">
@@ -6,11 +7,12 @@
       </span>
       <span class="spacer"></span>
       <div class="navigate">
-
-        <!-- <div class="search">
-          <app-search></app-search>
-        </div> -->
-
+        <a mat-icon-button class="link" routerLink="./books">
+          <mat-icon class="material-icons">library_books</mat-icon>
+        </a>
+        <a mat-icon-button class="link" routerLink="/admin/login">
+          <mat-icon class="material-icons">vpn_key</mat-icon>
+        </a>
       </div>
     </mat-toolbar-row>
   </mat-toolbar>
