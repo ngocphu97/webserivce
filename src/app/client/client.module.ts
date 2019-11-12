@@ -12,7 +12,8 @@ import {
   MatAutocompleteModule,
   MatSnackBarModule,
   MatCardModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatGridListModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -34,7 +35,8 @@ const MATERIALS = [
   MatAutocompleteModule,
   MatSnackBarModule,
   MatCardModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatGridListModule
 ] 
 
 @NgModule({

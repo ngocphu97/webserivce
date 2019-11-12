@@ -11,8 +11,6 @@
   </p>
 </div>
 
-
-
 <div class="loading" *ngIf="(loading$ | async)">
   <mat-spinner></mat-spinner>
   <p>Loading books ...</p>
@@ -23,9 +21,8 @@
 </div>
 
 <div *ngIf="!(loading$ | async) && filterdBook.length > 0">
-  <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
   <div class="card-container">
-    <app-book-card *ngFor="let book of filterdBook | paginate: { itemsPerPage: 9, currentPage: p }" class="card"
+    <app-book-card *ngFor="let book of filterdBook" class="card"
       [book]="book"></app-book-card>
   </div>
 </div>

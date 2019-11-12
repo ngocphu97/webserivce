@@ -1,11 +1,9 @@
 <mat-drawer-container class="drawer-container">
   <mat-drawer mode="side" opened class="sidenav-container">
-
     <app-admin-sidebar></app-admin-sidebar>
-
   </mat-drawer>
-  <mat-drawer-content>
 
+  <mat-drawer-content>
     <div class="toolbar">
       <app-admin-toolbar></app-admin-toolbar>
     </div>
@@ -13,6 +11,5 @@
     <div class="content">
       <router-outlet #outlet="outlet"></router-outlet>
     </div>
-
   </mat-drawer-content>
 </mat-drawer-container>

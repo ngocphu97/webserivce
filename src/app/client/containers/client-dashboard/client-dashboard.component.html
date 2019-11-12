@@ -24,32 +24,14 @@
       <p class="intro">Mở mang đầu óc !</p>
 
       <div class="search-book">
-        <app-search></app-search>
+        <app-search [books]="books$ | async"></app-search>
 
         <h3 class="most-search-title">Sách đề xuất</h3>
         <div class="most-search">
           <app-most-search class="search" *ngFor="let book of topSearchBooks$ | async" [book]="book"></app-most-search>
         </div>
-
-        <h3 class="most-search-title">Sách Thiếu Nhi</h3>
-        <div class="most-search">
-          <app-most-search class="search" *ngFor="let book of topSearchBooks$ | async" [book]="book"></app-most-search>
-        </div>
-
-        <h3 class="most-search-title">Sách Văn Học</h3>
-        <div class="most-search">
-          <app-most-search class="search" *ngFor="let book of topSearchBooks$ | async" [book]="book"></app-most-search>
-        </div>
-
-        <h3 class="most-search-title">Sách Kinh Tế</h3>
-        <div class="most-search">
-          <app-most-search class="search" *ngFor="let book of topSearchBooks$ | async" [book]="book"></app-most-search>
-        </div>
-      </div>
     </div>
-    <!-- <p class="intro-img">
-      <img src="assets/images/landing_graphic.svg" alt="">
-    </p> -->
+    
   </div>
 
 </div>

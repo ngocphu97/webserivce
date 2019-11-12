@@ -33,23 +33,6 @@ export class AddProductFormComponent implements OnInit {
       publishDate: { required: true }
     };
 
-
-    // name: string;
-    // sku: string;
-    // author: string;
-    // cost: number; // giá gốc
-    // retailPrice: number; // giá bán lẻ
-    // amount: number;
-    // inventory: number; // hàng tồn
-    // distributor: string;
-    // language: string;
-    // size: string;
-    // totalPage: number;
-    // translator: string; 
-    // publishDate: string;
-    // description: string;
-    // category_id: string;
-
     this.form = this.formBuilder.group({
       name: [null, Validators.required],
       category_id: [null, Validators.required],

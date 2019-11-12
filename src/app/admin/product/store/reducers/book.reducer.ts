@@ -62,8 +62,6 @@ export const bookReducer = createReducer(
     }
   }),
 
-  
-
 );
 
 function x(state, { categoryId }) {

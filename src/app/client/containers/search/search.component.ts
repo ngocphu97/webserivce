@@ -1,18 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { MatOption } from '@angular/material';
+import { Book } from 'src/app/admin/product/models';
 
 export interface StateGroup {
   letter: string;
-  names: string[];
+  books: string[];
 }
 
-export const _filter = (opt: string[], value: string): string[] => {
+export const _filter = (opt: any, value: string): string[] => {
   const filterValue = value.toLowerCase();
-  return opt.filter(item => item.toLowerCase().indexOf(filterValue) === 0);
+  return opt.filter(item => item.name.toLowerCase().indexOf(filterValue) === 0);
 };
 
 @Component({
@@ -20,98 +21,85 @@ export const _filter = (opt: string[], value: string): string[] => {
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnChanges {
+
+  @Input() books: Array<Book> = [];
 
   stateForm: FormGroup = this.formBuilder.group({
     stateGroup: '',
   });
 
-  stateGroups: StateGroup[] = [{
-    letter: 'A',
-    names: ['Alabama', 'Alaska', 'Arizona', 'Arkansas']
-  }, {
-    letter: 'C',
-    names: ['California', 'Colorado', 'Connecticut']
-  }, {
-    letter: 'D',
-    names: ['Delaware']
-  }, {
-    letter: 'F',
-    names: ['Florida']
-  }, {
-    letter: 'G',
-    names: ['Georgia']
-  }, {
-    letter: 'H',
-    names: ['Hawaii']
-  }, {
-    letter: 'I',
-    names: ['Idaho', 'Illinois', 'Indiana', 'Iowa']
-  }, {
-    letter: 'K',
-    names: ['Kansas', 'Kentucky']
-  }, {
-    letter: 'L',
-    names: ['Louisiana']
-  }, {
-    letter: 'M',
-    names: ['Maine', 'Maryland', 'Massachusetts', 'Michigan',
-      'Minnesota', 'Mississippi', 'Missouri', 'Montana']
-  }, {
-    letter: 'N',
-    names: ['Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
-      'New Mexico', 'New York', 'North Carolina', 'North Dakota']
-  }, {
-    letter: 'O',
-    names: ['Ohio', 'Oklahoma', 'Oregon']
-  }, {
-    letter: 'P',
-    names: ['Pennsylvania']
-  }, {
-    letter: 'R',
-    names: ['Rhode Island']
-  }, {
-    letter: 'S',
-    names: ['South Carolina', 'South Dakota']
-  }, {
-    letter: 'T',
-    names: ['Tennessee', 'Texas']
-  }, {
-    letter: 'U',
-    names: ['Utah']
-  }, {
-    letter: 'V',
-    names: ['Vermont', 'Virginia']
-  }, {
-    letter: 'W',
-    names: ['Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
-  }];
+  stateGroups: StateGroup[] = [];
 
   stateGroupOptions: Observable<StateGroup[]>;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private formBuilder: FormBuilder
   ) { }
-  ngOnInit() {
 
-    this.stateGroupOptions = this.stateForm.get('stateGroup')!.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filterGroup(value))
-      );
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.books) {
+      const booksFilter = this.books.map((book: any) => {
+        return {
+          sku: book.sku,
+          name: book.name,
+          category_id: book.category_id,
+          firtChar: book.name.charAt(0)
+        }
+      })
+
+      const groupBy = keys => array => array.reduce((objectsByKeyValue, obj) => {
+        const value = keys.map(key => obj[key]).join('-');
+        objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
+        return objectsByKeyValue;
+      }, {});
+
+      const groupByFirstChar = groupBy(['firtChar']);
+
+      this.stateGroups = Object.keys(groupByFirstChar(booksFilter)).map(i => {
+        return {
+          letter: i,
+          books: groupByFirstChar(booksFilter)[i]
+        }
+      });
+
+      this.stateGroupOptions = this.stateForm.get('stateGroup')!.valueChanges
+        .pipe(
+          startWith(''),
+          map(value => this._filterGroup(value))
+        );
+    }
+  }
+
+  groupBy() {
+    key => array => array.reduce((objectsByKeyValue, obj) => ({
+      ...objectsByKeyValue,
+      [obj[key]]: (objectsByKeyValue[obj[key]] || []).concat(obj)
+    }), {});
   }
 
   onSelectBook(event) {
-    const keyword = (event.option as MatOption).value;
-    this.router.navigate(['/client/books']);
+    if (event.key === 'Enter') {
+      const keyword = event.target.value;
+      this.router.navigate(
+        ['/client/books/search'],
+        { queryParams: { key: keyword } }
+      );
+    } else if (event.option && (event.option as MatOption).value) {
+      const sku = (event.option as MatOption).value;
+      this.router.navigate([`/client/books/detail/${sku}`]);
+    }
   }
 
   private _filterGroup(value: string): StateGroup[] {
     if (value) {
       return this.stateGroups
-        .map(group => ({ letter: group.letter, names: _filter(group.names, value) }))
-        .filter(group => group.names.length > 0);
+        .map(group => ({
+          letter: group.letter,
+          books: _filter(group.books, value)
+        }))
+        .filter(group => group.books.length > 0);
     }
 
     return this.stateGroups;

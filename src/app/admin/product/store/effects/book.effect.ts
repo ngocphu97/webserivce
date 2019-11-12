@@ -16,7 +16,9 @@ export class BookEffect {
     ofType(bookActions.getBookList),
     exhaustMap(() => {
       return this.bookService.getBookList().pipe(
-        map((res: any) => bookActions.getBookListSuccess({ bookList: res })),
+        map((res: any) => {
+          return bookActions.getBookListSuccess({ bookList: res })
+        }),
         catchError(error => of(bookActions.getBookListFail({ error: error })))
       );
     })
@@ -40,9 +42,7 @@ export class BookEffect {
       delete addBook.photo;
       return this.bookService.addBook(addBook).pipe(
         map((res) => {
-          console.log('Log Message: BookEffect -> res', res);
           this.bookService.addBookCover(book.photo, book.sku, res.insertId).subscribe(res => console.log(res));
-          this.openSnackBar('Add book success', 'success');
 
           return bookActions.addBookSuccess({
             book: {

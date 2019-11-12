@@ -1,13 +1,31 @@
 <form [formGroup]="stateForm">
   <mat-form-field appearance="outline" [color]="'primary'" class="search">
-    <input type="text" matInput placeholder="Book name ... " formControlName="stateGroup" [matAutocomplete]="autoGroup">
-    <mat-autocomplete #autoGroup="matAutocomplete" (optionSelected)="onSelectBook($event)">
-      <mat-optgroup *ngFor="let group of stateGroupOptions | async" [label]="group.letter">
-        <mat-option *ngFor="let name of group.names" [value]="name">
-          {{name}}
-        </mat-option>
-      </mat-optgroup>
+    <input 
+      type="text" 
+      matInput placeholder="Book name ... " 
+      formControlName="stateGroup" 
+      [matAutocomplete]="autoGroup"
+      (keyup)="onSelectBook($event)"
+    >
+    <mat-autocomplete 
+        #autoGroup="matAutocomplete" 
+        (optionSelected)="onSelectBook($event)">
+      
+      <mat-option *ngIf="!stateGroupOptions | async" class="is-loading">
+        Loading book
+      </mat-option>
+
+      <ng-container *ngIf="stateGroupOptions | async">
+        <mat-optgroup *ngFor="let group of stateGroupOptions | async" [label]="group.letter">
+          <mat-option *ngFor="let book of group.books" [value]="book.sku">
+            {{book.name}}
+          </mat-option>
+        </mat-optgroup>
+      </ng-container>
+
+  
     </mat-autocomplete>
+
     <button mat-button class="search-btn">
       <mat-icon matSuffix>search</mat-icon>
     </button>

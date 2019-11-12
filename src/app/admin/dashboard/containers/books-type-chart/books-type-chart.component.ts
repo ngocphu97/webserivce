@@ -7,12 +7,12 @@ import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 
+import { Book } from 'src/app/admin/product/models';
 import { Categories } from '../../models/categories.model';
 import { getBookList } from '../../../product/store/actions';
-import { Book } from 'src/app/admin/product/models';
+import * as fromBooksSelector from '../../../product/store/selector';
 import { getCategoriesList, getCategoryForAmount } from '../../store/category/category.actions';
 import { selectCategoriesList, selectCategoriesForAmount } from '../../store/category/category.selector';
-import * as fromBooksSelector from '../../../product/store/selector';
 
 am4core.useTheme(am4themes_animated);
 
@@ -78,7 +78,7 @@ export class BooksTypeChartComponent implements OnDestroy {
       valueAxis.renderer.minGridDistance = 30;
 
       this.categoriesForAmount$.pipe().subscribe((categories: any) => {
-        if(categories) {
+        if (categories) {
           categories = categories.map(category => {
             return {
               type: category.name,
@@ -93,16 +93,27 @@ export class BooksTypeChartComponent implements OnDestroy {
 
       let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
       categoryAxis.renderer.grid.template.location = 0;
-      categoryAxis.dataFields.category = "type";
+      categoryAxis.dataFields.category = 'type';
       categoryAxis.renderer.minGridDistance = 40;
       categoryAxis.fontSize = 13;
+
+      let label = categoryAxis.renderer.labels.template;
+      // label.wrap = true;
+      label.truncate = true;
+      label.maxWidth = 120;
+
+      categoryAxis.events.on('sizechanged', (ev) => {
+        let axis = ev.target;
+        let cellWidth = axis.pixelWidth / (axis.endIndex - axis.startIndex);
+        axis.renderer.labels.template.maxWidth = cellWidth;
+      });
 
       let axisBreak = valueAxis.axisBreaks.create();
       axisBreak.startValue = 2100;
       axisBreak.endValue = 22900;
       axisBreak.breakSize = 0.005;
 
-      let hoverState = axisBreak.states.create("hover");
+      let hoverState = axisBreak.states.create('hover');
       hoverState.properties.breakSize = 1;
       hoverState.properties.opacity = 0.1;
       hoverState.transitionDuration = 1500;
@@ -110,15 +121,15 @@ export class BooksTypeChartComponent implements OnDestroy {
       axisBreak.defaultState.transitionDuration = 1000;
 
       let series = chart.series.push(new am4charts.ColumnSeries());
-      series.dataFields.categoryX = "type";
-      series.dataFields.valueY = "amounts";
-      series.columns.template.tooltipText = "{valueY.value}";
+      series.dataFields.categoryX = 'type';
+      series.dataFields.valueY = 'amounts';
+      series.columns.template.tooltipText = '{valueY.value}';
       series.columns.template.tooltipY = 0;
       series.columns.template.strokeOpacity = 0;
 
       series.columns.template.events.on('hit', this.onChartSelect, this);
 
-      series.columns.template.adapter.add("fill", (fill, target) => {
+      series.columns.template.adapter.add('fill', (fill, target) => {
         return chart.colors.getIndex(target.dataItem.index);
       });
 
@@ -133,15 +144,12 @@ export class BooksTypeChartComponent implements OnDestroy {
         this.chart.dispose();
       }
     });
-
-
   }
 
   initChartData(): Observable<any> {
     return new Observable((observer) => {
       this.categoriesForAmount$.pipe().subscribe((categories: any) => {
         categories = categories.map(category => {
-          console.log('category', category);
           return {
             type: category.name,
             amounts: category.NumberOfBooks
@@ -158,8 +166,15 @@ export class BooksTypeChartComponent implements OnDestroy {
     this.selectedColor = ev.target.realFill.rgba;
     this.chossingCategory = targetData.type;
     this.choogingValue = targetData.amounts;
-    this.getBookByCategoryId(targetData.id);
+    this.mapCategoryId(this.chossingCategory);
     this.cdRef.detectChanges();
+  }
+
+  mapCategoryId(chossingCategory) {
+    this.categories$.pipe().subscribe(categories => {
+      const x = categories.filter(cat => cat.name === chossingCategory);
+      this.getBookByCategoryId(x[0].id);
+    }).unsubscribe();
   }
 
   getBookByCategoryId(id) {
@@ -168,7 +183,6 @@ export class BooksTypeChartComponent implements OnDestroy {
         this.dataSource = books
           .filter(book => book.category_id === id)
           .map(book => {
-            console.log(book);
             return {
               inventory: book.inventory,
               name: book.name,
@@ -177,7 +191,7 @@ export class BooksTypeChartComponent implements OnDestroy {
             }
           });
       }
-    })
+    }).unsubscribe();
   }
 
   close() {

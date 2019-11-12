@@ -60,6 +60,7 @@ export class ProductTableComponent implements OnChanges {
         }
       })
 
+      console.log('Log Message: ProductTableComponent -> constructor -> this.books', this.books[71].photo);
       this.dataSource = new MatTableDataSource(this.books);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;

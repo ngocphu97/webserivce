@@ -62,8 +62,8 @@ export class UploadComponent {
 
       uploadTask.then((snapshot) => {
         snapshot.ref.getDownloadURL().then((url) => {
-          console.log(url);
           this.uploadedImageUrl = url;
+          this.coverURL.emit(url);
         });
       });
 
