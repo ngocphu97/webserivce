@@ -50,13 +50,18 @@ function Books() {
     if (query) {
       bookQuery = `select * from books where category_id = ${query}`;
     } else {
-      bookQuery = `SELECT sku, name, author, cost, retailPrice, amount, inventory, distributor, language, size, totalPage, translator, publishDate, description, cover.photo  FROM books LEFT JOIN cover ON books.id = cover.bookId`;
+      bookQuery = `SELECT sku, name, author, cost, retailPrice, amount, inventory, distributor, language, size, totalPage, translator, publishDate, description, cover.photo  FROM books LEFT JOIN cover ON books.id = cover.bookId where deleted=1`;
     }
     queryDB(connection, response, bookQuery, '');
   };
 
   this.createBook = (fieldData, response) => {
     const bookQuery = 'insert into books set ?';
+    queryDB(connection, response, bookQuery, fieldData);
+  };
+
+  this.createHistorySearch = (fieldData, response) => {
+    const bookQuery = 'insert into history_search set ?';
     queryDB(connection, response, bookQuery, fieldData);
   };
 
@@ -71,22 +76,15 @@ function Books() {
   };
 
   this.getMostSearchForTimeLine = (reqeset, response) => {
-    const bookQuery = `SELECT sku, name, date_search, COUNT(sku) AS NumberOfSearch
-                        FROM history_search
-                        GROUP BY sku
-                        HAVING date_search > DATE_SUB(CURRENT_DATE(), INTERVAL ? DAY)
-                        ORDER BY COUNT(sku) DESC
-                        LIMIT 5`;
+    const bookQuery = `SELECT his.sku, his.name, his.date_search, cover.photo, COUNT(his.sku) AS NumberOfSearch
+    FROM history_search his
+    LEFT JOIN books ON his.sku = books.sku
+    LEFT JOIN cover ON books.id = cover.bookId
+    GROUP BY his.sku
+    HAVING date_search > DATE_SUB(CURRENT_DATE(), INTERVAL ? DAY)
+    ORDER BY COUNT(his.sku) DESC
+    LIMIT 5`;
     queryDB(connection, response, bookQuery, reqeset.num_days);
-  };
-
-  this.getLocationFromSKU = (reqeset, response) => {
-    const bookQuery = 'SELECT sku, books.name, bl.name, x, y '
-      + 'FROM bookshelf_location_entity be '
-      + 'LEFT JOIN books ON be.book_id = books.id '
-      + 'LEFT JOIN booshelf_location bl ON be.bookshelf_id = bl.id '
-      + 'WHERE books.sku=?;';
-    queryDB(connection, response, bookQuery, reqeset.sku);
   };
 
   this.getBookByCategory = (reqeset, response) => {
@@ -108,26 +106,9 @@ function Books() {
   };
 
   this.deleteBook = (fieldData, response) => {
-    const bookQuery = 'delete from books where id = ?';
+    const bookQuery = 'UPDATE books set deleted = 0 WHERE id =?;';
     queryDB(connection, response, bookQuery, fieldData.id);
   };
-
-  this.uploadBookCover = (request, response) => {
-
-    if (!request.files || Object.keys(request.files).length === 0) {
-      return res.status(400).send({mess : ''});
-    }
-
-    let sampleFile = request.files.image;
-
-    const fieldData = {
-      bookId: 1,
-      photo: sampleFile.data
-    }
-
-    const bookQuery = 'insert into cover set ?';
-    queryDB(connection, response, bookQuery, fieldData);
-  }
 
   this.getBookCover = (request, response) => {
     const bookQuery = 'select * from cover where bookId = ?';
