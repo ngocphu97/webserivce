@@ -12,7 +12,7 @@ import { getCategoriesList } from 'src/app/admin/dashboard/store/category/catego
 import { AddProductFormComponent } from '../../components';
 import { Categories } from 'src/app/admin/dashboard/models/categories.model';
 import { takeUntilDestroy } from '@app/core/destroyable';
-import { AddBook } from '../../models';
+import { AddBook, Book } from '../../models';
 
 @Component({
   selector: 'app-products-page',
@@ -27,6 +27,7 @@ export class ProductsPageComponent {
 
   filterValue: string = '';
   categories: Array<Categories>
+  findBook: Book;
 
   constructor(private store: Store<State>, public dialog: MatDialog) {
 
@@ -64,6 +65,6 @@ export class ProductsPageComponent {
         this.store.dispatch(addBook({ book: result }));
       }
     });
-  }
+  } 
 }
 

@@ -1,10 +1,13 @@
+<button mat-raised-button color="primary" (click)="editBook()">Sửa</button>
+<button mat-raised-button color="primary" *ngIf="isEdit" (click)="saveBook()">Lưu</button>
+
 <mat-vertical-stepper [linear]="'false'" #stepper class="book-detail">
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup" class="basic-info-form">
       <ng-template matStepLabel><strong>Thông tin chung</strong></ng-template>
 
       <mat-form-field>
-        <input matInput placeholder="Tên sách" formControlName="bookName">
+        <input matInput placeholder="Tên sách" formControlName="name" #bookName>
       </mat-form-field>
 
       <mat-form-field class="example-full-width">
@@ -12,16 +15,18 @@
       </mat-form-field>
 
       <mat-form-field class="example-chip-list" *ngIf="categories.length > 0">
-        <mat-chip-list #chipList>
-          <mat-chip *ngFor="let cat of categories" [selectable]="selectable" [removable]="removable"
-            (removed)="remove(cat)">
-            {{cat}}
-            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-          </mat-chip>
-          <input placeholder="Thể loại" [matChipInputFor]="chipList"
-            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-            (matChipInputTokenEnd)="add($event)">
-        </mat-chip-list>
+
+        <input *ngIf="!isEdit" matInput placeholder="Thể loại" formControlName="category_id" #bookName>
+
+        <ng-container *ngIf="isEdit">
+          <mat-label>Thể loại</mat-label>
+          <mat-select formControlName="category_id">
+            <mat-option *ngFor="let cat of categories" [value]="cat.id">
+              {{cat.name}}
+            </mat-option>
+          </mat-select>
+        </ng-container>
+
       </mat-form-field>
 
       <mat-form-field>
@@ -41,7 +46,7 @@
       </mat-form-field>
 
       <div>
-        <button mat-raised-button color="primary" matStepperNext>Next</button>
+        <button mat-raised-button color="primary" matStepperNext>Tiếp tục</button>
       </div>
     </form>
   </mat-step>
@@ -69,8 +74,8 @@
       </mat-form-field>
 
       <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button matStepperPrevious>Trở về</button>
+        <button mat-button matStepperNext>Tiếp tục</button>
       </div>
     </form>
   </mat-step>
@@ -81,7 +86,7 @@
       <img class="book-cover" src="{{selectedBook.image}}" alt="">
     </div>
     <div>
-      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperPrevious>Trở về</button>
     </div>
   </mat-step>
 

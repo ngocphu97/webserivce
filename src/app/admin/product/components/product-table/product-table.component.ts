@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatSort, MatPaginator, MatInput, MatTableDataSource } from '@angular/material';
+import { Book } from '../../models';
 
 @Component({
   selector: 'app-product-table',
@@ -15,6 +16,7 @@ export class ProductTableComponent implements OnChanges {
   @Input() categories: Array<any>;
   @Input() pending: boolean;
   @Input() filter: string = '';
+  @Input() findBook: Book;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -29,11 +31,10 @@ export class ProductTableComponent implements OnChanges {
 
   booksFake: Array<any> = [];
 
-  displayedColumns: string[] = [
-    'id', 'image', 'name', 'category', 'cost', 'inventory', 'amount', 'action'
-  ];
+  displayedColumns: string[] = ['image', 'name', 'category', 'cost', 'inventory', 'amount', 'action'];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) { 
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.books && changes.categories) {
@@ -42,7 +43,7 @@ export class ProductTableComponent implements OnChanges {
           ...cat,
           category_id: cat.id
         }
-      })
+      });
 
       this.books = this.books.map(book => {
         this.categories.filter(cat => {
@@ -56,11 +57,10 @@ export class ProductTableComponent implements OnChanges {
 
         return {
           ...book,
-          image: book.photo ? this.convertImage(book.photo.data) : ''
+          image: book.photo ? book.photo : 'https://www.blueinkreview.com/wp-content/uploads/2016/07/nocover-1.jpg'
         }
-      })
+      });
 
-      console.log('Log Message: ProductTableComponent -> constructor -> this.books', this.books[71].photo);
       this.dataSource = new MatTableDataSource(this.books);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
@@ -71,13 +71,6 @@ export class ProductTableComponent implements OnChanges {
     }
   }
 
-  convertImage(image) {
-    let typedArray = new Uint8Array(image);
-    const stringChar = typedArray.reduce((data, byte) => data + String.fromCharCode(byte), '');
-    let base64String = btoa(stringChar);
-
-    return `data:image/jpg;base64,${base64String}`;
-  }
 
   applyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -86,19 +79,12 @@ export class ProductTableComponent implements OnChanges {
   selectRow(row) {
     this.selectedBook = row;
     this.selectedRowIndex = row.id;
-    
-    this.selection.toggle(row);
-    if (this.selection.isSelected(row)) {
-      return this.interestList.push(row.name);
-    }
-    return this.interestList = this.interestList.filter(x => x !== row.name);
+
+    this.router.navigate([`/admin/books/${row.id}`]);
   }
 
   stopPropagation(event): void {
     event.stopPropagation()
   }
 
-  onSelectBookDetail(bookId: string) {
-    this.router.navigate([`/admin/books/${bookId}`]);
-  }
 }

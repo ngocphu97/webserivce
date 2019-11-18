@@ -1,10 +1,3 @@
-.book-detail {
-  width: 100%;
-  height: 645px;
-  overflow-y: auto;
-  border-left: 1px solid rgba(0, 0, 0, .10)
-}
-
 .basic-info-form,
 .data-form {
   display: flex;
@@ -17,4 +10,8 @@
 
 .book-cover-container .book-cover {
   width: 500px;
+}
+
+input, textarea {
+  color: #000000 !important;
 }

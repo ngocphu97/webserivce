@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, ElementRef, ViewChild } from '@angular/core';
 
 import { MatDialog } from '@angular/material';
 
@@ -18,36 +18,45 @@ import { MatChipInputEvent } from '@angular/material/chips';
 export class DetailProductComponent implements OnChanges {
 
   @Input() selectedBook: any;
+  @Input() categories: any;
+
   @Output() deleteBook = new EventEmitter<Book>();
+  @Output() editingBook = new EventEmitter<Book>();
+
+  @ViewChild('bookName', { static: true }) bookNameInput: ElementRef;
+
 
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
 
   visible = true;
-  selectable = true;
-  removable = true;
+  removable = false;
   addOnBlur = true;
+  selectable = true;
+  isEdit = false;
+
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  categories = [];
 
   constructor(
     public dialog: MatDialog,
     private _formBuilder: FormBuilder,
   ) {
+
     this.firstFormGroup = this._formBuilder.group({
-      bookName: [''],
-      categoryName: [''],
-      description: [''],
-      distributor: [''],
-      language: [''],
-      publishDate: [''],
-      translator: ['']
+      name: [{ value: '', disabled: true }],
+      category_id: [{ value: '', disabled: true }],
+      description: [{ value: '', disabled: true }],
+      distributor: [{ value: '', disabled: true }],
+      language: [{ value: '', disabled: true }],
+      publishDate: [{ value: '', disabled: true }],
+      translator: [{ value: '', disabled: true }],
     });
+
     this.secondFormGroup = this._formBuilder.group({
-      amount: [],
-      cost: [],
-      inventory: [],
-      retailPrice: []
+      amount: [{ value: undefined, disabled: true }],
+      cost: [{ value: undefined, disabled: true }],
+      inventory: [{ value: undefined, disabled: true }],
+      retailPrice: [{ value: undefined, disabled: true }],
     });
   }
 
@@ -55,15 +64,14 @@ export class DetailProductComponent implements OnChanges {
     if (changes.selectedBook) {
 
       this.firstFormGroup.patchValue({
-        bookName: this.selectedBook.name,
-        categoryName: this.selectedBook.categoryName,
+        name: this.selectedBook.name,
+        category_id: this.selectedBook.category_id,
         description: this.selectedBook.description,
         distributor: this.selectedBook.distributor,
         language: this.selectedBook.language,
         publishDate: this.selectedBook.publishDate,
         translator: this.selectedBook.translator
-      })
-      this.categories = [this.selectedBook.categoryName];
+      });
 
       this.secondFormGroup.patchValue({
         amount: this.selectedBook.amount,
@@ -74,17 +82,9 @@ export class DetailProductComponent implements OnChanges {
 
       this.selectedBook = {
         ...this.selectedBook,
-        // image: this.convertImage(this.selectedBook.photo.data)
+        image: this.selectedBook.photo
       }
     }
-  }
-
-  convertImage(image) {
-    let typedArray = new Uint8Array(image);
-    const stringChar = typedArray.reduce((data, byte) => data + String.fromCharCode(byte), '');
-    let base64String = btoa(stringChar);
-
-    return `data:image/jpg;base64,${base64String}`;
   }
 
   openDialog(): void {
@@ -125,4 +125,34 @@ export class DetailProductComponent implements OnChanges {
       this.categories.splice(index, 1);
     }
   }
+
+  editBook() {
+    this.firstFormGroup.get(['name']).enable();
+    this.firstFormGroup.get(['category_id']).enable();
+    this.firstFormGroup.get(['description']).enable();
+    this.firstFormGroup.get(['distributor']).enable();
+    this.firstFormGroup.get(['publishDate']).enable();
+    this.firstFormGroup.get(['translator']).enable();
+
+    this.secondFormGroup.get(['amount']).enable();
+    this.secondFormGroup.get(['cost']).enable();
+    this.secondFormGroup.get(['inventory']).enable();
+    this.secondFormGroup.get(['retailPrice']).enable();
+
+    this.bookNameInput.nativeElement.focus();
+    this.isEdit = true;
+  }
+
+  saveBook() {
+    console.log(this.firstFormGroup.value);
+    console.log(this.secondFormGroup.value);
+
+    const editBook = {
+      ...this.firstFormGroup.value,
+      ...this.secondFormGroup.value
+    }
+
+    this.editingBook.emit(editBook);
+  }
 }
+

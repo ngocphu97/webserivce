@@ -50,7 +50,7 @@ function Books() {
     if (request && request.query.cover) {
       bookQuery = `select * from books`;
     } else {
-      bookQuery = `SELECT sku, name, author, cost, retailPrice, amount, inventory, distributor, language, size, totalPage, translator, publishDate, description, cover.photo  FROM books LEFT JOIN cover ON books.id = cover.bookId`;
+      bookQuery = `SELECT books.id, sku, category_id, name, author, cost, retailPrice, amount, inventory, distributor, language, size, totalPage, translator, publishDate, description, cover.photo  FROM books LEFT JOIN cover ON books.id = cover.bookId`;
     }
     queryDB(connection, response, bookQuery, '');
   };
@@ -95,7 +95,8 @@ function Books() {
   };
 
   this.getRelateBook = (request, response) => {
-    const bookQuery = `SELECT sku, name, author, cost, retailPrice, amount, inventory, distributor, language, size, totalPage, translator, publishDate, description, cover.photo FROM books
+    const bookQuery = 
+    `SELECT sku, name, author, cost, retailPrice, amount, inventory, distributor, language, size, totalPage, translator, publishDate, description, cover.photo FROM books
     LEFT JOIN cover ON books.id = cover.bookId
     WHERE category_id in (SELECT category_id FROM books WHERE sku = ?)
     LIMIT 10;`;

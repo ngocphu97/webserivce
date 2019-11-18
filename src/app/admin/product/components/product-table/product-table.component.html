@@ -2,11 +2,6 @@
   <div class="book-list">
     <mat-table matSort [dataSource]="dataSource" class="table">
 
-      <ng-container matColumnDef="id">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
-      </ng-container>
-
       <ng-container matColumnDef="image">
         <mat-header-cell *matHeaderCellDef mat-sort-header> <span style="white-space: pre;"></span>
         </mat-header-cell>
@@ -58,22 +53,16 @@
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns" class="table-head"></mat-header-row>
-      <mat-row [ngClass]="{'selected': selectedRowIndex == row.id}" matRipple *matRowDef="let row; columns: displayedColumns;" class="row" (click)="selectRow(row)">
+      <mat-row 
+        matRipple 
+        class="row" 
+        (click)="selectRow(row)"
+        *matRowDef="let row; columns: displayedColumns;" 
+        [ngClass]="{'selected': selectedRowIndex == row.id}" 
+        >
       </mat-row>
     </mat-table>
 
     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-  </div>
-
-  <div class="book-detail">
-
-    <div *ngIf="!selectedBook" class="no-book">
-      <i class="material-icons">
-        menu_book
-      </i>
-      <h3>Select a book to check detail</h3>
-    </div>
-
-    <app-detail-product *ngIf="selectedBook" [selectedBook]="selectedBook"></app-detail-product>
   </div>
 </div>

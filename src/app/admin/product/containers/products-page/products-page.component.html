@@ -20,7 +20,11 @@
                       && (categories$ | async) 
                       && (categories$ | async).length > 0; 
                       else lonely">
-  <app-product-table [books]="books$ | async" [categories]="categories$ | async" [filter]="filterValue">
+  <app-product-table 
+      [books]="books$ | async" 
+      [categories]="categories$ | async"
+      [findBook]="findBook"
+      [filter]="filterValue">
   </app-product-table>
 </ng-container>
 

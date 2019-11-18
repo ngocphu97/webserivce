@@ -33,7 +33,7 @@ export const addBookFail = createAction(
 
 export const getBookById = createAction(
 	'[Book] Get Book By Id',
-	props<{ bookId: string }>()
+	props<{ bookId: number }>()
 );
 
 export const getBookByIdSuccess = createAction(
@@ -76,7 +76,6 @@ export const updateBookByIdFail = createAction(
 	'[Book] Update Book By Id Fail',
 	props<{ error: any }>()
 );
-
 
 export const deleteBook = createAction(
 	'[Book] Delete book',

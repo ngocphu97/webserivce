@@ -13,6 +13,7 @@ import { getBookList } from '../../../product/store/actions';
 import * as fromBooksSelector from '../../../product/store/selector';
 import { getCategoriesList, getCategoryForAmount } from '../../store/category/category.actions';
 import { selectCategoriesList, selectCategoriesForAmount } from '../../store/category/category.selector';
+import { Router } from '@angular/router';
 
 am4core.useTheme(am4themes_animated);
 
@@ -35,14 +36,17 @@ export class BooksTypeChartComponent implements OnDestroy {
   choogingValue: number;
   selectedColor: string;
 
-  dataSource = [];
   bookData = [];
-  displayedColumns = ['name', 'inventory', 'amounts', 'cost', 'star'];
+  dataSource = [];
+  displayedColumns = ['name'];
+
+  findBook: Book;
 
   constructor(
     private zone: NgZone,
     private cdRef: ChangeDetectorRef,
-    private store: Store<any>
+    private store: Store<any>,
+    private router: Router
   ) {
     this.store.dispatch(getCategoryForAmount());
     this.categoriesForAmount$ = this.store.pipe(select(selectCategoriesForAmount));
@@ -178,6 +182,9 @@ export class BooksTypeChartComponent implements OnDestroy {
   }
 
   getBookByCategoryId(id) {
+
+    // gọi api 
+
     this.books$.pipe().subscribe((books: any) => {
       if (books) {
         this.dataSource = books
@@ -191,10 +198,29 @@ export class BooksTypeChartComponent implements OnDestroy {
             }
           });
       }
-    }).unsubscribe();
+    });
   }
 
   close() {
     this.selected = false;
   }
+
+  selectRow(row) {
+    this.findBook = row;
+    this.router.navigate(
+      ['/admin/books'],
+      { queryParams: { id: row.id } }
+    );
+  }
 }
+
+// client
+// tạo sách => lấy id => tạo hình
+// xóa sách
+// tìm 
+// chi tiết
+// sách đề xuất => most search
+
+// admin
+// thêm chi tiết sách
+// module phieu de xuat   

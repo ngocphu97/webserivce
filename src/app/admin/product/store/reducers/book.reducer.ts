@@ -5,13 +5,13 @@ import * as BookActions from '../actions/book.action';
 import { Book } from '../../models/book.model';
 
 export interface State extends EntityState<Book> {
-  selectedBookId: string | null;
+  selectedBookId: number | null;
   topBooks: Array<Book> | null;
   loading: boolean | false;
 }
 
-export function selectBookId(book: Book): string {
-  return book.sku;
+export function selectBookId(book: Book): number {
+  return book.id;
 }
 
 export const adapter: EntityAdapter<Book> = createEntityAdapter<Book>({
@@ -37,7 +37,12 @@ export const bookReducer = createReducer(
     return { ...state, selectedBookId: bookId };
   }),
 
-  on(BookActions.getBookByCategoryId, x),
+  on(BookActions.getBookByCategoryId, (state, { categoryId }) => {
+    return {
+      ...state,
+      x: categoryId
+    };
+  }),
 
   on(BookActions.getBookListSuccess, (state, { bookList }) => {
     const newstate = {
@@ -63,16 +68,6 @@ export const bookReducer = createReducer(
   }),
 
 );
-
-function x(state, { categoryId }) {
-
-  console.log(state, categoryId);
-
-  return {
-    ...state,
-    x: categoryId
-  };
-}
 
 export function reducer(state: State | undefined, action: Action) {
   return bookReducer(state, action);

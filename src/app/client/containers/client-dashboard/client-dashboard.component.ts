@@ -4,7 +4,8 @@ import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 
 import { Book } from 'src/app/admin/product/models';
-import { selectTopSearch, selectBookList } from 'src/app/admin/product/store/selector';
+import { selectAllBooks } from 'src/app/admin/product/store/reducers';
+import { selectTopSearch } from 'src/app/admin/product/store/selector';
 import { getTopSearchBooksByTime, getBookList } from 'src/app/admin/product/store/actions';
 
 @Component({
@@ -22,6 +23,6 @@ export class ClientDashboardComponent {
     this.topSearchBooks$ = this.store.pipe(select(selectTopSearch));
 
     this.store.dispatch(getBookList());
-    this.books$ = this.store.pipe(select(selectBookList));
+    this.books$ = this.store.pipe(select(selectAllBooks));
   }
 }

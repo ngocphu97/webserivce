@@ -24,7 +24,7 @@ export class EditProductPageComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.route.paramMap.subscribe(params => {
-      const bookId = params.get('bookId').toString();
+      const bookId = parseInt(params.get('bookId').toString(), 0);
       this.store.dispatch(getBookById({ bookId }));
     });
     this.store.dispatch(getBookList());
