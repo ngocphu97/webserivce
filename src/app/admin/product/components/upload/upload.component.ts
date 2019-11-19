@@ -14,20 +14,23 @@ export class UploadComponent {
 
   @Output() coverURL = new EventEmitter<string>();
 
-  previewImage = null;
-  uploadMode = false;
-  uploadingImages = [];
-  uploadSuccess = false;
-  uploadImages = [];
-  storageRef = firebase.storage().ref();
   uploadProcess = 0;
 
+  previewImage = null;
   uploadedImageUrl = null;
+
+  uploadMode = false;
+  uploadSuccess = false;
+
+  uploadImages = [];
+  uploadingImages = [];
+
+  storageRef = firebase.storage().ref();
 
   constructor(public dialog: MatDialog, public uploadService: BookService) { }
 
   public openUploadDialog() {
-    let dialogRef = this.dialog.open(DialogComponent, {
+    this.dialog.open(DialogComponent, {
       width: '50%',
       height: '50%',
     })

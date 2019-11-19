@@ -1,14 +1,15 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, ElementRef, ViewChild } from '@angular/core';
 
+import { FormGroup, FormBuilder } from '@angular/forms';
+
 import { MatDialog } from '@angular/material';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { MatChipInputEvent } from '@angular/material/chips';
 
 import { ConfirmDialogComponent } from '@app/shared/dialog';
 import { Book } from '../../models/book.model';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
-
-import { MatChipInputEvent } from '@angular/material/chips';
+declare const firebase: any;
 
 @Component({
   selector: 'app-detail-product',
@@ -22,6 +23,7 @@ export class DetailProductComponent implements OnChanges {
 
   @Output() deleteBook = new EventEmitter<Book>();
   @Output() editingBook = new EventEmitter<Book>();
+  @Output() coverURL = new EventEmitter<string>();
 
   @ViewChild('bookName', { static: true }) bookNameInput: ElementRef;
 
@@ -34,6 +36,19 @@ export class DetailProductComponent implements OnChanges {
   addOnBlur = true;
   selectable = true;
   isEdit = false;
+
+  uploadProcess = 0;
+
+  previewImage = null;
+  uploadedImageUrl = null;
+
+  uploadMode = false;
+  uploadSuccess = false;
+
+  uploadImages = [];
+  uploadingImages = [];
+
+  storageRef = firebase.storage().ref();
 
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
@@ -144,15 +159,76 @@ export class DetailProductComponent implements OnChanges {
   }
 
   saveBook() {
-    console.log(this.firstFormGroup.value);
-    console.log(this.secondFormGroup.value);
-
     const editBook = {
       ...this.firstFormGroup.value,
       ...this.secondFormGroup.value
     }
 
     this.editingBook.emit(editBook);
+  }
+
+
+  onSelectImage(image: any) {
+    const uploadImage = image.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      this.previewImage = reader.result;
+    };
+    reader.readAsDataURL(uploadImage);
+
+    setTimeout(() => {
+      this.uploadSuccess = true;
+      this.uploadImageToFirebase(uploadImage);
+    }, 1000);
+  }
+
+  uploadImageToFirebase(uploadImage) {
+    const metadata = {
+      contentType: 'image/jpeg'
+    };
+
+    const uploadTask = this.storageRef
+      .child(uploadImage.name)
+      .put(uploadImage, metadata);
+
+    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+      (snapshot) => this.catchUploadProcess(snapshot),
+      (error) => this.catchUploadError(error));
+
+    uploadTask.then((snapshot) => {
+      snapshot.ref.getDownloadURL().then((url) => {
+        if (url) {
+          this.uploadSuccess = false;
+          this.uploadedImageUrl = url;
+        }
+      });
+    });
+  }
+
+  catchUploadProcess(snapshot): number {
+    return this.uploadProcess = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+  }
+
+  catchUploadError(error: any) {
+    switch (error.code) {
+      case 'storage/unauthorized':
+        alert('storage/unauthorized');
+        this.uploadProcess = -1;
+        break;
+      case 'storage/canceled':
+        alert('storage/canceled');
+        this.uploadProcess = -1;
+        break;
+      case 'storage/unknown':
+        alert('storage/unknown');
+        this.uploadProcess = -1;
+        break;
+    }
+  }
+
+  selectUploadMode() {
+    this.uploadMode = true;
   }
 }
 

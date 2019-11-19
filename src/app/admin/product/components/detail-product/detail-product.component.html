@@ -1,5 +1,7 @@
-<button mat-raised-button color="primary" (click)="editBook()">Sửa</button>
-<button mat-raised-button color="primary" *ngIf="isEdit" (click)="saveBook()">Lưu</button>
+<div class="actions">
+  <button mat-raised-button color="primary" (click)="editBook()" class="edit-btn">Sửa</button>
+  <button mat-raised-button color="primary" *ngIf="isEdit" (click)="saveBook()" class="save-btn">Lưu</button>
+</div>
 
 <mat-vertical-stepper [linear]="'false'" #stepper class="book-detail">
   <mat-step [stepControl]="firstFormGroup">
@@ -82,12 +84,38 @@
 
   <mat-step>
     <ng-template matStepLabel>Hình ảnh</ng-template>
+
     <div class="book-cover-container">
-      <img class="book-cover" src="{{selectedBook.image}}" alt="">
+
+      <div class="loading-spinner">
+        <mat-spinner *ngIf="isEdit && uploadSuccess"></mat-spinner>
+      </div>
+
+      <div class="input-image" *ngIf="isEdit">
+        <input type="file" id="file" class="inputfile" (change)="onSelectImage($event)">
+        <label for="file">
+          <i class="material-icons"> add_photo_alternate </i>
+        </label>
+      </div>
+
+      <img 
+        *ngIf="uploadedImageUrl" 
+        [ngClass]="{'filter-image': uploadSuccess}" 
+        class="book-cover"
+        src="{{uploadedImageUrl}}">
+
+      <img 
+        *ngIf="!uploadedImageUrl && selectedBook.image" 
+        [ngClass]="{'filter-image': uploadSuccess}"
+        class="book-cover" 
+        src="{{selectedBook.image}}">
+
     </div>
+
     <div>
       <button mat-button matStepperPrevious>Trở về</button>
     </div>
+
   </mat-step>
 
 </mat-vertical-stepper>
