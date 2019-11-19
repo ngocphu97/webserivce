@@ -183,7 +183,7 @@ export class BooksTypeChartComponent implements OnDestroy {
 
   getBookByCategoryId(id) {
 
-    // gọi api 
+    // g?i api 
 
     this.books$.pipe().subscribe((books: any) => {
       if (books) {
@@ -215,12 +215,12 @@ export class BooksTypeChartComponent implements OnDestroy {
 }
 
 // client
-// tạo sách => lấy id => tạo hình
-// xóa sách
-// tìm 
-// chi tiết
-// sách đề xuất => most search
+// t?o s�ch => l?y id => t?o h�nh
+// x�a s�ch
+// t�m 
+// chi ti?t
+// s�ch d? xu?t => most search
 
 // admin
-// thêm chi tiết sách
+// th�m chi ti?t s�ch
 // module phieu de xuat   
