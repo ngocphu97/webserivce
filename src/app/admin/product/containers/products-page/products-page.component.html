@@ -15,11 +15,7 @@
 
 </div>
 
-<ng-container *ngIf="(books$ | async) 
-                      && (books$ | async).length > 0 
-                      && (categories$ | async) 
-                      && (categories$ | async).length > 0; 
-                      else lonely">
+<ng-container *ngIf="(books$ | async) && (categories$ | async); else lonely">
   <app-product-table 
       [books]="books$ | async" 
       [categories]="categories$ | async"

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 
 import { Observable } from 'rxjs';
@@ -17,6 +17,7 @@ import { AddBook, Book } from '../../models';
 @Component({
   selector: 'app-products-page',
   templateUrl: './products-page.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./products-page.component.css']
 })
 export class ProductsPageComponent {
@@ -29,15 +30,18 @@ export class ProductsPageComponent {
   categories: Array<Categories>
   findBook: Book;
 
-  constructor(private store: Store<State>, public dialog: MatDialog) {
-
-    this.loading$ = this.store.pipe(select(fromBooksSelector.selectLoading));
-
+  constructor(
+    private store: Store<State>,
+    public dialog: MatDialog
+  ) {
     this.store.dispatch(getBookList());
-    this.books$ = this.store.pipe(select(fromBooksSelector.selectBookList));
-
     this.store.dispatch(getCategoriesList());
+
+    this.books$ = this.store.pipe(select(fromBooksSelector.selectBookList));
+    this.loading$ = this.store.pipe(select(fromBooksSelector.selectLoading));
     this.categories$ = this.store.pipe(select(fromCategoriesSelector.selectCategoriesList));
+
+    this.books$.subscribe(x => console.log(x));
 
     this.categories$.pipe(
       takeUntilDestroy(this)
@@ -65,6 +69,6 @@ export class ProductsPageComponent {
         this.store.dispatch(addBook({ book: result }));
       }
     });
-  } 
+  }
 }
 

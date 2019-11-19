@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 
 import { Book, AddBook } from '../../models/book.model';
+import { BookCover } from '../../models';
 
 export const getBookList = createAction(
 	'[Book] Get Book List'
@@ -121,22 +122,16 @@ export const addBookCoverFail = createAction(
   props<{ error: any }>()
 );
 
+export const updateBookCover = createAction(
+  '[Book] Update book cover',
+  props<{ bookCover: BookCover }>()
+);
 
-export enum ExploreActionTypes {
-	GET_BOOK_LIST = '[Book] Get Book List',
-	GET_BOOK_SUCCESS = '[Book] Get Book List Success',
-	GET_BOOK_FAILURE = '[Book] Get Book List Fail',
+export const updateBookCoverSuccess = createAction(
+  '[Book] Update book cover success',
+);
 
-	ADD_BOOK = '[Book] Add Book',
-	ADD_BOOK_SUCCESS = '[Book] Add Book Success',
-	ADD_BOOK_FAIL = '[Book] Add Book Fail',
-
-	GET_BOOK_BY_ID = '[Book] Get Book By Id',
-	GET_BOOK_BY_ID_SUCCESS = '[Book] Get Book By Id Success',
-	GET_BOOK_BY_ID_FAIL = '[Book] Get Book By Id Fail',
-
-	DELETE_BOOK = '[Book] Delete Book',
-	DELETE_BOOK_SUCCESS = '[Book] Delete Book Success',
-	DELETE_BOOK_FAIL = '[Book] Delete Book Fail',
-
-}
+export const updateBookCoverFail = createAction(
+  '[Book] Update book cover fail',
+  props<{ error: any }>()
+);

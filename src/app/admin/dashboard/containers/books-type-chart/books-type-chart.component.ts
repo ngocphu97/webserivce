@@ -182,15 +182,13 @@ export class BooksTypeChartComponent implements OnDestroy {
   }
 
   getBookByCategoryId(id) {
-
-    // g?i api 
-
     this.books$.pipe().subscribe((books: any) => {
       if (books) {
         this.dataSource = books
           .filter(book => book.category_id === id)
           .map(book => {
             return {
+              id: book.id,
               inventory: book.inventory,
               name: book.name,
               amounts: book.amount,
@@ -206,21 +204,8 @@ export class BooksTypeChartComponent implements OnDestroy {
   }
 
   selectRow(row) {
-    this.findBook = row;
-    this.router.navigate(
-      ['/admin/books'],
-      { queryParams: { id: row.id } }
-    );
+    this.zone.run(() => {
+      this.router.navigate([`admin/books/${row.id}`]);
+    });
   }
 }
-
-// client
-// t?o sách => l?y id => t?o hình
-// xóa sách
-// tìm 
-// chi ti?t
-// sách d? xu?t => most search
-
-// admin
-// thêm chi ti?t sách
-// module phieu de xuat   

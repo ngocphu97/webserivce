@@ -42,14 +42,13 @@ export class BookEffect {
       delete addBook.photo;
       return this.bookService.addBook(addBook).pipe(
         map((res) => {
-          this.bookService.addBookCover(book.photo, book.sku, res.insertId).subscribe(res => console.log(res));
+          if(book.photo) {
+            this.bookService.addBookCover(book.photo, res.insertId).subscribe(res => console.log(res));
+          } else {
+            this.bookService.addBookCover('https://www.blueinkreview.com/wp-content/uploads/2016/07/nocover-1.jpg', res.insertId).subscribe(res => console.log(res));
+          }
 
-          return bookActions.addBookSuccess({
-            book: {
-              ...addBook,
-              id: res.insertId
-            }
-          })
+          return bookActions.getBookList();
         }),
         catchError(error => of(bookActions.getBookListFail({ error: error })))
       )
@@ -106,6 +105,20 @@ export class BookEffect {
         map(() => {
           this.openSnackBar('Update book success', 'success');
           return bookActions.updateBookByIdSuccess({ book: book });
+        }),
+        catchError(error => of(bookActions.updateBookByIdFail({ error: error })))
+      )
+    })
+  ));
+
+  updateBookCover$ = createEffect(() => this.actions$.pipe(
+    ofType(bookActions.updateBookCover),
+    map((action: any) => action.bookCover),
+    exhaustMap((bookCover) => {
+      return this.bookService.updateBookCover(bookCover).pipe(
+        map((res) => {
+          console.log('Log Message: BookEffect -> res', res);
+          return bookActions.getBookList();
         }),
         catchError(error => of(bookActions.updateBookByIdFail({ error: error })))
       )

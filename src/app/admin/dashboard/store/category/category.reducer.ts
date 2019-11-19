@@ -30,11 +30,10 @@ export const categoriesReducer = createReducer(
   }),
 
   on(CategoriesActions.getCategoryForAmountSuccess, (state, { categoryForAmountList }) => {
-    const newState = {
+    return {
       ...state,
       categoryForAmountList: categoryForAmountList
     }
-    return newState;
   }),
 
 );

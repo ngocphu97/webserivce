@@ -1,5 +1,8 @@
 <div class="display-center mat-elevation-z1 data-table">
   <div class="book-list">
+
+    {{ books.length }}
+
     <mat-table matSort [dataSource]="dataSource" class="table">
 
       <ng-container matColumnDef="image">

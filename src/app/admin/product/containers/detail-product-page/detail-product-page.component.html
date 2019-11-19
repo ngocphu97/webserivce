@@ -3,6 +3,7 @@
     [selectedBook]="selectedBook$ | async" 
     [categories]="categoryList$ | async"
     (editingBook)="onEditBook($event)"
+    (updateBookCover)="onEditCoverPhoto($event)"
     (deleteBook)="onDeleteBook($event)">
 	</app-detail-product>
 </div>

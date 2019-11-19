@@ -131,8 +131,13 @@ function Books() {
   }
 
   this.uploadBookCoverPhoto = (request, response) => {
-    const bookQuery = 'insert into book_cover set photo = ?, sku = ?, book_id = ?';
-    queryDB(connection, response, bookQuery, [request.photo, request.sku, request.bookId]);
+    const bookQuery = 'insert into cover set photo = ?, bookId = ?';
+    queryDB(connection, response, bookQuery, [request.photo, request.bookId]);
+  }
+
+  this.updateBookCoverPhoto = (request, response) => {
+    const bookQuery = 'update cover set photo = ? where bookId = ?';
+    queryDB(connection, response, bookQuery, [request.photo, request.bookId]);
   }
 
   this.getBookCover = (request, response) => {

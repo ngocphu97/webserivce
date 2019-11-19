@@ -24,6 +24,7 @@ export class DetailProductComponent implements OnChanges {
   @Output() deleteBook = new EventEmitter<Book>();
   @Output() editingBook = new EventEmitter<Book>();
   @Output() coverURL = new EventEmitter<string>();
+  @Output() updateBookCover = new EventEmitter();
 
   @ViewChild('bookName', { static: true }) bookNameInput: ElementRef;
 
@@ -201,6 +202,7 @@ export class DetailProductComponent implements OnChanges {
         if (url) {
           this.uploadSuccess = false;
           this.uploadedImageUrl = url;
+          this.updateBookCover.emit({ bookId: this.selectedBook.id, photo: url });
         }
       });
     });

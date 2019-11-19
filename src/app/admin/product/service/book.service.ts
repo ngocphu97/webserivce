@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Book, AddBook } from '../models/book.model';
 import { environment } from 'src/environments/environment';
+import { BookCover } from '../models';
 
 @Injectable()
 export class BookService {
@@ -39,8 +40,12 @@ export class BookService {
     return this.http.put<Book>(`${this.baseUrl}/books/${book.id}`, book);
   }
 
-  addBookCover(photo: string, sku: string, bookId: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/books/uploadcover`, { photo, sku, bookId });
+  updateBookCover(bookCover: BookCover): Observable<any> {
+    return this.http.put(`${this.baseUrl}/books/${bookCover.id}/cover`, bookCover);
+  }
+
+  addBookCover(photo: string, bookId: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/books/uploadcover`, { photo, bookId });
   }
   
   upload(file) {

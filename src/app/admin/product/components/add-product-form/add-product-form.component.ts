@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { takeUntilDestroy } from '@app/core/destroyable';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { BookCover } from '../../models';
 
 @Component({
   selector: 'app-add-product-form',
@@ -57,8 +58,8 @@ export class AddProductFormComponent implements OnInit {
     });
   }
 
-  onCoverURL(coverUrl: string) {
-    this.form.controls['photo'].setValue(coverUrl);
+  onCoverURL(bookCover: BookCover) {
+    this.form.controls['photo'].setValue(bookCover);
   }
 
   onSubmit(): void {

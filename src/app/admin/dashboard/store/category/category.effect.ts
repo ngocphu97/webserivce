@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 
-import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
+import { Actions, ofType, createEffect } from '@ngrx/effects';
 import {  catchError, exhaustMap, map } from 'rxjs/operators';
 
 import * as fromActions from './category.actions'
 import { DashboardService } from '../../services/dashboard.service';
 
-// import { MatSnackBar } from '@angular/material';
 
 @Injectable()
 export class CategoriesEffect {
@@ -16,8 +15,8 @@ export class CategoriesEffect {
     ofType(fromActions.getCategoriesList),
     exhaustMap(() => {
       return this.service.getBookCategories().pipe(
-        map((res: any) => {
-          return fromActions.getCategoriesListSuccess({ categoriesList: res })
+        map((categories: any) => {
+          return fromActions.getCategoriesListSuccess({ categoriesList: categories })
         }),
         catchError(error => of(fromActions.getCategoriesListFail({ error: error })))
       );
@@ -28,9 +27,8 @@ export class CategoriesEffect {
     ofType(fromActions.getCategoryForAmount),
     exhaustMap(() => {
       return this.service.getCategoryForAmount().pipe(
-        map((res: any) => {
-          console.log(res);
-          return fromActions.getCategoryForAmountSuccess({ categoryForAmountList: res })
+        map((categories: any) => {
+          return fromActions.getCategoryForAmountSuccess({ categoryForAmountList: categories })
         }),
         catchError(error => of(fromActions.getCategoriesListFail({ error: error })))
       );
@@ -40,13 +38,6 @@ export class CategoriesEffect {
   constructor(
     private actions$: Actions,
     private service: DashboardService,
-    // private snackBar: MatSnackBar
   ) { }
-
-  // private openSnackBar(message: string, action: string): void {
-  //   this.snackBar.open(message, action, {
-  //     duration: 2000,
-  //   });
-  // }
 
 }

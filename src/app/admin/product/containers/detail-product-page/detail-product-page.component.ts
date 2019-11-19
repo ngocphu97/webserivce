@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 
 import { Book } from '../../models/book.model';
 import { State } from '../../store/reducers';
-import { deleteBook, getBookById, getBookList, updateBookById } from '../../store/actions';
+import { deleteBook, getBookById, getBookList, updateBookById, updateBookCover } from '../../store/actions';
 import { selectCurrentBook } from '../../store/selector';
 import { getCategoriesList } from 'src/app/admin/dashboard/store/category/category.actions';
 import { selectCategoriesList } from 'src/app/admin/dashboard/store/category/category.selector';
@@ -46,5 +46,9 @@ export class DetailProductPageComponent {
 
   onEditBook(book) {
     this.store.dispatch(updateBookById({ book: { ...book, id: this.bookId } }));
+  }
+
+  onEditCoverPhoto(coverPhoto) {
+    this.store.dispatch(updateBookCover({ bookCover: coverPhoto }));
   }
 }

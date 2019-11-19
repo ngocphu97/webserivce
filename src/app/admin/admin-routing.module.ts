@@ -18,11 +18,6 @@ const routes: Routes = [
         data: { animation: 'open' }
       },
       {
-        path: 'users',
-        loadChildren: () => import('./user/user.module').then(m => m.UserModule),
-        data: { animation: 'open' }
-      },
-      {
         path: 'books',
         loadChildren: () => import('./product/product.module').then(m => m.ProductModule),
         data: { animation: 'open' }

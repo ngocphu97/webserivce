@@ -1,6 +1,6 @@
-<div>
+<div  class="input-image">
   <input type="file" id="file" class="inputfile" (change)="onSelectImage($event)">
-  <label for="file">  
+  <label for="file">
     <i class="material-icons">add_photo_alternate</i>
   </label>
 </div>
@@ -8,10 +8,6 @@
 <img *ngIf="previewImage && !uploadedImageUrl" src="{{previewImage}}" alt="">
 
 <img *ngIf="uploadedImageUrl" src="{{uploadedImageUrl}}" alt="">
-
-<button mat-raised-button type="button" (click)="uploadImageToFirebase()">
-  Lưu lại
-</button>
 
 {{ uploadProcess | json }}
 

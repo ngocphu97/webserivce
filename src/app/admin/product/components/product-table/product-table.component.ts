@@ -28,16 +28,14 @@ export class ProductTableComponent implements OnChanges {
   dataSource: MatTableDataSource<any>;
   imageBlobUrl: any;
   selectedBook: any;
-
-  booksFake: Array<any> = [];
-
   displayedColumns: string[] = ['image', 'name', 'category', 'cost', 'inventory', 'amount', 'action'];
 
-  constructor(private router: Router) { 
+  constructor(private router: Router) {
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.books && changes.categories) {
+    if (changes.books) {
       this.categories = this.categories.map(cat => {
         return {
           ...cat,

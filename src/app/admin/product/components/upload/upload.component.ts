@@ -1,14 +1,11 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { BookService } from '../../service';
-import { DialogComponent } from '../dialog/dialog.component';
 
 declare const firebase: any;
 
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
-  styleUrls: ['./upload.component.css']
+  styleUrls: ['./upload.component.scss']
 })
 export class UploadComponent {
 
@@ -27,50 +24,43 @@ export class UploadComponent {
 
   storageRef = firebase.storage().ref();
 
-  constructor(public dialog: MatDialog, public uploadService: BookService) { }
-
-  public openUploadDialog() {
-    this.dialog.open(DialogComponent, {
-      width: '50%',
-      height: '50%',
-    })
-  }
-
   onSelectImage(image: any) {
     const uploadImage = image.target.files[0];
-
     const reader = new FileReader();
-    reader.onload = () => {
-      this.previewImage = reader.result;
-      this.uploadingImages.push(this.previewImage);
-      this.uploadImages.push(image.target.files[0]);
-    };
-    reader.readAsDataURL(image.target.files[0]);
+
+    reader.onload = () => this.previewImage = reader.result;
+    reader.readAsDataURL(uploadImage);
+
+    setTimeout(() => {
+      this.uploadSuccess = true;
+      this.uploadImageToFirebase(uploadImage);
+    }, 1000);
   }
 
-  uploadImageToFirebase() {
-    this.uploadImages.forEach(uploadImage => {
+  uploadImageToFirebase(uploadImage) {
 
-      const metadata = {
-        contentType: 'image/jpeg'
-      };
+    const metadata = {
+      contentType: 'image/jpeg'
+    };
 
-      const uploadTask = this.storageRef
-        .child(uploadImage.name)
-        .put(uploadImage, metadata);
+    const uploadTask = this.storageRef
+      .child(uploadImage.name)
+      .put(uploadImage, metadata);
 
-      uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
-        (snapshot) => this.catchUploadProcess(snapshot),
-        (error) => this.catchUploadError(error));
+    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+      (snapshot) => this.catchUploadProcess(snapshot),
+      (error) => this.catchUploadError(error));
 
-      uploadTask.then((snapshot) => {
-        snapshot.ref.getDownloadURL().then((url) => {
+    uploadTask.then((snapshot) => {
+      snapshot.ref.getDownloadURL().then((url) => {
+        if(url) {
+          this.uploadSuccess = false;
           this.uploadedImageUrl = url;
           this.coverURL.emit(url);
-        });
+        }
       });
-
     });
+
   }
 
   catchUploadProcess(snapshot): number {

@@ -63,6 +63,10 @@ router
   .put('/:id/', (request, response) => {
     tryCall(books.updateBook(request.body, response))
   })
+  
+  .put('/:id/cover', (request, response) => {
+    tryCall(books.updateBookCoverPhoto(request.body, response))
+  })
 
   .delete('/:id', (request, response) => {
     tryCall(books.deleteBook(request.params, response))
