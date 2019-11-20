@@ -66,7 +66,7 @@ function Books() {
   };
 
   this.getBookById = (reqeset, response) => {
-    const bookQuery = 'select * from books where id = ?';
+    const bookQuery = 'select *, categories.name, books.description from books left join categories on books.category_id=categories.id  where books.id = ?';
     queryDB(connection, response, bookQuery, reqeset.id);
   };
 
