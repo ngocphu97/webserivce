@@ -1,8 +1,6 @@
 <div class="display-center mat-elevation-z1 data-table">
   <div class="book-list">
 
-    {{ books.length }}
-
     <mat-table matSort [dataSource]="dataSource" class="table">
 
       <ng-container matColumnDef="image">
@@ -12,34 +10,34 @@
       </ng-container>
 
       <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Tên </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.name | slice:0:40}} </mat-cell>
       </ng-container>
 
 
       <ng-container matColumnDef="category">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Category </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Thể loại </mat-header-cell>
         <mat-cell *matCellDef="let element">
           <span>{{element.categoryName}} </span>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="cost">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Cost </mat-header-cell >
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Giá nhập </mat-header-cell >
         <mat-cell *matCellDef="let element">
           <span>{{element.cost | currency:'VND'}} </span>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="inventory">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Inventory </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Tồn kho </mat-header-cell>
         <mat-cell *matCellDef="let element">
           <span>{{element.inventory}} </span>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="amount">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Amount </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Số lượng nhập </mat-header-cell>
         <mat-cell *matCellDef="let element">
           <span class="quantity-indicator text-truncate" [ngClass]="{'danger': element.amount < 10}"></span>
           <span>{{element.amount}} </span>
@@ -47,11 +45,14 @@
       </ng-container>
 
       <ng-container matColumnDef="action">
-        <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
         <mat-cell *matCellDef="let element">
           <a mat-icon-button color="primary" routerLink="./{{element.id}}">
             <i class="material-icons"> edit </i>
           </a>
+          <button mat-icon-button color="warn" (click)="onDeleteBook(element)">
+            <i class="material-icons"> delete </i>
+          </button>
         </mat-cell>
       </ng-container>
 
@@ -59,9 +60,7 @@
       <mat-row 
         matRipple 
         class="row" 
-        (click)="selectRow(row)"
         *matRowDef="let row; columns: displayedColumns;" 
-        [ngClass]="{'selected': selectedRowIndex == row.id}" 
         >
       </mat-row>
     </mat-table>

@@ -10,6 +10,8 @@ import { deleteBook, getBookById, getBookList, updateBookById, updateBookCover }
 import { selectCurrentBook } from '../../store/selector';
 import { getCategoriesList } from 'src/app/admin/dashboard/store/category/category.actions';
 import { selectCategoriesList } from 'src/app/admin/dashboard/store/category/category.selector';
+import { ConfirmDialogComponent } from '@app/shared/dialog';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-detail-product-page',
@@ -23,15 +25,16 @@ export class DetailProductPageComponent {
   bookId: number;
 
   constructor(
+    private router: Router,
     private store: Store<State>,
     private route: ActivatedRoute,
-    private router: Router
+    public dialog: MatDialog
   ) {
     this.route.paramMap.subscribe(params => {
       this.bookId = parseInt(params.get('bookId'), 0);
       this.store.dispatch(getBookById({ bookId: this.bookId }));
     });
-    
+
     this.store.dispatch(getCategoriesList());
     this.store.dispatch(getBookList());
     this.selectedBook$ = this.store.pipe(select(selectCurrentBook));
@@ -40,8 +43,21 @@ export class DetailProductPageComponent {
   }
 
   onDeleteBook(book: Book) {
-    this.store.dispatch(deleteBook({ book }));
-    this.router.navigate(['/admin/books']);
+    this.dialog
+      .open(ConfirmDialogComponent, {
+        width: '500px',
+        data: {
+          title: 'Delete book',
+          message: 'Are you sure to delete this book?'
+        }
+      })
+      .afterClosed()
+      .subscribe((result: boolean) => {
+        if (result) {
+          this.store.dispatch(deleteBook({ book }));
+          this.router.navigate(['/admin/books']);
+        }
+      });
   }
 
   onEditBook(book) {

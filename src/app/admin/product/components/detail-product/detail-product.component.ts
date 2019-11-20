@@ -103,20 +103,6 @@ export class DetailProductComponent implements OnChanges {
     }
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '450px',
-      data: {
-        message: 'Are you sure you want to delete this book?',
-        title: 'Delete book'
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      result ? this.onDeleteBook() : 'true';
-    });
-  }
-
   onDeleteBook() {
     this.deleteBook.emit(this.selectedBook);
   }

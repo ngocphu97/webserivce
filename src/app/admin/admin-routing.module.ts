@@ -10,7 +10,7 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'books'
+        redirectTo: 'overview'
       },
       {
         path: 'overview',
@@ -29,7 +29,7 @@ const routes: Routes = [
       },
       {
         path: '**',
-        redirectTo: ''
+        redirectTo: 'overview'
       }
     ]
   }

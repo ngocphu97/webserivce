@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProductRoutingModule } from './product-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {
   MatProgressSpinnerModule,
@@ -27,14 +27,14 @@ import {
   MatChipsModule,
   MatRippleModule
 } from '@angular/material';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
-import { COMPONENTS, DialogComponent, AddProductFormComponent } from './components';
-import { CONTAINERS } from './containers';
-
-import { DialogModule } from '@app/shared/dialog';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatFileUploadModule } from 'angular-material-fileupload';
+
+import { CONTAINERS } from './containers';
+import { DialogModule } from '@app/shared/dialog';
+import { ProductRoutingModule } from './product-routing.module';
+import { COMPONENTS, DialogComponent, AddProductFormComponent } from './components';
 
 const MAT_MODULES = [
   MatProgressSpinnerModule,
@@ -86,7 +86,12 @@ const MAT_MODULES = [
     DialogComponent,
     AddProductFormComponent
   ],
-  providers: [],
+  providers: [
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: { displayDefaultIndicatorType: false }
+    }
+  ],
 
 })
 export class ProductModule { }

@@ -13,7 +13,7 @@
 }
 
 .book-cover-container .book-cover {
-  width: 500px;
+  max-width: 350px;
 }
 
 input,
@@ -21,13 +21,18 @@ textarea {
   color: #000000 !important;
 }
 
+.description {
+  line-height: 28px;
+}
+
 .actions {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 1rem;
 
-  .edit-btn {
+  .save-btn {
     margin-right: 5px;
+    margin-left: 5px;
   }
 }
 
@@ -78,4 +83,16 @@ textarea {
 
 .filter-image {
   filter: opacity(0.4);
+}
+
+.material-icons {
+  font-size: 23px;
+}
+
+.navigate-back {
+  transform: rotate(180deg) !important;
+}
+
+.navigate-back-data {
+  margin-right: 5px;
 }

@@ -1,8 +1,8 @@
 <div class="action">
-  <h1> Book management </h1>
+  <h1> Quản lý sách </h1>
 
   <mat-form-field class="filter-field" appearance="outline">
-    <mat-label>Search book</mat-label>
+    <mat-label>Tìm kiếm</mat-label>
     <input matInput (keyup)="applyFilter($event)">
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
@@ -20,19 +20,20 @@
       [books]="books$ | async" 
       [categories]="categories$ | async"
       [findBook]="findBook"
-      [filter]="filterValue">
+      [filter]="filterValue"
+      (deleteBook)="onDeleteBook($event)">
   </app-product-table>
 </ng-container>
 
 <ng-template #lonely>
   <div *ngIf="loading$ | async; else empty" class="loading">
     <mat-spinner></mat-spinner>
-    <div>Loading books</div>
+    <div>Đang tải...</div>
   </div>
 
   <ng-template #empty>
     <div class="d-flex" l10nTranslate>
-      No books around here
+      Hiện tại không có sách
     </div>
   </ng-template>
 

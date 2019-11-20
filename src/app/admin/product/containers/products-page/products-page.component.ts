@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material';
 
 import { State } from '../../store/reducers/book.reducer';
-import { getBookList, addBook, addBookCover } from '../../store/actions';
+import { getBookList, addBook, addBookCover, deleteBook } from '../../store/actions';
 import * as fromBooksSelector from '../../store/selector';
 import * as fromCategoriesSelector from '../../../dashboard/store/category/category.selector';
 import { getCategoriesList } from 'src/app/admin/dashboard/store/category/category.actions';
@@ -13,6 +13,7 @@ import { AddProductFormComponent } from '../../components';
 import { Categories } from 'src/app/admin/dashboard/models/categories.model';
 import { takeUntilDestroy } from '@app/core/destroyable';
 import { AddBook, Book } from '../../models';
+import { ConfirmDialogComponent } from '@app/shared/dialog';
 
 @Component({
   selector: 'app-products-page',
@@ -41,15 +42,13 @@ export class ProductsPageComponent {
     this.loading$ = this.store.pipe(select(fromBooksSelector.selectLoading));
     this.categories$ = this.store.pipe(select(fromCategoriesSelector.selectCategoriesList));
 
-    this.books$.subscribe(x => console.log(x));
-
-    this.categories$.pipe(
-      takeUntilDestroy(this)
-    ).subscribe((cats: Array<Categories>) => {
-      if (cats) {
-        this.categories = cats
-      }
-    });
+    this.categories$
+      .pipe(takeUntilDestroy(this))
+      .subscribe((cats: Array<Categories>) => {
+        if (cats) {
+          this.categories = cats
+        }
+      });
   }
 
   applyFilter(event) {
@@ -69,6 +68,23 @@ export class ProductsPageComponent {
         this.store.dispatch(addBook({ book: result }));
       }
     });
+  }
+
+  onDeleteBook(book: Book) {
+    this.dialog
+      .open(ConfirmDialogComponent, {
+        width: '500px',
+        data: {
+          title: 'Delete book',
+          message: 'Are you sure to delete this book?'
+        }
+      })
+      .afterClosed()
+      .subscribe((result: boolean) => {
+        if (result) {
+          this.store.dispatch(deleteBook({ book }));
+        }
+      });
   }
 }
 

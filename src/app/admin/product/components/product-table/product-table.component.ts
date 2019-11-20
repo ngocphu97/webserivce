@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, Input, ViewChild, SimpleChanges, OnChanges, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { SelectionModel } from '@angular/cdk/collections';
@@ -18,6 +18,8 @@ export class ProductTableComponent implements OnChanges {
   @Input() filter: string = '';
   @Input() findBook: Book;
 
+  @Output() deleteBook = new EventEmitter<Book>();
+
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild('search', { static: true }) exploreFieldInput: MatInput;
@@ -30,9 +32,7 @@ export class ProductTableComponent implements OnChanges {
   selectedBook: any;
   displayedColumns: string[] = ['image', 'name', 'category', 'cost', 'inventory', 'amount', 'action'];
 
-  constructor(private router: Router) {
-
-  }
+  constructor(private router: Router) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.books) {
@@ -69,7 +69,6 @@ export class ProductTableComponent implements OnChanges {
     }
   }
 
-
   applyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
@@ -83,6 +82,10 @@ export class ProductTableComponent implements OnChanges {
 
   stopPropagation(event): void {
     event.stopPropagation()
+  }
+
+  onDeleteBook(book) {
+    this.deleteBook.emit(book);
   }
 
 }
