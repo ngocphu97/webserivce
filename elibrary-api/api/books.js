@@ -32,10 +32,6 @@ router
     tryCall(books.getMostSearchForTimeLine(request.params, response));
   })
 
-  .get('/getLocationFromSKU/:sku', (request, response) => {
-    tryCall(books.getLocationFromSKU(request.params, response));
-  })
-
   .get('/getForCategories/:categoryId/', (request, response) => {
     tryCall(books.getBookByCategory(request.params, response));
   })
@@ -52,8 +48,20 @@ router
     tryCall(books.createBook(request.body, response));
   })
 
-  .post('/upload', (request, response) => {
-    tryCall(books.uploadBookCover(request, response));
+  /*
+      url: http://localhost:3000/books/createHistorySearch
+      param:
+          {
+          "sku": "8935244835199",
+          "name": "Thám Tử Lừng Danh Conan - Tập 96"
+          }
+  */
+  .post('/createHistorySearch', (request, response) => {
+    tryCall(books.createHistorySearch(request.body, response));
+  })
+
+  .post('/deleteBook', (request, response) => {
+    tryCall(books.deleteBook(request.body, response));
   })
 
   .post('/uploadcover', (request, response) => {
@@ -67,9 +75,5 @@ router
   .put('/:id/cover', (request, response) => {
     tryCall(books.updateBookCoverPhoto(request.body, response))
   })
-
-  .delete('/:id', (request, response) => {
-    tryCall(books.deleteBook(request.params, response))
-  });
 
 module.exports = router;
