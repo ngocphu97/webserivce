@@ -47,6 +47,22 @@ export const getBookByIdFail = createAction(
 	props<{ error: any }>()
 );
 
+export const getBookLocationBySku = createAction(
+  '[Book] Get Book Location By SKU',
+  props<{ sku: number }>()
+);
+
+export const getBookLocationBySkuSuccess = createAction(
+  '[Book] Get Book Location By SKU Success',
+  props<{ bookLocation: any }>()
+);
+
+export const getBookLocationBySkuFail = createAction(
+  '[Book] Get Book Location By SKU Fail',
+  props<{ error: any }>()
+);
+
+
 export const getBookByCategoryId = createAction(
   '[Book] Get Book Category Id',
   props<{ categoryId: number }>()

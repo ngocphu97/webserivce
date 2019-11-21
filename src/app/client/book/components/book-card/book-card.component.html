@@ -5,24 +5,22 @@
   </mat-card-header>
   <mat-card-content class="book-content">
     <p class="book-image">
-      <img src="{{book.image}}" alt="Photo of a Shiba Inu">
+      <img src="{{book.image}}">
     </p>
     <p class="book-description">
       {{book.description}}
     </p>
-    <div>
-      <button mat-icon-button [color]="'accent'" *ngFor="let ratingId of ratingArr; index as i" (click)="onClick(i+1)">
-        <mat-icon>
-          {{showIcon(i)}}
-        </mat-icon>
-      </button>
-    </div>
+    
   </mat-card-content>
 
   <mat-card-actions class="book-actions">
-    <button mat-raised-button color='primary' class="action-btn" (click)="openDialog()">
-      See more <mat-icon class="btn-icon">check</mat-icon>
-    </button>
+    <a routerLink="./detail/{{book.sku}}/{{book.id}}" 
+       mat-raised-button 
+       color='primary' 
+       class="action-btn" 
+      >
+      Xem thêm <mat-icon class="btn-icon">check</mat-icon>
+    </a>
   </mat-card-actions>
 
 </mat-card>

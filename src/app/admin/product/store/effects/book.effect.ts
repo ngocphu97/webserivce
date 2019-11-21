@@ -34,6 +34,17 @@ export class BookEffect {
     })
   ));
 
+  getBookLocation$ = createEffect(() => this.actions$.pipe(
+    ofType(bookActions.getBookLocationBySku),
+    map(action => action.sku),
+    exhaustMap((sku: number) => {
+      return this.bookService.getBookLocationBySKU(sku).pipe(
+        map((res: any) => bookActions.getBookLocationBySkuSuccess({ bookLocation: res[0] })),
+        catchError(error => of(bookActions.getBookLocationBySkuFail({ error: error })))
+      );
+    })
+  ));
+
   addBook$ = createEffect(() => this.actions$.pipe(
     ofType(bookActions.addBook),
     map((action: any) => action.book),
@@ -42,10 +53,10 @@ export class BookEffect {
       delete addBook.photo;
       return this.bookService.addBook(addBook).pipe(
         map((res) => {
-          if(book.photo) {
+          if (book.photo) {
             this.bookService.addBookCover(book.photo, res.insertId).subscribe(res => console.log(res));
           } else {
-            this.bookService.addBookCover('https://www.blueinkreview.com/wp-content/uploads/2016/07/nocover-1.jpg', res.insertId).subscribe(res => console.log(res));
+            this.bookService.addBookCover('https://www.blueinkreview.com/wp-c ontent/uploads/2016/07/nocover-1.jpg', res.insertId).subscribe(res => console.log(res));
           }
 
           return bookActions.getBookList();

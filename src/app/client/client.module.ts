@@ -25,6 +25,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { BookService } from '../admin/product/service';
 import { DashboardService } from '../admin/dashboard/services/dashboard.service';
+import { DefaultUrlSerializer } from '@angular/router';
 
 const MATERIALS = [
   MatToolbarModule,
@@ -54,7 +55,8 @@ const MATERIALS = [
   ],
   providers: [
     BookService,
-    DashboardService
+    DashboardService,
+    DefaultUrlSerializer
   ],
 })
 export class ClientModule { }

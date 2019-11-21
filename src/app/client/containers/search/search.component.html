@@ -1,32 +1,16 @@
-<form [formGroup]="stateForm">
+<form [formGroup]="form" (submit)="onSubmit()">
   <mat-form-field appearance="outline" [color]="'primary'" class="search">
     <input 
       type="text" 
-      matInput placeholder="Book name ... " 
-      formControlName="stateGroup" 
-      [matAutocomplete]="autoGroup"
-      (keyup)="onSelectBook($event)"
+      matInput 
+      placeholder="Tìm kiếm sản phầm mong muốn " 
+      formControlName="keyword" 
+      #search
     >
-    <mat-autocomplete 
-        #autoGroup="matAutocomplete" 
-        (optionSelected)="onSelectBook($event)">
-      
-      <mat-option *ngIf="!stateGroupOptions | async" class="is-loading">
-        Loading book
-      </mat-option>
-
-      <ng-container *ngIf="stateGroupOptions | async">
-        <mat-optgroup *ngFor="let group of stateGroupOptions | async" [label]="group.letter">
-          <mat-option *ngFor="let book of group.books" [value]="book.sku">
-            {{book.name}}
-          </mat-option>
-        </mat-optgroup>
-      </ng-container>
-
-  
-    </mat-autocomplete>
-
-    <button mat-button class="search-btn">
+    <button 
+        mat-button class="search-btn" 
+        [routerLink]="['search']"
+        [queryParams]="{ keyword: search.value }">
       <mat-icon matSuffix>search</mat-icon>
     </button>
   </mat-form-field>

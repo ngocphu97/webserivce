@@ -85,7 +85,7 @@ function Books() {
       + 'FROM bookshelf_location_entity be '
       + 'LEFT JOIN books ON be.book_id = books.id '
       + 'LEFT JOIN booshelf_location bl ON be.bookshelf_id = bl.id '
-      + 'WHERE books.sku=?;';
+      + 'WHERE books.sku = ?;';
     queryDB(connection, response, bookQuery, reqeset.sku);
   };
 

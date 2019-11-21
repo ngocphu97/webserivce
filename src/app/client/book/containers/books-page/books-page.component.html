@@ -1,10 +1,10 @@
 <div class="header">
-  <h1 class="title"> wellcome to e library </h1>
+  <h1 class="title"> Chào mừng đến với thư viện ELIBRARY </h1>
 
   <p>
     <mat-form-field class="search-field">
-      <mat-label>Books</mat-label>
-      <input matInput placeholder="Search book name ...." #searchInput>
+      <mat-label>Sách</mat-label>
+      <input matInput placeholder="Tìm kiếm sản phẩm mong muốn" #searchInput>
       <mat-icon class="search-field-icon" matSuffix [routerLink]="['search']"
         [queryParams]="{ keyword: searchInput.value }">search</mat-icon>
     </mat-form-field>
@@ -15,7 +15,7 @@
 
 <div class="loading" *ngIf="(books$ | async).length === 0">
   <mat-spinner></mat-spinner>
-  <p>Loading books ...</p>
+  <p>Đang tải sách</p>
 </div>
 
 
