@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import * as fromContainers from './containers';
-import { BooksResolve } from './service/book.resolve';
 
 const routes: Routes = [
   {
     path: '',
     component: fromContainers.ProductsPageComponent
+  },
+  {
+    path: 'proposal-import',
+    component: fromContainers.ImportProposalPageComponent
   },
   {
     path: 'add-book',

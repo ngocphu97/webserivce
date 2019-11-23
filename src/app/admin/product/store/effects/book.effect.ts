@@ -26,9 +26,12 @@ export class BookEffect {
 
   getBookTopSearch$ = createEffect(() => this.actions$.pipe(
     ofType(bookActions.getTopSearchBooksByTime),
-    exhaustMap(() => {
-      return this.bookService.getBookTopSearch(30).pipe(
-        map((res: any) => bookActions.getTopSearchBooksByTimeSuccess({ topBooks: res })),
+    exhaustMap((action) => {
+      return this.bookService.getBookTopSearch(action.time).pipe(
+        map((res: any) => {
+          console.log(res);
+          return bookActions.getTopSearchBooksByTimeSuccess({ topBooks: res });
+        }),
         catchError(error => of(bookActions.getTopSearchBooksByTimeFail({ error: error })))
       );
     })
@@ -65,21 +68,6 @@ export class BookEffect {
       )
     })
   ));
-
-  // addBookCover$ = createEffect(() => this.actions$.pipe(
-  //   ofType(bookActions.addBookCover),
-  //   map((action: any) => action),
-  //   exhaustMap((action) => {
-  //     return this.bookService.addBookCover(action.photo, action.sku).pipe(
-  //       map((res) => {
-  //         console.log('Log Message: BookEffect -> res', res);
-  //         this.openSnackBar('Add book success', 'success');
-  //         return bookActions.addBookCoverSuccess();
-  //       }),
-  //       catchError(error => of(bookActions.getBookListFail({ error: error })))
-  //     )
-  //   })
-  // ));
 
   getBookById$ = createEffect(() => this.actions$.pipe(
     ofType(bookActions.getBookById),

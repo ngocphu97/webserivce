@@ -88,4 +88,8 @@ export class ProductTableComponent implements OnChanges {
     this.deleteBook.emit(book);
   }
 
+  importProposal(book) {
+    console.log('Log Message: ProductTableComponent -> importProposal -> book', book);
+  }
+
 }

@@ -11,8 +11,12 @@ export class AuthService {
     @Inject(AUTH_CONFIGURATION) private config: AuthConfiguration
   ) { }
 
-  public login(): Observable<any> {
-    return this.http.get(this.config.loginApiURL);
+  // public login(): Observable<any> {
+  //   return this.http.get(this.config.loginApiURL);
+  // }
+
+  login(credential: any): Observable<any> {
+    return this.http.post(this.config.loginApiURL, { email: credential.email, password: credential.password });
   }
 
   getListAdmin(): Observable<any> {

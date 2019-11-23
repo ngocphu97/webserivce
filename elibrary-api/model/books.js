@@ -71,7 +71,7 @@ function Books() {
   };
 
   this.getMostSearchForTimeLine = (reqeset, response) => {
-    const bookQuery = `SELECT sku, name, date_search, COUNT(sku) AS NumberOfSearch
+    const bookQuery = `SELECT sku, name, date_search, COUNT(sku) AS numberOfSearch
                         FROM history_search
                         GROUP BY sku
                         HAVING date_search > DATE_SUB(CURRENT_DATE(), INTERVAL ? DAY)
