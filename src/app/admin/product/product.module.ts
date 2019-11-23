@@ -26,7 +26,8 @@ import {
   MatStepperModule,
   MatChipsModule,
   MatRippleModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatAutocompleteModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
@@ -63,7 +64,8 @@ const MAT_MODULES = [
   MatChipsModule,
   MatRippleModule,
   MatProgressBarModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatAutocompleteModule
 ];
 
 @NgModule({

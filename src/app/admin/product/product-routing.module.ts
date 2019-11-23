@@ -12,6 +12,10 @@ const routes: Routes = [
     component: fromContainers.ImportProposalPageComponent
   },
   {
+    path: 'proposal-import/create',
+    component: fromContainers.AddImportProposalPageComponent
+  },
+  {
     path: 'add-book',
     component: fromContainers.AddProductPageComponent
   },

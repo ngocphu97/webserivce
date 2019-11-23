@@ -1,0 +1,13 @@
+.add-import-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-import-form>* {
+  width: 100%;
+}
+
+
+.submit-btn {
+  width: fit-content !important;
+}
