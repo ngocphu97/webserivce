@@ -18,7 +18,7 @@ const routes: Routes = [
     component: SearchPageComponent
   },
   {
-    path: 'detail/:id',
+    path: 'detail/:sku/:id',
     component: DeatailPageComponent
   },
   {

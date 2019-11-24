@@ -19,7 +19,6 @@ import {
 
 import { COMPONENTS } from './components';
 import { CONTAINERS } from './containers';
-import { BookDetailDialogComponent } from './components/book-detail-dialog/book-detail-dialog.component';
 import { BooksResolve } from 'src/app/admin/product/service/book.resolve';
 import { ScrollingModule } from '@angular/cdk/scrolling'
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -49,9 +48,6 @@ const MATERIALS = [
     NgxPaginationModule,
 
     MATERIALS
-  ],
-  entryComponents: [
-    BookDetailDialogComponent
   ],
   providers: [
     BooksResolve

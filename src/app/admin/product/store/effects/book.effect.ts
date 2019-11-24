@@ -26,10 +26,24 @@ export class BookEffect {
 
   getBookTopSearch$ = createEffect(() => this.actions$.pipe(
     ofType(bookActions.getTopSearchBooksByTime),
-    exhaustMap(() => {
-      return this.bookService.getBookTopSearch(30).pipe(
-        map((res: any) => bookActions.getTopSearchBooksByTimeSuccess({ topBooks: res })),
+    exhaustMap((action) => {
+      return this.bookService.getBookTopSearch(action.time).pipe(
+        map((res: any) => {
+          console.log(res);
+          return bookActions.getTopSearchBooksByTimeSuccess({ topBooks: res });
+        }),
         catchError(error => of(bookActions.getTopSearchBooksByTimeFail({ error: error })))
+      );
+    })
+  ));
+
+  getBookLocation$ = createEffect(() => this.actions$.pipe(
+    ofType(bookActions.getBookLocationBySku),
+    map(action => action.sku),
+    exhaustMap((sku: number) => {
+      return this.bookService.getBookLocationBySKU(sku).pipe(
+        map((res: any) => bookActions.getBookLocationBySkuSuccess({ bookLocation: res[0] })),
+        catchError(error => of(bookActions.getBookLocationBySkuFail({ error: error })))
       );
     })
   ));
@@ -42,10 +56,10 @@ export class BookEffect {
       delete addBook.photo;
       return this.bookService.addBook(addBook).pipe(
         map((res) => {
-          if(book.photo) {
+          if (book.photo) {
             this.bookService.addBookCover(book.photo, res.insertId).subscribe(res => console.log(res));
           } else {
-            this.bookService.addBookCover('https://www.blueinkreview.com/wp-content/uploads/2016/07/nocover-1.jpg', res.insertId).subscribe(res => console.log(res));
+            this.bookService.addBookCover('https://www.blueinkreview.com/wp-c ontent/uploads/2016/07/nocover-1.jpg', res.insertId).subscribe(res => console.log(res));
           }
 
           return bookActions.getBookList();
@@ -54,21 +68,6 @@ export class BookEffect {
       )
     })
   ));
-
-  // addBookCover$ = createEffect(() => this.actions$.pipe(
-  //   ofType(bookActions.addBookCover),
-  //   map((action: any) => action),
-  //   exhaustMap((action) => {
-  //     return this.bookService.addBookCover(action.photo, action.sku).pipe(
-  //       map((res) => {
-  //         console.log('Log Message: BookEffect -> res', res);
-  //         this.openSnackBar('Add book success', 'success');
-  //         return bookActions.addBookCoverSuccess();
-  //       }),
-  //       catchError(error => of(bookActions.getBookListFail({ error: error })))
-  //     )
-  //   })
-  // ));
 
   getBookById$ = createEffect(() => this.actions$.pipe(
     ofType(bookActions.getBookById),

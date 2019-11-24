@@ -8,6 +8,7 @@ export interface State extends EntityState<Book> {
   selectedBookId: number | null;
   topBooks: Array<Book> | null;
   loading: boolean | false;
+  bookLocation: any | null
 }
 
 export function selectBookId(book: Book): number {
@@ -21,7 +22,8 @@ export const adapter: EntityAdapter<Book> = createEntityAdapter<Book>({
 export const initialState: State = adapter.getInitialState({
   selectedBookId: undefined,
   topBooks:  undefined,
-  loading: undefined
+  loading: undefined,
+  bookLocation: undefined
 });
 
 export const bookReducer = createReducer(
@@ -66,6 +68,13 @@ export const bookReducer = createReducer(
       topBooks: topBooks
     }
   }),
+ 
+  on(BookActions.getBookLocationBySkuSuccess, (state, { bookLocation }) => {
+    return {
+      ...state,
+      bookLocation: bookLocation
+    }
+  }),
 
 );
 
@@ -76,6 +85,7 @@ export function reducer(state: State | undefined, action: Action) {
 export const getSelectedBookId = (state: State) => state.selectedBookId;
 export const getSelectedTopSearch = (state: State) => state.topBooks;
 export const getSelectedLoading = (state: State) => state.loading;
+export const getSelectBookLocation = (state: State) => state.bookLocation;
 
 const {
   selectIds,

@@ -1,1 +1,4 @@
-<app-book-card [book]=""></app-book-card>
+<app-book-detail 
+  [book]="book$ | async"
+  [bookLocation]="bookLocation$ | async"
+></app-book-detail>

@@ -71,7 +71,7 @@ function Books() {
   };
 
   this.getMostSearchForTimeLine = (reqeset, response) => {
-    const bookQuery = `SELECT sku, name, date_search, COUNT(sku) AS NumberOfSearch
+    const bookQuery = `SELECT sku, name, date_search, COUNT(sku) AS numberOfSearch
                         FROM history_search
                         GROUP BY sku
                         HAVING date_search > DATE_SUB(CURRENT_DATE(), INTERVAL ? DAY)
@@ -85,7 +85,7 @@ function Books() {
       + 'FROM bookshelf_location_entity be '
       + 'LEFT JOIN books ON be.book_id = books.id '
       + 'LEFT JOIN booshelf_location bl ON be.bookshelf_id = bl.id '
-      + 'WHERE books.sku=?;';
+      + 'WHERE books.sku = ?;';
     queryDB(connection, response, bookQuery, reqeset.sku);
   };
 

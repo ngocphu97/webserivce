@@ -11,6 +11,7 @@ import { Credential, UserProfile } from '../models';
 import { AuthService } from '../services';
 import { LoginPageActions, AuthApiActions, AuthActions, ResetPasswordActions } from '../actions';
 import { LogoutConfirmationDialogComponent } from '../components';
+import { HttpError } from '@app/core/exception';
 
 @Injectable()
 export class AuthEffects {
@@ -19,34 +20,32 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(LoginPageActions.login),
       map(action => action.credential),
-      map((auth: Credential) => {
-        if (auth.email === 'admin@yopmail.com' && auth.password === 'admin') {
-          return AuthApiActions.loginSuccess({ user: auth });
-        } else {
-          return AuthApiActions.loginInvalid({ error: 'User name or password incorrect' })
-        }
-      })
-      // exhaustMap((auth: Credential) => 
-      //   this.authService.login().pipe(
-      //     // map((res: Array<UserProfile>) => {
+      exhaustMap((auth: Credential) => {
+        return this.authService.login(auth).pipe(
+          map((response: any) => {
+            if(response && response.status === 200 && response.result ) {
+              const user: UserProfile = {
+                id: response.result[0].id,
+                username: response.result[0].email,
+                password: response.result[0].password,
+              }
+              return AuthApiActions.loginSuccess({ user });
+            } else {
+              const error: HttpError = {
+                message: response.message,
+                status: response.status,
+                statusText: response.statusText,
+              };
+              return AuthApiActions.loginFailure({ error });
+            }
+          }),
+          catchError(error => {
+            console.log('Log Message: AuthEffects -> error', error);
             
-      //       // const userArray = res.map((user) => {
-      //       //   return {
-      //       //     username: user.username,
-      //       //     password: user.password
-      //       //   };
-      //       // });
-
-      //       // if (userArray.some(user => user.username === auth.username && user.password === auth.password)) {
-      //       //   return AuthApiActions.loginSuccess({user: auth});
-      //       // } else {
-      //       //   return AuthApiActions.loginInvalid({ error: 'User name or password incorrect' })
-      //       // }
-      //     // }),
-      //     // catchError(error => of(AuthApiActions.loginFailure({ error })))
-      //   ))
-    )
-  );
+            return of(AuthApiActions.loginFailure({ error }));
+          })
+      )}) 
+  ));
 
   loginSuccess$ = createEffect(() =>
     this.actions$.pipe(

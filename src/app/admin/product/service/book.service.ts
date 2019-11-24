@@ -32,6 +32,10 @@ export class BookService {
     return this.http.get<Book>(`${this.baseUrl}/books/${bookId}`);
   }
 
+  getBookLocationBySKU(sku: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/books/getLocationFromSKU/${sku}`);
+  }
+
   deleteBookById(bookId: string): Observable<Book> {
     return this.http.delete<Book>(`${this.baseUrl}/books/${bookId}`);
   }

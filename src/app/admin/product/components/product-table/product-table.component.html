@@ -47,10 +47,13 @@
       <ng-container matColumnDef="action">
         <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <a mat-icon-button color="primary" routerLink="./{{element.id}}">
+          <a mat-icon-button color="primary" routerLink="./{{element.id}}" matTooltip="Sửa">
             <i class="material-icons"> edit </i>
           </a>
-          <button mat-icon-button color="warn" (click)="onDeleteBook(element)">
+          <button mat-icon-button color="primary" (click)="importProposal(element)" matTooltip="Yêu cầu thêm sách">
+            <i class="material-icons add-icon"> add </i>
+          </button>
+          <button mat-icon-button color="warn" (click)="onDeleteBook(element)" matTooltip="Xóa">
             <i class="material-icons"> delete </i>
           </button>
         </mat-cell>

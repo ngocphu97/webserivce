@@ -15,8 +15,9 @@ export class BooksPageComponent {
   p: number = 1;
 
   books$: Observable<any>;
+  bookLocation$: Observable<any>;
 
-  constructor(private store: Store<any>, private router: Router) {
+  constructor(private store: Store<any>) {
     this.books$ = this.store.pipe(select(selectBookList));
   }
 

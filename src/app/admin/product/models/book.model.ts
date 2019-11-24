@@ -15,7 +15,8 @@ export interface Book {
 	reviews?: string;
 	amount: number;
 	description: string;
-	photo?: string;
+  photo?: string;
+  
 }
 
 export interface AddBook {

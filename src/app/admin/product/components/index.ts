@@ -4,6 +4,8 @@ import { DetailProductComponent } from './detail-product/detail-product.componen
 import { EditProductFormComponent } from './edit-product-form/edit-product-form.component';
 import { UploadComponent } from './upload/upload.component';
 import { DialogComponent } from './dialog/dialog.component';
+import { ImportProposalFormComponent } from './import-proposal-form/import-proposal-form.component';
+import { ImportProposalTableComponent } from './import-proposal-table/import-proposal-table.component';
 
 export const COMPONENTS = [
 	ProductTableComponent,
@@ -11,7 +13,9 @@ export const COMPONENTS = [
 	DetailProductComponent,
 	EditProductFormComponent,
 	UploadComponent,
-	DialogComponent
+  DialogComponent,
+  ImportProposalFormComponent,
+  ImportProposalTableComponent
 ]
 
 export {
@@ -19,5 +23,7 @@ export {
 	AddProductFormComponent,
 	DetailProductComponent,
 	UploadComponent,
-	DialogComponent
+  DialogComponent,
+  ImportProposalFormComponent,
+  ImportProposalTableComponent
 }

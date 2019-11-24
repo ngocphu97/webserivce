@@ -1,0 +1,21 @@
+table {
+  width: 100%;
+}
+
+tr {
+  height: 60px !important;
+}
+
+.select-book-option {
+  width: 70%;
+}
+
+.select-amount-input {
+  width: 30%;
+}
+
+
+:host::ng-deep.mat-slide-toggle-bar .mat-disabled {
+  background-color: rgba(3, 169, 244, 0.54) !important;
+}
+  

@@ -14,7 +14,7 @@
 <mat-nav-list>
 
   <a mat-list-item class="item" routerLink="/admin/overview" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-    <i class="material-icons">multiline_chart</i> Overview
+    <i class="material-icons">multiline_chart</i> Thống kê chung
   </a>
 
   <a mat-list-item class="item" [routerLink]="['/admin/users']" routerLinkActive="active"
@@ -24,12 +24,12 @@
 
   <a mat-list-item class="item" [routerLink]="['/admin/books']" routerLinkActive="active"
     [routerLinkActiveOptions]="{exact: true}">
-    <i class="material-icons">menu_book</i> Books
+    <i class="material-icons">menu_book</i> Sách
   </a>
 
-  <a mat-list-item class="item" [routerLink]="['/admin/account/settings']" routerLinkActive="active"
+  <a mat-list-item class="item" [routerLink]="['/admin/books/proposal-import']" routerLinkActive="active"
     [routerLinkActiveOptions]="{exact: true}">
-    <i class="material-icons">widgets</i> Settings
+    <i class="material-icons">widgets</i> Yêu cầu nhập sách
   </a>
 
 </mat-nav-list>

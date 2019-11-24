@@ -23,7 +23,7 @@ export class BookPieChartComponent implements OnDestroy {
   topBooks$: Observable<any>;
 
   constructor(private zone: NgZone, private store: Store<any>) {
-    this.store.dispatch(getTopSearchBooksByTime({ time: 30 }));
+    this.store.dispatch(getTopSearchBooksByTime({ time: 90 }));
     this.topBooks$ = this.store.pipe(select(selectTopSearch));
   }
 
@@ -51,8 +51,8 @@ export class BookPieChartComponent implements OnDestroy {
       if(books) {
         chart.data = books.map(book => {
           return {
-            bookName: book.name,
-            searchTime: book.NumberOfSearch
+            bookName: book.name + ` (${book.numberOfSearch} lần) `,
+            searchTime: book.numberOfSearch
           }
         });
       }

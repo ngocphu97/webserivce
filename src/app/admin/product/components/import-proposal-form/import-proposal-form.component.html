@@ -1,0 +1,19 @@
+<form [formGroup]="form" class="add-import-form" (submit)="onSubmit()">
+
+  <mat-form-field>
+    <mat-label>Sách</mat-label>
+    <mat-select formControlName="bookId">
+      <mat-option *ngFor="let book of books" [value]="book.id">
+        {{book.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Số lượng </mat-label>
+    <input matInput type="text" formControlName="amount">
+  </mat-form-field>
+
+  <button mat-raised-button class="submit-btn" color="primary" type="submit">Thêm yêu cầu</button>
+
+</form>

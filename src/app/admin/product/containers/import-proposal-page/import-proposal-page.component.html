@@ -1,0 +1,14 @@
+<div class="action">
+  <h1> Quản lý yêu cầu nhập sách </h1>
+
+  <span>
+    <a routerLink="./create" mat-mini-fab color="primary" >
+      <i class="material-icons">add</i>
+    </a>
+  </span>
+
+</div>
+
+<div class="proposal">
+  <app-import-proposal-table [books]="books$ | async"></app-import-proposal-table>
+</div>
