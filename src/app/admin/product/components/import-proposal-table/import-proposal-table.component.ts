@@ -9,7 +9,7 @@ import { MatSort, MatTableDataSource } from '@angular/material';
 @Component({
   selector: 'app-import-proposal-table',
   templateUrl: './import-proposal-table.component.html',
-  styleUrls: ['./import-proposal-table.component.css']
+  styleUrls: ['./import-proposal-table.component.scss']
 })
 export class ImportProposalTableComponent implements OnInit, OnChanges {
 
@@ -62,8 +62,9 @@ export class ImportProposalTableComponent implements OnInit, OnChanges {
     }
   }
 
-  updateStatus(row) {
-    row.status === false;
+  updateStatus(element) {
+    this.selectImport = element;
+    this.selectImport.status = true;
   }
 
   onChangeBookAmount(newAmount) {
