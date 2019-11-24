@@ -19,43 +19,28 @@ let queryDB = (connection, response, query, fieldData) => {
   });
 }
 
-let querySearch = (connection, response, query, fieldData, page) => {
-  var page = (page < 1 ? 1 : page) || 1;
-  var items = 12;
-  var indexStart, indexEnd;
-  indexStart = (page - 1) * items;
-  indexEnd = indexStart + items;
-  connection.acquire((error, connection) => {
-    if (error) {
-      response.send(error);
-    } else {
-      connection.query(query, fieldData, (error, result) => {
-        if (error) {
-          response.send(error);
-        } else {
-          connection.release();
-          response.send(result.slice(indexStart, indexEnd));
-        }
-      }, (error) => {
-        response.send(error);
-      });
-    }
-  });
-}
-
 function proposalImport() {
 
-  this.getProposalImport = (request, response) => {
+  this.getProposalImport = (_request, response) => {
     let proposalImportQuery = '';
-      proposalImportQuery = `select proposal_import.bookId, books.name as bookName, proposal_import.amount, proposal_import.date, proposal_import.status from proposal_import left join books on proposal_import.bookId=books.id
-      ORDER BY proposal_import.id DESC
-      limit 10`;
-      queryDB(connection, response, proposalImportQuery, '');
+    proposalImportQuery =
+      'select proposal_import.id, proposal_import.bookId, proposal_import.amount, proposal_import.date, proposal_import.status, '
+      + 'books.name as bookName '
+      + 'from proposal_import '
+      + 'left join books on proposal_import.bookId = books.id'
+      + 'ORDER BY proposal_import.id DESC';
+
+    queryDB(connection, response, proposalImportQuery, '');
   };
 
-  this.getProposalImportById = (reqeset, response) => {
-    const proposalImportQuery = 'select proposal_import.bookId, books.name as bookName, proposal_import.amount, proposal_import.date, proposal_import.status from proposal_import left join books on proposal_import.bookId=books.id where proposal_import.id = ?';
-    queryDB(connection, response, proposalImportQuery, reqeset.id);
+  this.getProposalImportById = (request, response) => {
+    const proposalImportQuery =
+      'select proposal_import.id, proposal_import.bookId, '
+      + 'books.name as bookName, proposal_import.amount, proposal_import.date, proposal_import.status '
+      + 'from proposal_import left join books on proposal_import.bookId = books.id '
+      + 'where proposal_import.id = ?';
+
+    queryDB(connection, response, proposalImportQuery, request.id);
   };
 
   this.createProposalImport = (fieldData, response) => {
@@ -64,8 +49,32 @@ function proposalImport() {
   };
 
   this.updateProposalImport = (fieldData, response) => {
-    const proposalImportQuery = 'update proposal_import set ? where id = ?';
-    queryDB(connection, response, proposalImportQuery, [fieldData, fieldData.id]);
+
+    connection.acquire((error, connection) => {
+      if (error) {
+        response.send(error);
+      } else {
+        connection.query('select status from proposal_import where id = ?', fieldData.id, (error, result) => {
+          if (error) {
+            response.send(error);
+          } else {
+            if (result[0].status) {
+              response.send({ 
+                code: 405,
+                mess: 'ko the update dc ' 
+              });
+              connection.release();
+            } else {
+              const proposalImportQuery = 'update proposal_import set ? where id = ?';
+              queryDB(connection, response, proposalImportQuery, [fieldData, fieldData.id]);
+            }
+          }
+        }, (error) => {
+          response.send(error);
+        });
+      }
+    });
+    
   };
 }
 

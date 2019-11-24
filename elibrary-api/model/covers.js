@@ -19,30 +19,6 @@ let queryDB = (connection, response, query, fieldData) => {
   });
 }
 
-let querySearch = (connection, response, query, fieldData, page) => {
-  var page = (page < 1 ? 1 : page) || 1;
-  var items = 12;
-  var indexStart, indexEnd;
-  indexStart = (page - 1) * items;
-  indexEnd = indexStart + items;
-  connection.acquire((error, connection) => {
-    if (error) {
-      response.send(error);
-    } else {
-      connection.query(query, fieldData, (error, result) => {
-        if (error) {
-          response.send(error);
-        } else {
-          connection.release();
-          response.send(result.slice(indexStart, indexEnd));
-        }
-      }, (error) => {
-        response.send(error);
-      });
-    }
-  });
-}
-
 function Covers() {
 
   this.createCover = (fieldData, response) => {

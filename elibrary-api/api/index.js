@@ -3,14 +3,14 @@ const swaggerUi = require('swagger-ui-express');
 const booksRoutes = require('./books');
 const usersRoutes = require('./users');
 const categoriesRoutes = require('./categories');
-const swaggerDocument = require('./swagger.json');
 const proposalImportRoutes = require('./proposal-import');
+const swaggerDocument = require('./swagger.json');
 
 const api = ((app) => {
 	app.use('/books', booksRoutes);
   app.use('/users', usersRoutes);
-  app.use('/proposal-import', proposalImportRoutes);
   app.use('/categories', categoriesRoutes);
+  app.use('/proposal-import', proposalImportRoutes);
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 });
 
