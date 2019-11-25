@@ -23,13 +23,12 @@ export class DeatailPageComponent implements OnInit, OnDestroy {
         this.store.dispatch(getBookById({ bookId: params['id'] }));
       }
       if (params['sku']) {
-        console.log('Log Message: ', params['sku']);
         this.store.dispatch(getBookLocationBySku({ sku: params['sku'] }))
       }
     })
 
-    this.book$ = this.store.pipe(select(selectCurrentBook));
     this.bookLocation$ = this.store.pipe(select(selectBookLocationBySku));
+    this.book$ = this.store.pipe(select(selectCurrentBook));
 
   }
 

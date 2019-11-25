@@ -23,16 +23,9 @@
       </ng-container>
 
       <ng-container matColumnDef="cost">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Giá nhập </mat-header-cell >
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Giá nhập </mat-header-cell>
         <mat-cell *matCellDef="let element">
           <span>{{element.cost | currency:'VND'}} </span>
-        </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="inventory">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Tồn kho </mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <span>{{element.inventory}} </span>
         </mat-cell>
       </ng-container>
 
@@ -45,7 +38,7 @@
       </ng-container>
 
       <ng-container matColumnDef="action">
-        <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
         <mat-cell *matCellDef="let element">
           <a mat-icon-button color="primary" routerLink="./{{element.id}}" matTooltip="Sửa">
             <i class="material-icons"> edit </i>
@@ -60,11 +53,7 @@
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns" class="table-head"></mat-header-row>
-      <mat-row 
-        matRipple 
-        class="row" 
-        *matRowDef="let row; columns: displayedColumns;" 
-        >
+      <mat-row matRipple class="row" *matRowDef="let row; columns: displayedColumns;">
       </mat-row>
     </mat-table>
 

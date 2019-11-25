@@ -31,7 +31,8 @@ export class AddProductFormComponent implements OnInit {
       retailPrice: { required: true },
       amount: { required: true },
       distributor: { required: true },
-      publishDate: { required: true }
+      publishDate: { required: true },
+      location: { required: true }
     };
 
     this.form = this.formBuilder.group({
@@ -46,6 +47,7 @@ export class AddProductFormComponent implements OnInit {
       language: [null],
       publishDate: [null, Validators.required],
       description: [null],
+      location: [null, Validators.required],
       photo: [null]
     });
   }

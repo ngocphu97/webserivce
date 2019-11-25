@@ -45,3 +45,13 @@ export const selectLoading = createSelector(
   selectBookState,
   fromReducer.getSelectedLoading
 )
+
+export const selectProposalList = createSelector(
+  selectBookState,
+  fromReducer.getSelectProposalList
+)
+
+export const selectBookLoction = createSelector(
+  selectBookState,
+  fromReducer.getSelectBookLocationList
+)

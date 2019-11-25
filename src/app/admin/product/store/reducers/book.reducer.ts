@@ -3,12 +3,16 @@ import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
 import * as BookActions from '../actions/book.action';
 import { Book } from '../../models/book.model';
+import { Proposal } from '../../models/proposal.model';
+import { BookLocation } from '../../models/book-location.model';
 
 export interface State extends EntityState<Book> {
   selectedBookId: number | null;
   topBooks: Array<Book> | null;
   loading: boolean | false;
-  bookLocation: any | null
+  bookLocation: any | null;
+  location: Array<BookLocation> | null;
+  proposalImports: Array<Proposal> | null
 }
 
 export function selectBookId(book: Book): number {
@@ -23,7 +27,9 @@ export const initialState: State = adapter.getInitialState({
   selectedBookId: undefined,
   topBooks:  undefined,
   loading: undefined,
-  bookLocation: undefined
+  bookLocation: undefined,
+  proposalImports: undefined,
+  location: undefined
 });
 
 export const bookReducer = createReducer(
@@ -68,11 +74,32 @@ export const bookReducer = createReducer(
       topBooks: topBooks
     }
   }),
+
+  on(BookActions.getBookLocationListSuccess, (state, { bookLocationList }) => {
+    return {
+      ...state,
+      location: bookLocationList
+    }
+  }),
  
   on(BookActions.getBookLocationBySkuSuccess, (state, { bookLocation }) => {
     return {
       ...state,
       bookLocation: bookLocation
+    }
+  }),
+ 
+  on(BookActions.getProposalListSuccess, (state, { proposalList }) => {
+    return {
+      ...state,
+      proposalImports: proposalList
+    }
+  }),
+
+  on(BookActions.getProposalListSuccess, (state, { proposalList }) => {
+    return {
+      ...state,
+      proposalImports: proposalList
     }
   }),
 
@@ -86,6 +113,8 @@ export const getSelectedBookId = (state: State) => state.selectedBookId;
 export const getSelectedTopSearch = (state: State) => state.topBooks;
 export const getSelectedLoading = (state: State) => state.loading;
 export const getSelectBookLocation = (state: State) => state.bookLocation;
+export const getSelectProposalList = (state: State) => state.proposalImports;
+export const getSelectBookLocationList = (state: State) => state.location;
 
 const {
   selectIds,

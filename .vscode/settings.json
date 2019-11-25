@@ -1,5 +1,4 @@
 {
   "outline.problems.colors": true,
-  "editor.suggest.showColors": true,
-  "workbench.editor.swipeToNavigate": false,
+  "files.insertFinalNewline": true
 }

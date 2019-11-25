@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Book, AddBook } from '../models/book.model';
 import { environment } from 'src/environments/environment';
 import { BookCover } from '../models';
+import { Proposal } from '../models/proposal.model';
 
 @Injectable()
 export class BookService {
@@ -33,7 +34,15 @@ export class BookService {
   }
 
   getBookLocationBySKU(sku: number): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/books/getLocationFromSKU/${sku}`);
+    return this.http.get<any>(`${this.baseUrl}/location/getLocationFromSKU/${sku}`);
+  }
+
+  getBookLocationList(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/location`);
+  }
+
+  addBookLocation(location: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/location`, { book_id: location.bookId, bookshelf_id: location.bookshelf_id});
   }
 
   deleteBookById(bookId: string): Observable<Book> {
@@ -60,5 +69,19 @@ export class BookService {
 
   getBookPhotoByBookId(bookId): Observable<any> {
     return this.http.get(`${this.baseUrl}/books/photo/${bookId}`);
+  }
+
+  getProposalList(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/proposal-import`);
+  }
+
+  updateProposalById(proposal: Proposal): Observable<any> {
+
+    proposal = {
+      ...proposal,
+      status: proposal.status.toString()
+    };
+    
+    return this.http.put(`${this.baseUrl}/proposal-import/${proposal.id}`, proposal );
   }
 }

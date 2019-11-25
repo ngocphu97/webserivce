@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Add book</h1>
+<h1 mat-dialog-title>Thêm sách mới</h1>
 
 <div mat-dialog-content>
   <form name="addProductForm" autocomplete="off" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -28,6 +28,17 @@
 
       <div class="input">
         <mat-form-field>
+          <mat-label>Vị trí đặt</mat-label>
+          <mat-select formControlName="location">
+            <mat-option *ngFor="let location of data.locations" [value]="location.locationId">
+              Khu {{location.name}} - {{location.description}} -- {{location.locationId}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="input">
+        <mat-form-field>
           <mat-label>SKU</mat-label>
           <input matInput autocomplete="off" tabindex="1" type="text"  formControlName="sku" />
           <mat-error>
@@ -37,6 +48,7 @@
           </mat-error>
         </mat-form-field>
       </div>
+    
 
       <div class="input">
         <mat-form-field>

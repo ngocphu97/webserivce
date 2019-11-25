@@ -2,6 +2,8 @@ import { createAction, props } from '@ngrx/store';
 
 import { Book, AddBook } from '../../models/book.model';
 import { BookCover } from '../../models';
+import { BookLocation } from '../../models/book-location.model';
+import { Proposal } from '../../models/proposal.model';
 
 export const getBookList = createAction(
 	'[Book] Get Book List'
@@ -151,3 +153,48 @@ export const updateBookCoverFail = createAction(
   '[Book] Update book cover fail',
   props<{ error: any }>()
 );
+
+export const getProposalList = createAction(
+  '[Proposal Import] Get Proposal Import Book List'
+);
+
+export const getProposalListSuccess = createAction(
+  '[Proposal Import] Get Proposal Import List Success',
+  props<{ proposalList: any }>()
+);
+
+export const getProposalListFail = createAction(
+  '[Proposal Import] Get Proposal Import List Fail',
+  props<{ error: any }>()
+);
+
+export const updateProposal = createAction(
+  '[Proposal Import] Update Proposal Import ',
+  props<{ proposal: Proposal }>()
+);
+
+export const updateProposalSuccess = createAction(
+  '[Proposal Import] Update Proposal Import Success',
+  props<{ id: any }>()
+);
+
+export const updateProposalFail = createAction(
+  '[Proposal Import] Update Proposal Import Fail',
+  props<{ error: any }>()
+);
+
+export const getBookLocationList = createAction(
+  '[Book Location ] Get Book Location Book List'
+);
+
+export const getBookLocationListSuccess = createAction(
+  '[Book Location] Get Book Location List Success',
+  props<{ bookLocationList: Array<BookLocation> }>()
+);
+
+export const getBookLocationListFail = createAction(
+  '[Book Location] Get Book Location List Fail',
+  props<{ error: any }>()
+);
+
+

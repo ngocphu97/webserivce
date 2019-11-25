@@ -27,7 +27,7 @@ function proposalImport() {
       'select proposal_import.id, proposal_import.bookId, proposal_import.amount, proposal_import.date, proposal_import.status, '
       + 'books.name as bookName '
       + 'from proposal_import '
-      + 'left join books on proposal_import.bookId = books.id'
+      + 'left join books on proposal_import.bookId = books.id '
       + 'ORDER BY proposal_import.id DESC';
 
     queryDB(connection, response, proposalImportQuery, '');
@@ -58,15 +58,24 @@ function proposalImport() {
           if (error) {
             response.send(error);
           } else {
-            if (result[0].status) {
-              response.send({ 
+            if (result[0].status.toString() === 'true') {
+              response.send({
                 code: 405,
-                mess: 'ko the update dc ' 
+                mess: 'ko the update dc '
               });
               connection.release();
-            } else {
+            } else if (result[0].status.toString() === 'false') {
+              
               const proposalImportQuery = 'update proposal_import set ? where id = ?';
-              queryDB(connection, response, proposalImportQuery, [fieldData, fieldData.id]);
+
+              connection.query(proposalImportQuery, [fieldData, fieldData.id], (error, result) => {
+                if (error) {
+                  response.send(error);
+                } else {
+                  connection.release();
+                  response.send(result);
+                }
+              });
             }
           }
         }, (error) => {
@@ -74,8 +83,9 @@ function proposalImport() {
         });
       }
     });
-    
+
   };
 }
 
 module.exports = new proposalImport();
+

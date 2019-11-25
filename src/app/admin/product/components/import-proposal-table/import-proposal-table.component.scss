@@ -1,3 +1,7 @@
+* {
+  transition: all 0.8s;
+}
+
 table {
   width: 100%;
 }
@@ -14,8 +18,27 @@ tr {
   width: 30%;
 }
 
+:host::ng-deep {
+  .mat-slide-toggle.mat-disabled {
+    opacity: 1 !important;
+  }
 
-:host::ng-deep.mat-slide-toggle-bar .mat-disabled {
-  background-color: rgba(3, 169, 244, 0.54) !important;
+  .mat-slide-toggle-bar.mat-checked.mat-disabled {
+    background-color: rgba(3, 169, 244, 0.54) !important;
+  }
 }
-  
+
+.selected-row {
+  background: #211f1f0f !important;
+}
+
+.description-header-row th {
+  color: red !important;
+}
+
+.header-row th {
+  font-weight: bolder;
+  color: #000000 !important;
+}
+
+

@@ -22,22 +22,23 @@ let queryDB = (connection, response, query, fieldData) => {
 function LocationBookshelf() {
 
   this.getLocation = (response) => {
-    const locationQuery = 'SELECT id, name FROM `booshelf_location`';
-		queryDB(connection, response, locationQuery, '');
+    const locationQuery = 'SELECT id as locationId, name, area, decription as description FROM booshelf_location';
+    queryDB(connection, response, locationQuery, '');
   };
 
-  this.getLocationFromSKU = (reqeset, response) => {
-    const locationQuery = 'SELECT sku, books.name, bl.name, x, y '
+  this.getLocationFromSKU = (request, response) => {
+    const locationQuery = 
+    'SELECT bl.name, x, y'
       + 'FROM bookshelf_location_entity be '
       + 'LEFT JOIN books ON be.book_id = books.id '
       + 'LEFT JOIN booshelf_location bl ON be.bookshelf_id = bl.id '
-      + 'WHERE books.sku=?;';
-    queryDB(connection, response, locationQuery, reqeset.sku);
+      + 'WHERE books.sku = ?';
+    queryDB(connection, response, locationQuery, request.sku);
   };
 
   this.createLocation = (fieldData, response) => {
     const locationQuery = 'insert into bookshelf_location_entity set ?';
-    queryDB(connection, response, locationQuery, fieldData);
+    queryDB(connection, response, locationQuery, [fieldData]);
   };
 }
 

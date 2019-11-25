@@ -4,16 +4,22 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material';
 
+import { takeUntilDestroy } from '@app/core/destroyable';
+import { ConfirmDialogComponent } from '@app/shared/dialog';
+
+import { AddProductFormComponent } from '../../components';
+
+import { AddBook, Book } from '../../models';
+import { BookLocation } from '../../models/book-location.model';
+import { Categories } from 'src/app/admin/dashboard/models/categories.model';
+
 import { State } from '../../store/reducers/book.reducer';
-import { getBookList, addBook, addBookCover, deleteBook } from '../../store/actions';
+
+import { getBookList, addBook, deleteBook, getBookLocationList } from '../../store/actions';
+import { getCategoriesList } from 'src/app/admin/dashboard/store/category/category.actions';
+
 import * as fromBooksSelector from '../../store/selector';
 import * as fromCategoriesSelector from '../../../dashboard/store/category/category.selector';
-import { getCategoriesList } from 'src/app/admin/dashboard/store/category/category.actions';
-import { AddProductFormComponent } from '../../components';
-import { Categories } from 'src/app/admin/dashboard/models/categories.model';
-import { takeUntilDestroy } from '@app/core/destroyable';
-import { AddBook, Book } from '../../models';
-import { ConfirmDialogComponent } from '@app/shared/dialog';
 
 @Component({
   selector: 'app-products-page',
@@ -25,10 +31,12 @@ export class ProductsPageComponent {
 
   books$: Observable<any>;
   categories$: Observable<any>;
+  locations$: Observable<Array<BookLocation>>;
   loading$: Observable<boolean>;
 
   filterValue: string = '';
-  categories: Array<Categories>
+  categories: Array<Categories>;
+  locations: Array<BookLocation>;
   findBook: Book;
 
   constructor(
@@ -37,16 +45,26 @@ export class ProductsPageComponent {
   ) {
     this.store.dispatch(getBookList());
     this.store.dispatch(getCategoriesList());
+    this.store.dispatch(getBookLocationList());
 
     this.books$ = this.store.pipe(select(fromBooksSelector.selectBookList));
     this.loading$ = this.store.pipe(select(fromBooksSelector.selectLoading));
     this.categories$ = this.store.pipe(select(fromCategoriesSelector.selectCategoriesList));
+    this.locations$ = this.store.pipe(select(fromBooksSelector.selectBookLoction));
 
     this.categories$
       .pipe(takeUntilDestroy(this))
       .subscribe((cats: Array<Categories>) => {
         if (cats) {
           this.categories = cats
+        }
+      });
+
+    this.locations$
+      .pipe(takeUntilDestroy(this))
+      .subscribe((locations: Array<BookLocation>) => {
+        if (locations) {
+          this.locations = locations
         }
       });
   }
@@ -59,7 +77,8 @@ export class ProductsPageComponent {
     const dialogRef = this.dialog.open(AddProductFormComponent, {
       width: '900px',
       data: {
-        categories: this.categories
+        categories: this.categories,
+        locations: this.locations
       }
     })
 

@@ -5,7 +5,7 @@ export interface Book {
 	author: string;
 	cost: number; // giá gốc
 	retailPrice: number; // giá bán lẻ
-	inventory: number; // hàng tồn
+	inventory?: number; // hàng tồn
 	distributor: string;
 	language: string;
 	size: string;
@@ -16,6 +16,7 @@ export interface Book {
 	amount: number;
 	description: string;
   photo?: string;
+  location: number;
   
 }
 
@@ -25,7 +26,7 @@ export interface AddBook {
 	author: string;
 	cost: number; // giá gốc
 	retailPrice: number; // giá bán lẻ
-	inventory: number; // hàng tồn
+	inventory?: number; // hàng tồn
 	distributor: string;
 	language: string;
 	size: string;
@@ -34,5 +35,7 @@ export interface AddBook {
 	publishDate: string;
 	reviews?: string;
 	amount: number;
-	description: string;
+  description: string;
+  location: number;
+  photo?: string;
 }

@@ -12,7 +12,7 @@ const tryCall = ((request) => {
 });
 
 router
-  .get('/', (request, response) => {
+  .get('/', (_request, response) => {
     tryCall(locationbookshelf.getLocation(response));
   })
 

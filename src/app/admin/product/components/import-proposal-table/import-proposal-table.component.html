@@ -1,73 +1,85 @@
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort >
+<div class="mat-elevation-z1">
+  <table mat-table [dataSource]="dataSource" matSort>
 
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef> Tên </th>
-    <td mat-cell *matCellDef="let element" style="width: 10%"> {{element.name}} </td>
-  </ng-container>
+    <ng-container matColumnDef="bookName">
+      <th mat-header-cell *matHeaderCellDef> Tên sách </th>
+      <td mat-cell *matCellDef="let element" style="width: 50%">
 
-  <ng-container matColumnDef="bookName">
-    <th mat-header-cell *matHeaderCellDef> Tên sách </th>
-    <td mat-cell *matCellDef="let element" style="width: 42%">
+        <span *ngIf="!element.edit">{{element.bookName}}</span>
 
-      <span *ngIf="!element.edit">{{element.bookName}}</span>
+        <form *ngIf="element.edit" class="select-book-form">
+          <mat-form-field class="select-book-option">
+            <input matInput #bookNameInput [matAutocomplete]="auto" [formControl]="stateCtrl"
+              value="{{element.bookName}}">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let state of filteredStates | async" [value]="state.name">
+                <span>{{state.name}}</span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </form>
 
-      <form *ngIf="element.edit" class="select-book-form">
-        <mat-form-field class="select-book-option">
-          <input matInput #bookNameInput [matAutocomplete]="auto" [formControl]="stateCtrl" value="{{element.bookName}}">
-          <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let state of filteredStates | async" [value]="state.name">
-              <span>{{state.name}}</span>
-            </mat-option>
-          </mat-autocomplete>
+      </td>
+
+    </ng-container>
+
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef> Số lượng sách </th>
+      <td mat-cell *matCellDef="let element" style="width: 15%">
+        <span *ngIf="!element.edit">{{element.amount}}</span>
+        <mat-form-field *ngIf="element.edit" class="select-amount-input">
+          <input matInput #bookAmount (change)="onChangeBookAmount(bookAmount.value)" value="{{element.amount}}">
         </mat-form-field>
-      </form>
+      </td>
+    </ng-container>
 
-    </td>
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef> Ngày yêu cầu </th>
+      <td mat-cell *matCellDef="let element" style="width: 15%"> {{element.date}} </td>
+    </ng-container>
 
-  </ng-container>
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Trạng thái </th>
+      <td mat-cell *matCellDef="let element" style="width: 15%">
+        <mat-slide-toggle [checked]="element.status" [disabled]="element.status" (click)="updateStatus(element)">
+          <span *ngIf="element.status">
+            Đã duyệt
+          </span>
+          <span *ngIf="!element.status">
+            Chưa duyệt
+          </span>
+        </mat-slide-toggle>
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="amount">
-    <th mat-header-cell *matHeaderCellDef> Số lượng sách </th>
-    <td mat-cell *matCellDef="let element" style="width: 12%"> 
-      <span *ngIf="!element.edit">{{element.amount}}</span>  
-      <mat-form-field *ngIf="element.edit" class="select-amount-input">
-        <input matInput #bookAmount (change)="onChangeBookAmount(bookAmount.value)" value="{{element.amount}}">
-      </mat-form-field>
-     </td>
-  </ng-container>
+    <ng-container matColumnDef="item-description">
+      <th colspan="5" mat-header-cell *matHeaderCellDef> Yêu cầu nhập sách sau khi được duyệt sẽ không thể thay đổi lại
+        !
+      </th>
+    </ng-container>
 
-  <ng-container matColumnDef="date">
-    <th mat-header-cell *matHeaderCellDef> Ngày yêu cầu </th>
-    <td mat-cell *matCellDef="let element"> {{element.date | date}} </td>
-  </ng-container>
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef> </th>
+      <td mat-cell *matCellDef="let element" style="width: 5%">
+        <div *ngIf="!element.edit" matTooltip="Không thể chỉnh sửa" [matTooltipDisabled]="!element.status">
+          <button mat-icon-button (click)="edit(element)" [disabled]="element.status">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
 
-  <ng-container matColumnDef="status">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Trạng thái </th>
-    <td mat-cell *matCellDef="let element">
-      <mat-slide-toggle [checked]="element.status" [disabled]="element.status" (click)="updateStatus(element)">
-        <span *ngIf="element.status">Đã duyệt</span>
-        <span>{{element.status}}</span>
-        <span *ngIf="!element.status">Chưa duyệt</span>
-      </mat-slide-toggle>
-    </td>
-  </ng-container>
-
-  <ng-container matColumnDef="action">
-    <th mat-header-cell *matHeaderCellDef> </th>
-    <td mat-cell *matCellDef="let element">
-      <div *ngIf="!element.edit" matTooltip="Không thể chỉnh sửa" [matTooltipDisabled]="!element.status">
-        <button mat-icon-button (click)="edit(element)" [disabled]="element.status">
-          <mat-icon>edit</mat-icon>
+        <button mat-icon-button color="primary" (click)="save(element)" *ngIf="element.edit">
+          <mat-icon>done</mat-icon>
         </button>
-      </div>
+      </td>
+    </ng-container>
 
-      <button mat-icon-button color="primary" (click)="save(element)" *ngIf="element.edit">
-        <mat-icon>done</mat-icon>
-      </button>
-    </td>
-  </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns" class="header-row"></tr>
+    <tr mat-header-row *matHeaderRowDef="['item-description']" class="description-header-row"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+      [ngClass]="{'selected-row': selectedRowIndex === row.id }"></tr>
 
+  </table>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+  <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
+
+</div>

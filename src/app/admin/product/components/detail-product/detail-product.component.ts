@@ -66,6 +66,8 @@ export class DetailProductComponent implements OnChanges {
       language: [{ value: '', disabled: true }],
       publishDate: [{ value: '', disabled: true }],
       translator: [{ value: '', disabled: true }],
+      location: [{ value: '', disabled: true }],
+      
     });
 
     this.secondFormGroup = this._formBuilder.group({
@@ -86,7 +88,8 @@ export class DetailProductComponent implements OnChanges {
         distributor: this.selectedBook.distributor,
         language: this.selectedBook.language,
         publishDate: this.selectedBook.publishDate,
-        translator: this.selectedBook.translator
+        translator: this.selectedBook.translator,
+        location: this.selectedBook.location
       });
 
       this.secondFormGroup.patchValue({

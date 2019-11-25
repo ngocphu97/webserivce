@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 
-import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, catchError, exhaustMap } from 'rxjs/operators';
+import { Actions, ofType, createEffect } from '@ngrx/effects';
+
+import { MatSnackBar } from '@angular/material';
 
 import * as bookActions from '../actions'
 import { BookService } from '../../service';
-import { MatSnackBar } from '@angular/material';
-import { Book } from '../../models/book.model';
+import { Book, AddBook } from '../../models/book.model';
 
 @Injectable()
 export class BookEffect {
@@ -29,7 +30,6 @@ export class BookEffect {
     exhaustMap((action) => {
       return this.bookService.getBookTopSearch(action.time).pipe(
         map((res: any) => {
-          console.log(res);
           return bookActions.getTopSearchBooksByTimeSuccess({ topBooks: res });
         }),
         catchError(error => of(bookActions.getTopSearchBooksByTimeFail({ error: error })))
@@ -37,7 +37,7 @@ export class BookEffect {
     })
   ));
 
-  getBookLocation$ = createEffect(() => this.actions$.pipe(
+  getBookLocationBySku$ = createEffect(() => this.actions$.pipe(
     ofType(bookActions.getBookLocationBySku),
     map(action => action.sku),
     exhaustMap((sku: number) => {
@@ -48,19 +48,42 @@ export class BookEffect {
     })
   ));
 
+  getBookLocationList$ = createEffect(() => this.actions$.pipe(
+    ofType(bookActions.getBookLocationList),
+    exhaustMap(() => {
+      return this.bookService.getBookLocationList().pipe(
+        map((res: any) => bookActions.getBookLocationListSuccess({ bookLocationList: res })),
+        catchError(error => of(bookActions.getBookLocationListFail({ error: error })))
+      );
+    })
+  ));
+
   addBook$ = createEffect(() => this.actions$.pipe(
     ofType(bookActions.addBook),
     map((action: any) => action.book),
-    exhaustMap((book) => {
+    exhaustMap((book: AddBook) => {
+
       const addBook = { ...book };
       delete addBook.photo;
+      delete addBook.location;
+
       return this.bookService.addBook(addBook).pipe(
         map((res) => {
+
           if (book.photo) {
-            this.bookService.addBookCover(book.photo, res.insertId).subscribe(res => console.log(res));
+            this.bookService.addBookCover(book.photo, res.insertId).subscribe();
           } else {
-            this.bookService.addBookCover('https://www.blueinkreview.com/wp-c ontent/uploads/2016/07/nocover-1.jpg', res.insertId).subscribe(res => console.log(res));
+            this.bookService.addBookCover('https://www.blueinkreview.com/wp-content/uploads/2016/07/nocover-1.jpg', res.insertId).subscribe(res => console.log(res));
           }
+
+          if (res.insertId) {
+            const location = {
+              book_id: res.insertId,
+              bookshelf_id: book.location,
+            };
+            this.bookService.addBookLocation(location).subscribe(res => console.log(res));
+          }
+
 
           return bookActions.getBookList();
         }),
@@ -115,9 +138,34 @@ export class BookEffect {
     map((action: any) => action.bookCover),
     exhaustMap((bookCover) => {
       return this.bookService.updateBookCover(bookCover).pipe(
-        map((res) => {
-          console.log('Log Message: BookEffect -> res', res);
+        map(() => {
           return bookActions.getBookList();
+        }),
+        catchError(error => of(bookActions.updateBookByIdFail({ error: error })))
+      )
+    })
+  ));
+
+  getProposalList$ = createEffect(() => this.actions$.pipe(
+    ofType(bookActions.getProposalList),
+    exhaustMap(() => {
+      return this.bookService.getProposalList().pipe(
+        map((res) => {
+          return bookActions.getProposalListSuccess({ proposalList: res });
+        }),
+        catchError(error => of(bookActions.getProposalListFail({ error: error })))
+      )
+    })
+  ));
+
+  updateProposal$ = createEffect(() => this.actions$.pipe(
+    ofType(bookActions.updateProposal),
+    map((action: any) => action.proposal),
+    exhaustMap((proposal) => {
+      return this.bookService.updateProposalById(proposal).pipe(
+        map(() => {
+          this.openSnackBar('Update book success', 'success');
+          return bookActions.updateProposalSuccess({ id: proposal.id });
         }),
         catchError(error => of(bookActions.updateBookByIdFail({ error: error })))
       )

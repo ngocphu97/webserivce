@@ -10,5 +10,10 @@
 </div>
 
 <div class="proposal">
-  <app-import-proposal-table [books]="books$ | async"></app-import-proposal-table>
+  <app-import-proposal-table 
+    [books]="books$ | async" 
+    [proposalImport]="proposalList$ | async"
+    (proposal)="onSaveProposal($event)"
+    >
+  </app-import-proposal-table>
 </div>

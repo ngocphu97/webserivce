@@ -47,15 +47,7 @@ router
   .post('/', (request, response) => {
     tryCall(books.createBook(request.body, response));
   })
-
-  /*
-      url: http://localhost:3000/books/createHistorySearch
-      param:
-          {
-          "sku": "8935244835199",
-          "name": "Thám Tử Lừng Danh Conan - Tập 96"
-          }
-  */
+  
   .post('/createHistorySearch', (request, response) => {
     tryCall(books.createHistorySearch(request.body, response));
   })

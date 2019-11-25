@@ -30,7 +30,7 @@ export class ProductTableComponent implements OnChanges {
   dataSource: MatTableDataSource<any>;
   imageBlobUrl: any;
   selectedBook: any;
-  displayedColumns: string[] = ['image', 'name', 'category', 'cost', 'inventory', 'amount', 'action'];
+  displayedColumns: string[] = ['image', 'name', 'category', 'cost', 'amount', 'action'];
 
   constructor(private router: Router) { }
 
@@ -91,5 +91,4 @@ export class ProductTableComponent implements OnChanges {
   importProposal(book) {
     console.log('Log Message: ProductTableComponent -> importProposal -> book', book);
   }
-
 }
