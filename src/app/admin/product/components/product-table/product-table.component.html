@@ -43,9 +43,9 @@
           <a mat-icon-button color="primary" routerLink="./{{element.id}}" matTooltip="Sửa">
             <i class="material-icons"> edit </i>
           </a>
-          <button mat-icon-button color="primary" (click)="importProposal(element)" matTooltip="Yêu cầu thêm sách">
+          <a mat-icon-button color="primary"  routerLink="./proposal-import/create" matTooltip="Yêu cầu thêm sách">
             <i class="material-icons add-icon"> add </i>
-          </button>
+          </a>
           <button mat-icon-button color="warn" (click)="onDeleteBook(element)" matTooltip="Xóa">
             <i class="material-icons"> delete </i>
           </button>

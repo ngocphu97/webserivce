@@ -183,6 +183,21 @@ export const updateProposalFail = createAction(
   props<{ error: any }>()
 );
 
+export const addProposal = createAction(
+  '[Proposal Import] Add Proposal Import ',
+  props<{ proposal: Proposal }>()
+);
+
+export const addProposalSuccess = createAction(
+  '[Proposal Import] Add Proposal Import Success',
+  props<{ proposal: Proposal }>()
+);
+
+export const addProposalFail = createAction(
+  '[Proposal Import] Add Proposal Import Fail',
+  props<{ error: any }>()
+);
+
 export const getBookLocationList = createAction(
   '[Book Location ] Get Book Location Book List'
 );

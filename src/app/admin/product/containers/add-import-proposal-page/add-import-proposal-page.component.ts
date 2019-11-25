@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
-import { getBookList } from '../../store/actions';
+import { getBookList, addProposal } from '../../store/actions';
 
 import { Book } from '../../models';
 import * as fromBooksSelector from '../../store/selector';
+import { Proposal } from '../../models/proposal.model';
 
 @Component({
   selector: 'app-add-import-proposal-page',
@@ -19,9 +20,18 @@ export class AddImportProposalPageComponent implements OnInit {
   constructor(private store: Store<any>) {
     this.store.dispatch(getBookList());
     this.books$ = this.store.pipe(select(fromBooksSelector.selectBookList));
-   }
+  }
 
   ngOnInit() {
+  }
+
+  onAddProposal(proposal: Proposal) {
+    proposal = {
+      ...proposal,
+      date: proposal.date.toString()
+    };
+    
+    this.store.dispatch(addProposal({ proposal }));
   }
 
 }

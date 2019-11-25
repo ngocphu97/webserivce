@@ -25,7 +25,6 @@ export class ForgotPasswordPageComponent extends DetroyableComponent {
     this.pending$ = this.store.pipe(select(ResetPasswordSelectors.selectResetPasswordPagePending));
     this.isVaidResetPassword$ = this.store.pipe(select(ResetPasswordSelectors.selectIsVaidResetPassword));
     this.store.pipe(select(ResetPasswordSelectors.selectAdmin)).pipe().subscribe(admin => {
-      console.log(admin);
       return this.admin = admin;
     });
   }

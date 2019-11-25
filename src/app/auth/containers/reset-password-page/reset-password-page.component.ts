@@ -19,7 +19,6 @@ export class ResetPasswordPageComponent {
   ) { }
 
   onResetPassword(password): void {
-    console.log(password);
     // this.store.dispatch(ResetPasswordActions.resetPassword({ password }));
   }
 

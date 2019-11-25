@@ -40,8 +40,6 @@ export class AuthEffects {
             }
           }),
           catchError(error => {
-            console.log('Log Message: AuthEffects -> error', error);
-            
             return of(AuthApiActions.loginFailure({ error }));
           })
       )}) 
@@ -121,7 +119,6 @@ export class AuthEffects {
     ofType(ResetPasswordActions.resetPassword),
     map(action => action.admin),
     exhaustMap(admin => {
-      console.log('admin', admin);
       return this.authService.resetPassword(admin).pipe(
         map(res => {
           return ResetPasswordActions.resetPasswordSuccess(res);

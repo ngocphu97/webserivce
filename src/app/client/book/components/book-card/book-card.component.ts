@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
 @Component({
@@ -6,13 +6,12 @@ import { MatDialog } from '@angular/material';
   templateUrl: './book-card.component.html',
   styleUrls: ['./book-card.component.scss']
 })
-export class BookCardComponent implements OnInit, OnChanges {
+export class BookCardComponent implements OnInit {
 
   @Input() book: any;
   @Input() bookLocation: any;
   
-  
-  constructor(private dialog: MatDialog) { }
+  constructor() { }
 
   ngOnInit() {
     this.book = {
@@ -25,10 +24,4 @@ export class BookCardComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    // if (changes.book) {
-    //   console.log('Log Message: BookCardComponent -> ngOnChanges -> this.book', this.book);
-      
-    // }
-  }
 }

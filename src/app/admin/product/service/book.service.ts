@@ -62,9 +62,7 @@ export class BookService {
   }
   
   upload(file) {
-    this.http.post('/upload', file).pipe().subscribe(
-      x => console.log(x)
-    );
+    this.http.post('/upload', file).pipe().subscribe( );
   }
 
   getBookPhotoByBookId(bookId): Observable<any> {
@@ -84,4 +82,15 @@ export class BookService {
     
     return this.http.put(`${this.baseUrl}/proposal-import/${proposal.id}`, proposal );
   }
+
+  addProposal(proposal: Proposal): Observable<any> {
+
+    proposal = {
+      ...proposal,
+      status: proposal.status.toString()
+    };
+    
+    return this.http.post(`${this.baseUrl}/proposal-import`, proposal );
+  }
+
 }

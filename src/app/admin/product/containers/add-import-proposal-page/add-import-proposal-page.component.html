@@ -3,5 +3,8 @@
 </div>
 
 <div class="proposal">
-  <app-import-proposal-form [books]="books$ | async"></app-import-proposal-form>
+  <app-import-proposal-form 
+    [books]="books$ | async"
+    (proposal)="onAddProposal($event)"
+  ></app-import-proposal-form>
 </div>

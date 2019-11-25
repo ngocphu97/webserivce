@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material';
 import * as bookActions from '../actions'
 import { BookService } from '../../service';
 import { Book, AddBook } from '../../models/book.model';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class BookEffect {
@@ -73,7 +74,7 @@ export class BookEffect {
           if (book.photo) {
             this.bookService.addBookCover(book.photo, res.insertId).subscribe();
           } else {
-            this.bookService.addBookCover('https://www.blueinkreview.com/wp-content/uploads/2016/07/nocover-1.jpg', res.insertId).subscribe(res => console.log(res));
+            this.bookService.addBookCover('https://www.blueinkreview.com/wp-content/uploads/2016/07/nocover-1.jpg', res.insertId).subscribe();
           }
 
           if (res.insertId) {
@@ -81,7 +82,7 @@ export class BookEffect {
               book_id: res.insertId,
               bookshelf_id: book.location,
             };
-            this.bookService.addBookLocation(location).subscribe(res => console.log(res));
+            this.bookService.addBookLocation(location).subscribe();
           }
 
 
@@ -172,10 +173,26 @@ export class BookEffect {
     })
   ));
 
+  addProposal$ = createEffect(() => this.actions$.pipe(
+    ofType(bookActions.addProposal),
+    map((action: any) => action.proposal),
+    exhaustMap((proposal) => {
+      return this.bookService.addProposal(proposal).pipe(
+        map((res) => {
+          this.openSnackBar('Thêm thành công', 'Thành công');
+          this.router.navigate(['admin/books/proposal-import']);
+          return bookActions.addProposalSuccess({ proposal: { ...proposal, id: res.insertId} });
+        }),
+        catchError(error => of(bookActions.updateBookByIdFail({ error: error })))
+      )
+    })
+  ));
+
   constructor(
     private actions$: Actions,
     private bookService: BookService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) { }
 
   openSnackBar(message: string, action: string): void {
