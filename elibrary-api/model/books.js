@@ -50,10 +50,38 @@ function Books() {
     if (request && request.query.cover) {
       bookQuery = `select * from books`;
     } else {
-      bookQuery = `SELECT books.id, sku, category_id, name, author, cost, retailPrice, amount, distributor, language, size, totalPage, translator, publishDate, description, cover.photo  FROM books LEFT JOIN cover ON books.id = cover.bookId`;
+      bookQuery = 
+          ' SELECT books.id, books.sku, books.category_id, books.name, books.author, books.cost, books.retailPrice, '
+        + ' books.amount, books.distributor, books.language, books.size,'
+        + ' books.totalPage, books.translator, books.publishDate, books.description, cover.photo,'
+        + ' temp.bookshelf_id as bookshelfId, temp.name as locationName, temp.decription as locationDescription '
+        + ' FROM books '
+        + ' LEFT JOIN cover ON books.id = cover.bookId '
+        + ' LEFT JOIN ( SELECT * '
+        + '             FROM bookshelf_location_entity '
+        + '             LEFT JOIN booshelf_location on booshelf_location.id = bookshelf_location_entity.bookshelf_id) temp '
+        + '             ON temp.book_id = books.id';
     }
     queryDB(connection, response, bookQuery, '');
   };
+
+  this.getBookById = (request, response) => {
+
+    const bookQuery =
+        ' SELECT books.id, books.sku, books.category_id, books.name, books.author, books.cost, books.retailPrice, categories.name, books.description, '
+      + ' books.amount, books.distributor, books.language, books.size,'  
+      + ' temp.bookshelf_id as bookshelfId, temp.name as locationName, temp.decription as locationDescription '
+      + ' FROM books '
+      + ' left join categories on books.category_id = categories.id' 
+      + ' LEFT JOIN ( SELECT * '
+      + '             FROM bookshelf_location_entity '
+      + '             LEFT JOIN booshelf_location on booshelf_location.id = bookshelf_location_entity.bookshelf_id) temp '
+      + '             ON temp.book_id = books.id'
+      + ' WHERE books.id = ?';
+
+    queryDB(connection, response, bookQuery, request.id);
+  };
+
 
   this.createBook = (fieldData, response) => {
     const bookQuery = 'insert into books set ?';
@@ -63,11 +91,6 @@ function Books() {
   this.searchBooks = (query, response) => {
     const bookQuery = `SELECT sku, name, author, cost, retailPrice, amount, distributor, language, size, totalPage, translator, publishDate, description, cover.photo FROM books LEFT JOIN cover ON books.id = cover.bookId WHERE books.name LIKE '%${query.searchKey}%';`;
     querySearch(connection, response, bookQuery, query.searchKey, query.page);
-  };
-
-  this.getBookById = (reqeset, response) => {
-    const bookQuery = 'select *, categories.name, books.description from books left join categories on books.category_id=categories.id  where books.id = ?';
-    queryDB(connection, response, bookQuery, reqeset.id);
   };
 
   this.getMostSearchForTimeLine = (reqeset, response) => {

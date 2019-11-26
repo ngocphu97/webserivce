@@ -5,6 +5,7 @@ import { Book, AddBook } from '../models/book.model';
 import { environment } from 'src/environments/environment';
 import { BookCover } from '../models';
 import { Proposal } from '../models/proposal.model';
+import { BookLocationEntity } from '../models/book-location.model';
 
 @Injectable()
 export class BookService {
@@ -91,6 +92,15 @@ export class BookService {
     };
     
     return this.http.post(`${this.baseUrl}/proposal-import`, proposal );
+  }
+
+  updateBookLocation(bookLocationEntity: BookLocationEntity): Observable<any>  {
+    
+    const bookLocation = {
+      book_id: bookLocationEntity.bookId,
+      bookshelf_id: bookLocationEntity.bookshelfId
+    }
+    return this.http.put(`${this.baseUrl}/location/${bookLocationEntity.bookId}`, bookLocation);
   }
 
 }

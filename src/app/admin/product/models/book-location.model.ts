@@ -8,3 +8,8 @@ export interface BookLocation {
   x: number;
   y: number;
 }
+
+export interface BookLocationEntity {
+  bookId: number;
+  bookshelfId: number;
+}

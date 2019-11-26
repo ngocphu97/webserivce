@@ -30,8 +30,8 @@ export class ProductTableComponent implements OnChanges {
   dataSource: MatTableDataSource<any>;
   imageBlobUrl: any;
   selectedBook: any;
-  displayedColumns: string[] = ['image', 'name', 'category', 'cost', 'amount', 'action'];
-
+  displayedColumns: string[] = ['image', 'name', 'category', 'cost', 'amount', 'locationName','action'];
+  
   constructor(private router: Router) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -76,8 +76,6 @@ export class ProductTableComponent implements OnChanges {
   selectRow(row) {
     this.selectedBook = row;
     this.selectedRowIndex = row.id;
-
-    this.router.navigate([`/admin/books/${row.id}`]);
   }
 
   stopPropagation(event): void {

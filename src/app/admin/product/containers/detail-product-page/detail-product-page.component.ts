@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
 
 import { Book } from '../../models/book.model';
 import { State } from '../../store/reducers';
-import { deleteBook, getBookById, getBookList, updateBookById, updateBookCover } from '../../store/actions';
-import { selectCurrentBook } from '../../store/selector';
+import { deleteBook, getBookById, getBookList, updateBookById, updateBookCover, getBookLocationList, updateBookEntityLocation } from '../../store/actions';
+import { selectCurrentBook, selectBookLoction } from '../../store/selector';
 import { getCategoriesList } from 'src/app/admin/dashboard/store/category/category.actions';
 import { selectCategoriesList } from 'src/app/admin/dashboard/store/category/category.selector';
 import { ConfirmDialogComponent } from '@app/shared/dialog';
@@ -22,6 +22,7 @@ export class DetailProductPageComponent {
 
   selectedBook$: Observable<any>;
   categoryList$: Observable<any>;
+  bookshelfLoctions$: Observable<any>;
   bookId: number;
 
   constructor(
@@ -37,9 +38,11 @@ export class DetailProductPageComponent {
 
     this.store.dispatch(getCategoriesList());
     this.store.dispatch(getBookList());
+    this.store.dispatch(getBookLocationList());
+
     this.selectedBook$ = this.store.pipe(select(selectCurrentBook));
     this.categoryList$ = this.store.pipe(select(selectCategoriesList));
-
+    this.bookshelfLoctions$ = this.store.pipe(select(selectBookLoction));
   }
 
   onDeleteBook(book: Book) {
@@ -61,7 +64,16 @@ export class DetailProductPageComponent {
   }
 
   onEditBook(book) {
-    this.store.dispatch(updateBookById({ book: { ...book, id: this.bookId } }));
+    console.log('Log Message: DetailProductPageComponent -> onEditBook -> book', book);
+    // this.store.dispatch(updateBookById({ book: { ...book, id: this.bookId } }));
+    
+    this.store.dispatch(updateBookEntityLocation({
+      bookLocationEntity: {
+        bookId: this.bookId,
+        bookshelfId: book.bookshelfId
+      }
+    }));
+    
   }
 
   onEditCoverPhoto(coverPhoto) {

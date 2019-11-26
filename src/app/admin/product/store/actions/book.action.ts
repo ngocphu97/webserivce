@@ -2,7 +2,7 @@ import { createAction, props } from '@ngrx/store';
 
 import { Book, AddBook } from '../../models/book.model';
 import { BookCover } from '../../models';
-import { BookLocation } from '../../models/book-location.model';
+import { BookLocation, BookLocationEntity } from '../../models/book-location.model';
 import { Proposal } from '../../models/proposal.model';
 
 export const getBookList = createAction(
@@ -80,7 +80,6 @@ export const getBookByCategoryIdFail = createAction(
   props<{ error: any }>()
 );
 
-
 export const updateBookById = createAction(
 	'[Book] Update Book By Id',
 	props<{ book: Book }>()
@@ -151,6 +150,20 @@ export const updateBookCoverSuccess = createAction(
 
 export const updateBookCoverFail = createAction(
   '[Book] Update book cover fail',
+  props<{ error: any }>()
+);
+
+export const updateBookEntityLocation = createAction(
+  '[Book] Update book location',
+  props<{ bookLocationEntity: BookLocationEntity }>()
+);
+
+export const updateBookEntityLocationSuccess = createAction(
+  '[Book] Update book location success',
+);
+
+export const updateBookEntityLocationFail = createAction(
+  '[Book] Update book location fail',
   props<{ error: any }>()
 );
 

@@ -20,6 +20,7 @@ export class DetailProductComponent implements OnChanges {
 
   @Input() selectedBook: any;
   @Input() categories: any;
+  @Input() bookshelfLoctions: Array<any>;
 
   @Output() deleteBook = new EventEmitter<Book>();
   @Output() editingBook = new EventEmitter<Book>();
@@ -66,8 +67,8 @@ export class DetailProductComponent implements OnChanges {
       language: [{ value: '', disabled: true }],
       publishDate: [{ value: '', disabled: true }],
       translator: [{ value: '', disabled: true }],
-      location: [{ value: '', disabled: true }],
-      
+      locationName: [{ value: '', disabled: true }],
+      bookshelfId: [{ value: null, disabled: true }],
     });
 
     this.secondFormGroup = this._formBuilder.group({
@@ -89,7 +90,10 @@ export class DetailProductComponent implements OnChanges {
         language: this.selectedBook.language,
         publishDate: this.selectedBook.publishDate,
         translator: this.selectedBook.translator,
-        location: this.selectedBook.location
+        bookshelfId: this.selectedBook.bookshelfId,
+        locationName: this.selectedBook.locationName + this.selectedBook.locationDescription 
+          ? this.selectedBook.locationName + ' - ' + this.selectedBook.locationDescription 
+          : 'Chưa có'
       });
 
       this.secondFormGroup.patchValue({
@@ -138,14 +142,32 @@ export class DetailProductComponent implements OnChanges {
     this.firstFormGroup.get(['distributor']).enable();
     this.firstFormGroup.get(['publishDate']).enable();
     this.firstFormGroup.get(['translator']).enable();
+    this.firstFormGroup.get(['locationName']).enable();
+    this.firstFormGroup.get(['bookshelfId']).enable();
 
     this.secondFormGroup.get(['amount']).enable();
     this.secondFormGroup.get(['cost']).enable();
     this.secondFormGroup.get(['inventory']).enable();
     this.secondFormGroup.get(['retailPrice']).enable();
-
+    
     this.bookNameInput.nativeElement.focus();
     this.isEdit = true;
+  }
+
+  cancel() {
+    this.firstFormGroup.get(['name']).disable();
+    this.firstFormGroup.get(['category_id']).disable();
+    this.firstFormGroup.get(['description']).disable();
+    this.firstFormGroup.get(['distributor']).disable();
+    this.firstFormGroup.get(['publishDate']).disable();
+    this.firstFormGroup.get(['translator']).disable();
+
+    this.secondFormGroup.get(['amount']).disable();
+    this.secondFormGroup.get(['cost']).disable();
+    this.secondFormGroup.get(['inventory']).disable();
+    this.secondFormGroup.get(['retailPrice']).disable();
+
+    this.isEdit = false;
   }
 
   saveBook() {

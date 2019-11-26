@@ -59,7 +59,6 @@ export class EditProductFormComponent implements OnInit, OnChanges {
         description: this.selectedBook.description,
         distributor: this.selectedBook.distributor,
         photo: this.selectedBook.photo,
-        inventory: this.selectedBook.inventory,
         language: this.selectedBook.language,
         name: this.selectedBook.name,
         publishDate: this.selectedBook.publishDate,

@@ -1,11 +1,14 @@
 <div class="actions">
-  <button mat-raised-button color="primary" (click)="editBook()" class="edit-btn">
+  <button mat-raised-button color="primary" (click)="editBook()" *ngIf="!isEdit" class="action-btn">
     <i class="material-icons"> edit </i> Sửa
   </button>
-  <button mat-raised-button color="primary" *ngIf="isEdit" (click)="saveBook()" class="save-btn">
+  <button mat-raised-button color="primary" *ngIf="isEdit" (click)="cancel()" class="action-btn">
+    <i class="material-icons"> save </i> Hủy
+  </button>
+  <button mat-raised-button color="primary" *ngIf="isEdit" (click)="saveBook()" class="action-btn">
     <i class="material-icons"> save </i> Lưu
   </button>
-  <button mat-raised-button color="warn" (click)="onDeleteBook()" class="save-btn">
+  <button mat-raised-button color="warn" (click)="onDeleteBook()" class="action-btn">
     <i class="material-icons"> delete </i> Xóa
   </button>
 </div>
@@ -21,7 +24,17 @@
       </mat-form-field>
       
       <mat-form-field>
-        <input matInput placeholder="Vị trí" formControlName="location" #bookName>
+        <input *ngIf="!isEdit" matInput placeholder="Vị trí" formControlName="locationName" #bookName>
+
+        <ng-container *ngIf="isEdit">
+          <mat-label>Thể loại</mat-label>
+          <mat-select formControlName="bookshelfId">
+            <mat-option *ngFor="let bookshelf of bookshelfLoctions" [value]="bookshelf.locationId">
+              {{bookshelf.name}} - {{bookshelf.description}}
+            </mat-option>
+          </mat-select>
+        </ng-container>
+
       </mat-form-field>
 
       <mat-form-field class="example-full-width">

@@ -27,8 +27,8 @@ function LocationBookshelf() {
   };
 
   this.getLocationFromSKU = (request, response) => {
-    const locationQuery = 
-    'SELECT bl.name, x, y'
+    const locationQuery =
+      'SELECT bl.name, x, y'
       + 'FROM bookshelf_location_entity be '
       + 'LEFT JOIN books ON be.book_id = books.id '
       + 'LEFT JOIN booshelf_location bl ON be.bookshelf_id = bl.id '
@@ -40,6 +40,53 @@ function LocationBookshelf() {
     const locationQuery = 'insert into bookshelf_location_entity set ?';
     queryDB(connection, response, locationQuery, [fieldData]);
   };
+
+  this.updateLocation = (fieldData, response) => {
+    // const locationQuery = `update bookshelf_location_entity SET bookshelf_id = ? WHERE book_id = ${fieldData.book_id}`;
+    // queryDB(connection, response, locationQuery, [fieldData]);
+
+    connection.acquire((error, connection) => {
+      if (error) {
+        response.send(error);
+      } else {
+        connection.query(`select * from bookshelf_location_entity WHERE book_id = ${fieldData.book_id}`, '', (error, result) => {
+          if (error) {
+            response.send(error);
+          } else {
+            console.log('Log Message: this.updateLocation -> result', result);
+
+            if (result.length === 0) {
+              const locationQuery = `insert bookshelf_location_entity SET ?`;
+              connection.query(locationQuery, [fieldData], (error, result) => {
+                if (error) {
+                  response.send(error);
+                } else {
+                  connection.release();
+                  response.send(result);
+                }
+              });
+
+            } else {
+              const locationQuery = `update bookshelf_location_entity SET bookshelf_id = ? WHERE book_id = ${fieldData.book_id}`;
+              connection.query(locationQuery, [fieldData], (error, result) => {
+                if (error) {
+                  response.send(error);
+                } else {
+                  connection.release();
+                  response.send(result);
+                }
+              });
+            }
+          }
+        }, (error) => {
+          response.send(error);
+        });
+      }
+    });
+
+  };
+
+
 }
 
 module.exports = new LocationBookshelf();

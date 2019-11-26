@@ -1,9 +1,12 @@
 <div class="book-detail" *ngIf="selectedBook$ | async">
   <app-detail-product 
-    [selectedBook]="selectedBook$ | async" 
     [categories]="categoryList$ | async"
+    [selectedBook]="selectedBook$ | async" 
+    [bookshelfLoctions]="bookshelfLoctions$ | async"
+
     (editingBook)="onEditBook($event)"
+    (deleteBook)="onDeleteBook($event)"
     (updateBookCover)="onEditCoverPhoto($event)"
-    (deleteBook)="onDeleteBook($event)">
+    >
 	</app-detail-product>
 </div>

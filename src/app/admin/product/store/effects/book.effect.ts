@@ -142,7 +142,19 @@ export class BookEffect {
         map(() => {
           return bookActions.getBookList();
         }),
-        catchError(error => of(bookActions.updateBookByIdFail({ error: error })))
+        catchError(error => of(bookActions.updateBookCoverFail({ error: error })))
+      )
+    })
+  ));
+
+  updateBookLoctionsEntity$ = createEffect(() => this.actions$.pipe(
+    ofType(bookActions.updateBookEntityLocation),
+    exhaustMap((action) => {
+      return this.bookService.updateBookLocation(action.bookLocationEntity).pipe(
+        map(() => {
+          return bookActions.updateBookEntityLocationSuccess();
+        }),
+        catchError(error => of(bookActions.updateBookEntityLocationFail({ error: error })))
       )
     })
   ));
@@ -168,7 +180,7 @@ export class BookEffect {
           this.openSnackBar('Update book success', 'success');
           return bookActions.updateProposalSuccess({ id: proposal.id });
         }),
-        catchError(error => of(bookActions.updateBookByIdFail({ error: error })))
+        catchError(error => of(bookActions.updateProposalFail({ error: error })))
       )
     })
   ));
@@ -183,7 +195,7 @@ export class BookEffect {
           this.router.navigate(['admin/books/proposal-import']);
           return bookActions.addProposalSuccess({ proposal: { ...proposal, id: res.insertId} });
         }),
-        catchError(error => of(bookActions.updateBookByIdFail({ error: error })))
+        catchError(error => of(bookActions.addProposalFail({ error: error })))
       )
     })
   ));

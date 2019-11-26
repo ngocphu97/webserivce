@@ -5,19 +5,18 @@ export interface Book {
 	author: string;
 	cost: number; // giá gốc
 	retailPrice: number; // giá bán lẻ
-	inventory?: number; // hàng tồn
 	distributor: string;
 	language: string;
 	size: string;
 	totalPage: number;
 	translator: string;
 	publishDate: string;
-	reviews?: string;
 	amount: number;
 	description: string;
   photo?: string;
-  location: number;
-  
+  bookshelfId?: number;
+  locationName?: string;
+  locationDescription?: string;
 }
 
 export interface AddBook {
@@ -26,16 +25,14 @@ export interface AddBook {
 	author: string;
 	cost: number; // giá gốc
 	retailPrice: number; // giá bán lẻ
-	inventory?: number; // hàng tồn
 	distributor: string;
 	language: string;
 	size: string;
 	totalPage: number;
 	translator: string;
 	publishDate: string;
-	reviews?: string;
 	amount: number;
   description: string;
-  location: number;
+  location?: number;
   photo?: string;
 }

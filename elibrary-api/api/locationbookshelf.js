@@ -24,4 +24,8 @@ router
     tryCall(locationbookshelf.createLocation(request.body, response));
   })
 
+  .put('/:id/', (request, response) => {
+    tryCall(locationbookshelf.updateLocation(request.body, response))
+  })
+
 module.exports = router;
