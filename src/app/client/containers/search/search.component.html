@@ -9,7 +9,7 @@
     >
     <button 
         mat-button class="search-btn" 
-        [routerLink]="['search']"
+        routerLink="./books/search"
         [queryParams]="{ keyword: search.value }">
       <mat-icon matSuffix>search</mat-icon>
     </button>

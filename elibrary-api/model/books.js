@@ -50,8 +50,8 @@ function Books() {
     if (request && request.query.cover) {
       bookQuery = `select * from books`;
     } else {
-      bookQuery = 
-          ' SELECT books.id, books.sku, books.category_id, books.name, books.author, books.cost, books.retailPrice, '
+      bookQuery =
+        ' SELECT books.id, books.sku, books.category_id, books.name, books.author, books.cost, books.retailPrice, '
         + ' books.amount, books.distributor, books.language, books.size,'
         + ' books.totalPage, books.translator, books.publishDate, books.description, cover.photo,'
         + ' temp.bookshelf_id as bookshelfId, temp.name as locationName, temp.decription as locationDescription '
@@ -68,11 +68,11 @@ function Books() {
   this.getBookById = (request, response) => {
 
     const bookQuery =
-        ' SELECT books.id, books.sku, books.category_id, books.name, books.author, books.cost, books.retailPrice, categories.name, books.description, '
-      + ' books.amount, books.distributor, books.language, books.size,'  
+      ' SELECT books.id, books.sku, books.category_id, books.name, books.author, books.cost, books.retailPrice, categories.name, books.description, '
+      + ' books.amount, books.distributor, books.language, books.size,'
       + ' temp.bookshelf_id as bookshelfId, temp.name as locationName, temp.decription as locationDescription '
       + ' FROM books '
-      + ' left join categories on books.category_id = categories.id' 
+      + ' left join categories on books.category_id = categories.id'
       + ' LEFT JOIN ( SELECT * '
       + '             FROM bookshelf_location_entity '
       + '             LEFT JOIN booshelf_location on booshelf_location.id = bookshelf_location_entity.bookshelf_id) temp '
@@ -88,18 +88,28 @@ function Books() {
     queryDB(connection, response, bookQuery, fieldData);
   };
 
-  this.searchBooks = (query, response) => {
-    const bookQuery = `SELECT sku, name, author, cost, retailPrice, amount, distributor, language, size, totalPage, translator, publishDate, description, cover.photo FROM books LEFT JOIN cover ON books.id = cover.bookId WHERE books.name LIKE '%${query.searchKey}%';`;
-    querySearch(connection, response, bookQuery, query.searchKey, query.page);
+  this.searchBooks = (fieldData, response) => {
+    console.log('Log Message: this.searchBooks -> query.searchKey', fieldData);
+    const bookQuery =
+      'SELECT books.id, sku, name, author, cost, retailPrice, amount, distributor, language, size, totalPage, translator, publishDate, description, cover.photo '
+      + 'FROM books '
+      + 'LEFT JOIN cover ON books.id = cover.bookId '
+      + `WHERE books.name LIKE '%${fieldData.searchKey}%'`;
+
+    querySearch(connection, response, bookQuery, fieldData.searchKey);
   };
 
   this.getMostSearchForTimeLine = (reqeset, response) => {
-    const bookQuery = `SELECT sku, name, date_search, COUNT(sku) AS numberOfSearch
-                        FROM history_search
-                        GROUP BY sku
-                        HAVING date_search > DATE_SUB(CURRENT_DATE(), INTERVAL ? DAY)
-                        ORDER BY COUNT(sku) DESC
-                        LIMIT 5`;
+    const bookQuery = `
+        SELECT t.bookId, history_search.sku, history_search.name, history_search.date_search, c.photo, COUNT(history_search.sku) AS numberOfSearch
+        FROM history_search
+        LEFT JOIN (SELECT books.sku, books.id as bookId from books) t ON history_search.sku = t.sku
+        LEFT JOIN (SELECT cover.photo, cover.bookId as coverBookId from cover) c ON bookId = c.coverBookId
+        GROUP BY history_search.sku
+        HAVING date_search > DATE_SUB(CURRENT_DATE(), INTERVAL 90 DAY)
+        ORDER BY COUNT(history_search.sku) DESC
+        LIMIT 5 `;
+
     queryDB(connection, response, bookQuery, reqeset.num_days);
   };
 
@@ -118,8 +128,8 @@ function Books() {
   };
 
   this.getRelateBook = (request, response) => {
-    const bookQuery = 
-    `SELECT sku, name, author, cost, retailPrice, amount, inventory, distributor, language, size, totalPage, translator, publishDate, description, cover.photo FROM books
+    const bookQuery =
+      `SELECT sku, name, author, cost, retailPrice, amount, inventory, distributor, language, size, totalPage, translator, publishDate, description, cover.photo FROM books
     LEFT JOIN cover ON books.id = cover.bookId
     WHERE category_id in (SELECT category_id FROM books WHERE sku = ?)
     LIMIT 10;`;

@@ -171,6 +171,18 @@ export class BookEffect {
     })
   ));
 
+  getBooksByKeyword$ = createEffect(() => this.actions$.pipe(
+    ofType(bookActions.getBooksByKeyword),
+    exhaustMap((action) => {
+      return this.bookService.getBookByKeyword(action.keyword).pipe(
+        map((res) => {
+          return bookActions.getBooksByKeywordSuccess({ searchBooks: res });
+        }),
+        catchError(error => of(bookActions.getBooksByKeywordFail({ error: error })))
+      )
+    })
+  ));
+
   updateProposal$ = createEffect(() => this.actions$.pipe(
     ofType(bookActions.updateProposal),
     map((action: any) => action.proposal),

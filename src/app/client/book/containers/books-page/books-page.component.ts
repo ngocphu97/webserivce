@@ -17,8 +17,13 @@ export class BooksPageComponent {
   books$: Observable<any>;
   bookLocation$: Observable<any>;
 
-  constructor(private store: Store<any>) {
+  constructor(private store: Store<any>, private router: Router) {
     this.books$ = this.store.pipe(select(selectBookList));
+  }
+
+  onSearch(keyword: string) {
+    keyword = keyword.split(' ').join('+');
+    this.router.navigate(['/client/books/search'], { queryParams: { keyword } });
   }
 
 }

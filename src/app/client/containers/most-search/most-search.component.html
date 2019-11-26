@@ -1,9 +1,19 @@
-<mat-card class="most-search-book-card">
+<mat-card 
+  class="most-search-book-card" 
+  matTooltip="{{book.name}}" 
+  routerLink="./books/detail/{{book.sku}}/{{book.bookId}}"  
+  matTooltipClass="custom-tooltip">
+  
   <mat-card-header>
-    <mat-card-title class="book-name" matTooltip="{{book.name}}" matTooltipClass="custom-tooltip">
+    <mat-card-title class="book-name">
       {{book.name}}</mat-card-title>
   </mat-card-header>
 
-  <img mat-card-image src="https://cdn0.fahasa.com/media/wysiwyg/Thang-10-2019/noi%20me%20nghe%20nao_350x415.png" >
+  <div class="cover">
+    <img *ngIf="book.photo" src="{{book.photo}}" class="image">
+    <img *ngIf="!book.photo" src="https://cdn0.fahasa.com/media/wysiwyg/Thang-10-2019/noi%20me%20nghe%20nao_350x415.png"
+      class="image">
+  </div>
+
 
 </mat-card>

@@ -28,12 +28,14 @@ function LocationBookshelf() {
 
   this.getLocationFromSKU = (request, response) => {
     const locationQuery =
-      'SELECT bl.name, x, y'
+        'SELECT bl.name, x, y '
       + 'FROM bookshelf_location_entity be '
       + 'LEFT JOIN books ON be.book_id = books.id '
       + 'LEFT JOIN booshelf_location bl ON be.bookshelf_id = bl.id '
       + 'WHERE books.sku = ?';
     queryDB(connection, response, locationQuery, request.sku);
+
+     
   };
 
   this.createLocation = (fieldData, response) => {
@@ -42,8 +44,6 @@ function LocationBookshelf() {
   };
 
   this.updateLocation = (fieldData, response) => {
-    // const locationQuery = `update bookshelf_location_entity SET bookshelf_id = ? WHERE book_id = ${fieldData.book_id}`;
-    // queryDB(connection, response, locationQuery, [fieldData]);
 
     connection.acquire((error, connection) => {
       if (error) {
@@ -53,8 +53,6 @@ function LocationBookshelf() {
           if (error) {
             response.send(error);
           } else {
-            console.log('Log Message: this.updateLocation -> result', result);
-
             if (result.length === 0) {
               const locationQuery = `insert bookshelf_location_entity SET ?`;
               connection.query(locationQuery, [fieldData], (error, result) => {

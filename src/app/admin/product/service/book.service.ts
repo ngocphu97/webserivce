@@ -22,6 +22,10 @@ export class BookService {
     return this.http.get(`${this.baseUrl}/books/mostsearch/${numTime}`);
   }
 
+  getBookByKeyword(keyword: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/books/search`, { searchKey: keyword });
+  }
+
   getBookListWithCover(): Observable<any> {
     return this.http.get(`${this.baseUrl}/books?cover=1`);
   }
@@ -43,7 +47,7 @@ export class BookService {
   }
 
   addBookLocation(location: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/location`, { book_id: location.bookId, bookshelf_id: location.bookshelf_id});
+    return this.http.post(`${this.baseUrl}/location`, { book_id: location.bookId, bookshelf_id: location.bookshelf_id });
   }
 
   deleteBookById(bookId: string): Observable<Book> {
@@ -61,9 +65,9 @@ export class BookService {
   addBookCover(photo: string, bookId: string): Observable<any> {
     return this.http.post(`${this.baseUrl}/books/uploadcover`, { photo, bookId });
   }
-  
+
   upload(file) {
-    this.http.post('/upload', file).pipe().subscribe( );
+    this.http.post('/upload', file).pipe().subscribe();
   }
 
   getBookPhotoByBookId(bookId): Observable<any> {
@@ -80,8 +84,8 @@ export class BookService {
       ...proposal,
       status: proposal.status.toString()
     };
-    
-    return this.http.put(`${this.baseUrl}/proposal-import/${proposal.id}`, proposal );
+
+    return this.http.put(`${this.baseUrl}/proposal-import/${proposal.id}`, proposal);
   }
 
   addProposal(proposal: Proposal): Observable<any> {
@@ -90,12 +94,12 @@ export class BookService {
       ...proposal,
       status: proposal.status.toString()
     };
-    
-    return this.http.post(`${this.baseUrl}/proposal-import`, proposal );
+
+    return this.http.post(`${this.baseUrl}/proposal-import`, proposal);
   }
 
-  updateBookLocation(bookLocationEntity: BookLocationEntity): Observable<any>  {
-    
+  updateBookLocation(bookLocationEntity: BookLocationEntity): Observable<any> {
+
     const bookLocation = {
       book_id: bookLocationEntity.bookId,
       bookshelf_id: bookLocationEntity.bookshelfId

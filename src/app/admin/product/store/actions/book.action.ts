@@ -125,6 +125,21 @@ export const getTopSearchBooksByTimeFail = createAction(
   props<{ error: any }>()
 );
 
+export const getBooksByKeyword = createAction(
+  '[Book] Get book by keyword',
+  props<{ keyword: string }>()
+);
+
+export const getBooksByKeywordSuccess = createAction(
+  '[Book] Get book by keyword success',
+  props<{ searchBooks: Array<Book> }>()
+);
+
+export const getBooksByKeywordFail = createAction(
+  '[Book] Get book by keyword fail',
+  props<{ error: any }>()
+);
+
 export const addBookCover = createAction(
   '[Book] Add book cover',
   props<{ photo: string, sku: string }>()

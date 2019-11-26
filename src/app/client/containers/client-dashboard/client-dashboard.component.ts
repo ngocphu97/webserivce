@@ -30,10 +30,9 @@ export class ClientDashboardComponent {
     this.books$ = this.store.pipe(select(selectAllBooks));
   }
 
-
   onSeachWithKeyword(keyword: string) {
     keyword = keyword.split(' ').join('+');
-    this.router.navigate(['/client/books'], { queryParams: { keyword } });
+    this.router.navigate(['/client/books/search'], { queryParams: { keyword } });
   }
 }
 

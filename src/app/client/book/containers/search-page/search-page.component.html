@@ -1,28 +1,34 @@
 <div class="header">
   <h1>
-    SEARCH
+    KẾT QUẢ TÌM KIẾM
   </h1>
-  <p>
+  
+  <form>
     <mat-form-field class="search-field">
-      <mat-label>Books</mat-label>
-      <input matInput placeholder="Search book name ...." #searchInput>
-      <mat-icon class="search-field-icon" matSuffix (click)="onSearch(searchInput.value)">search</mat-icon>
+      <mat-label>Tìm sách</mat-label>
+      <input matInput (keyup.enter)="onSearch(searchInput.value)" placeholder="Search book name ...." #searchInput>
+      <mat-icon class="search-field-icon" matSuffix
+        routerLink="/client/books/search"
+        [queryParams]="{ keyword: searchInput.value }"
+        
+      >
+        search</mat-icon>
     </mat-form-field>
-  </p>
+  </form>
+
 </div>
 
 <div class="loading" *ngIf="(loading$ | async)">
   <mat-spinner></mat-spinner>
-  <p>Loading books ...</p>
+  <p> Đang tìm sách ...</p>
 </div>
 
-<div class="loading" *ngIf="!(loading$ | async) && filterdBook.length === 0">
-  <p>No book match your search ...</p>
+<div class="loading" *ngIf="!(loading$ | async) && (booksSearchByName$ | async) && (booksSearchByName$ | async).length === 0">
+  <p>Không có sách phù hợp</p>
 </div>
 
-<div *ngIf="!(loading$ | async) && filterdBook.length > 0">
+<div *ngIf="!(loading$ | async)">
   <div class="card-container">
-    <app-book-card *ngFor="let book of filterdBook" class="card"
-      [book]="book"></app-book-card>
+    <app-book-card *ngFor="let book of booksSearchByName$ | async" class="card" [book]="book"></app-book-card>
   </div>
 </div>

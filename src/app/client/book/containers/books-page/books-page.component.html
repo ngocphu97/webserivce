@@ -1,14 +1,15 @@
 <div class="header">
   <h1 class="title"> Chào mừng đến với thư viện ELIBRARY </h1>
 
-  <p>
+  <form>
     <mat-form-field class="search-field">
-      <mat-label>Sách</mat-label>
-      <input matInput placeholder="Tìm kiếm sản phẩm mong muốn" #searchInput>
-      <mat-icon class="search-field-icon" matSuffix [routerLink]="['search']"
-        [queryParams]="{ keyword: searchInput.value }">search</mat-icon>
+      <mat-label>Tìm sách</mat-label>
+      <input matInput (keyup.enter)="onSearch(searchInput.value)" placeholder="Search book name ...." #searchInput>
+      <mat-icon class="search-field-icon" matSuffix routerLink="/client/books/search"
+        [queryParams]="{ keyword: searchInput.value }"  >
+        search</mat-icon>
     </mat-form-field>
-  </p>
+  </form>
 
 </div>
 
@@ -20,12 +21,14 @@
 
 
 <div *ngIf="(books$ | async).length > 0">
-  <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
+  <pagination-controls 
+      previousLabel="Trước"
+      nextLabel="Sau"
+      class="pagination"
+      (pageChange)="p = $event"></pagination-controls>
   <div class="card-container">
-    <app-book-card 
-        *ngFor="let book of (books$ | async) | paginate: { itemsPerPage: 9, currentPage: p }" 
-        class="card"
-        [book]="book">
+    <app-book-card *ngFor="let book of (books$ | async) | paginate: { itemsPerPage: 9, currentPage: p }" class="card"
+      [book]="book">
     </app-book-card>
   </div>
 </div>

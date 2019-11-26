@@ -26,6 +26,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { BookService } from '../admin/product/service';
 import { DashboardService } from '../admin/dashboard/services/dashboard.service';
 import { DefaultUrlSerializer } from '@angular/router';
+import { SearchComponent } from './containers/search/search.component';
 
 const MATERIALS = [
   MatToolbarModule,
@@ -57,6 +58,6 @@ const MATERIALS = [
     BookService,
     DashboardService,
     DefaultUrlSerializer
-  ],
+  ]
 })
 export class ClientModule { }

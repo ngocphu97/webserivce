@@ -55,3 +55,9 @@ export const selectBookLoction = createSelector(
   selectBookState,
   fromReducer.getSelectBookLocationList
 )
+
+export const selectSearchBookByKeywordList = createSelector(
+  selectBookState,
+  fromReducer.getSearchBookByKeywordList
+)
+

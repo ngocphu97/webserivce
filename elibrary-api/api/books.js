@@ -20,8 +20,8 @@ router
     }
   })
 
-  .get('/search', (request, response) => {
-    tryCall(books.searchBooks(request.query, response));
+  .post('/search', (request, response) => {
+    tryCall(books.searchBooks(request.body, response));
   })
 
   .get('/:id/', (request, response) => {

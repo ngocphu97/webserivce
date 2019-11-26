@@ -7,32 +7,32 @@
     <mat-icon *ngIf="form.get('email').value" matSuffix>drafts</mat-icon>
     <mat-error>
       <span *ngIf="form.get('email').hasError('email')">
-        Email is invalid
+        Email không đúng
       </span>
     </mat-error>
     <mat-error>
       <span *ngIf="form.get('email').hasError('required')">
-        Email is required
+        Nhập email
       </span>
     </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Password</mat-label>
+    <mat-label>Mật khẩu</mat-label>
     <input matInput autocomplete="off" tabindex="2" type="password" placeholder="Password" formControlName="password" />
     <mat-icon *ngIf="!form.get('password').value" matSuffix>lock</mat-icon>
     <mat-icon *ngIf="form.get('password').value" matSuffix>lock_open</mat-icon>
     <mat-error>
       <span *ngIf="form.get('password').hasError('required')">
-        Password is required
+        Nhập mật khẩu
       </span>
     </mat-error>
   </mat-form-field>
 
-  <div class="actions" fxLayoutAlign="space-between center">
-    <a [routerLink]="['/forgot-password']">Forgot Password?</a>
+  <div class="actions" fxLayoutAlign="space-between end">
+    <!-- <a [routerLink]="['/forgot-password']">Forgot Password?</a> -->
     <button mat-raised-button tabindex="3" color="accent" type="submit" class="w-100" [disabled]="form.invalid">
-      Login
+      Đăng nhập
     </button>
   </div>
 </form>
@@ -40,18 +40,18 @@
 <hr>
 
 <div class="text-center mt-32">
-  <span>Login with your social</span>
+  <span>Đăng nhập bằng </span>
 </div>
 
 <div class="social">
   <div class="social-button">
     <button class="social-button__gg" mat-raised-button color="accent" (click)="loginGG()">
-      Sign in with Google
+      Đăng nhập với Google
     </button>
   </div>
   <div class="social-button">
     <button class="social-button__fb" mat-raised-button color="primary" (click)="loginFB()">
-      Sign in with Facebook
+      Đăng nhập với Facebook
     </button>
   </div>
 </div>

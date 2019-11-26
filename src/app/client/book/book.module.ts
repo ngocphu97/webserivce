@@ -22,6 +22,7 @@ import { CONTAINERS } from './containers';
 import { BooksResolve } from 'src/app/admin/product/service/book.resolve';
 import { ScrollingModule } from '@angular/cdk/scrolling'
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ClientModule } from '../client.module';
 
 const MATERIALS = [
   MatToolbarModule,
@@ -38,7 +39,10 @@ const MATERIALS = [
 ]
 
 @NgModule({
-  declarations: [CONTAINERS, COMPONENTS],
+  declarations: [
+    CONTAINERS,
+    COMPONENTS
+  ],
   imports: [
     CommonModule,
     BookRoutingModule,

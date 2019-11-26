@@ -1,8 +1,10 @@
 .most-search-book-card {
-  width: 100px;
+  width: 135px;
+  height: 240px;
   box-shadow: none !important;
   border: 1px solid transparent;
   transition: box-shadow 0.3s ease-in-out;
+  border: 1.5px solid #ffbb45;
 
   .book-name {
     width: 100px;
@@ -15,8 +17,24 @@
   &:hover {
     cursor: pointer;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3) !important;
-    border: 1px solid #ffbb45;
+    border: 1.5px solid #ffbb45;
   }
+}
+
+
+.image {
+  max-width: 155px;
+  width: 150px;
+  height: 195px;
+  display: flex;
+  margin: 0 -16px 16px -16px;
+}
+
+.cover {
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+  margin: 0 -16px 16px -16px;
 }
 
 :host::ng-deep.mat-card-header-text {

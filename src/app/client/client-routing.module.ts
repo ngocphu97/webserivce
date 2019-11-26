@@ -11,7 +11,7 @@ const routes: Routes = [
   },
   {
     path: 'books',
-    component: BookLayoutComponent,
+    component: BookLayoutComponent, 
     loadChildren: () => import('./book/book.module').then(m => m.BookModule)
   }
 ];
