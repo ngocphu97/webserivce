@@ -74,7 +74,6 @@ export class DetailProductComponent implements OnChanges {
     this.secondFormGroup = this._formBuilder.group({
       amount: [{ value: undefined, disabled: true }],
       cost: [{ value: undefined, disabled: true }],
-      inventory: [{ value: undefined, disabled: true }],
       retailPrice: [{ value: undefined, disabled: true }],
     });
   }
@@ -91,15 +90,14 @@ export class DetailProductComponent implements OnChanges {
         publishDate: this.selectedBook.publishDate,
         translator: this.selectedBook.translator,
         bookshelfId: this.selectedBook.bookshelfId,
-        locationName: this.selectedBook.locationName + this.selectedBook.locationDescription 
-          ? this.selectedBook.locationName + ' - ' + this.selectedBook.locationDescription 
+        locationName: this.selectedBook.locationName + this.selectedBook.locationDescription
+          ? this.selectedBook.locationName + ' - ' + this.selectedBook.locationDescription
           : 'Chưa có'
       });
 
       this.secondFormGroup.patchValue({
         amount: this.selectedBook.amount,
         cost: this.selectedBook.cost,
-        inventory: this.selectedBook.inventory,
         retailPrice: this.selectedBook.retailPrice,
       });
 
@@ -147,9 +145,8 @@ export class DetailProductComponent implements OnChanges {
 
     this.secondFormGroup.get(['amount']).enable();
     this.secondFormGroup.get(['cost']).enable();
-    this.secondFormGroup.get(['inventory']).enable();
     this.secondFormGroup.get(['retailPrice']).enable();
-    
+
     this.bookNameInput.nativeElement.focus();
     this.isEdit = true;
   }
@@ -164,7 +161,6 @@ export class DetailProductComponent implements OnChanges {
 
     this.secondFormGroup.get(['amount']).disable();
     this.secondFormGroup.get(['cost']).disable();
-    this.secondFormGroup.get(['inventory']).disable();
     this.secondFormGroup.get(['retailPrice']).disable();
 
     this.isEdit = false;
@@ -172,6 +168,7 @@ export class DetailProductComponent implements OnChanges {
 
   saveBook() {
     const editBook = {
+      id: this.selectedBook.id,
       ...this.firstFormGroup.value,
       ...this.secondFormGroup.value
     }

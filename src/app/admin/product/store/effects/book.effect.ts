@@ -72,9 +72,11 @@ export class BookEffect {
         map((res) => {
 
           if (book.photo) {
-            this.bookService.addBookCover(book.photo, res.insertId).subscribe();
+            this.bookService.addBookCover(book.photo, res.insertId).subscribe(res => console.log(res));
           } else {
-            this.bookService.addBookCover('https://www.blueinkreview.com/wp-content/uploads/2016/07/nocover-1.jpg', res.insertId).subscribe();
+            this.bookService.addBookCover(
+              'https://www.blueinkreview.com/wp-content/uploads/2016/07/nocover-1.jpg', 
+              res.insertId).subscribe(res => console.log(res));
           }
 
           if (res.insertId) {
@@ -84,7 +86,6 @@ export class BookEffect {
             };
             this.bookService.addBookLocation(location).subscribe();
           }
-
 
           return bookActions.getBookList();
         }),
@@ -110,9 +111,10 @@ export class BookEffect {
     ofType(bookActions.deleteBook),
     map((action: any) => action.book),
     exhaustMap((book) => {
+      console.log('Log Message: BookEffect -> book', book);
       return this.bookService.deleteBookById(book.id).pipe(
         map(() => {
-          this.openSnackBar('Delete book success', 'success');
+          this.openSnackBar('Đã xóa thành công', ' ');
           return bookActions.deleteBookSuccess({ bookId: book.id });
         }),
         catchError(error => of(bookActions.deleteBookError({ error: error })))
@@ -126,7 +128,7 @@ export class BookEffect {
     exhaustMap((book) => {
       return this.bookService.updateBookById(book).pipe(
         map(() => {
-          this.openSnackBar('Update book success', 'success');
+          this.openSnackBar('Cập nhật sách thành công', '_');
           return bookActions.updateBookByIdSuccess({ book: book });
         }),
         catchError(error => of(bookActions.updateBookByIdFail({ error: error })))
@@ -183,13 +185,25 @@ export class BookEffect {
     })
   ));
 
+  addBookHistorySearch$ = createEffect(() => this.actions$.pipe(
+    ofType(bookActions.addBookHistorySearch),
+    exhaustMap((action) => {
+      return this.bookService.addBookHistorySearch(action.historySearchBook).pipe(
+        map((res) => {
+          return bookActions.addBookHistorySearchSuccess();
+        }),
+        catchError(error => of(bookActions.addBookHistorySearchFail({ error: error })))
+      )
+    })
+  ));
+
   updateProposal$ = createEffect(() => this.actions$.pipe(
     ofType(bookActions.updateProposal),
     map((action: any) => action.proposal),
     exhaustMap((proposal) => {
       return this.bookService.updateProposalById(proposal).pipe(
         map(() => {
-          this.openSnackBar('Update book success', 'success');
+          this.openSnackBar('Cập nhật yêu cầu thêm sách thành công', ' ');
           return bookActions.updateProposalSuccess({ id: proposal.id });
         }),
         catchError(error => of(bookActions.updateProposalFail({ error: error })))
@@ -203,9 +217,9 @@ export class BookEffect {
     exhaustMap((proposal) => {
       return this.bookService.addProposal(proposal).pipe(
         map((res) => {
-          this.openSnackBar('Thêm thành công', 'Thành công');
+          this.openSnackBar('Thêm thành công', ' ');
           this.router.navigate(['admin/books/proposal-import']);
-          return bookActions.addProposalSuccess({ proposal: { ...proposal, id: res.insertId} });
+          return bookActions.addProposalSuccess({ proposal: { ...proposal, id: res.insertId } });
         }),
         catchError(error => of(bookActions.addProposalFail({ error: error })))
       )

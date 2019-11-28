@@ -1,10 +1,12 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
-import { selectBookList, selectLoading, selectSearchBookByKeywordList } from 'src/app/admin/product/store/selector';
-import { ActivatedRoute, Router } from '@angular/router';
+
 import { Book } from 'src/app/admin/product/models';
 import { getBooksByKeyword } from 'src/app/admin/product/store/actions';
+import { selectLoading, selectSearchBookByKeywordList } from 'src/app/admin/product/store/selector';
 
 @Component({
   selector: 'app-search-page',
@@ -19,13 +21,18 @@ export class SearchPageComponent {
   loading$: Observable<boolean>;
   booksSearchByName$: Observable<Array<any>>;
 
-  keyword: string;
   books: Array<Book>;
 
-  constructor(private store: Store<any>, private route: ActivatedRoute, private router: Router) {
-    this.route.queryParams.subscribe(y => {
-      this.keyword = y.keyword
-      this.store.dispatch(getBooksByKeyword({ keyword: this.keyword }));
+  constructor(
+    private store: Store<any>,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+
+    this.route.queryParams.subscribe(param => {
+      if (param && param.keyword) {
+        this.store.dispatch(getBooksByKeyword({ keyword: param.keyword }));
+      }
     });
 
     this.loading$ = this.store.pipe(select(selectLoading));
@@ -36,6 +43,5 @@ export class SearchPageComponent {
     keyword = keyword.split(' ').join('+');
     this.router.navigate(['/client/books/search'], { queryParams: { keyword } });
   }
-
 
 }

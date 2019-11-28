@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+
 import { Store } from '@ngrx/store';
+
 import { getBookList } from 'src/app/admin/product/store/actions';
 import { getCategoriesList } from 'src/app/admin/dashboard/store/category/category.actions';
 
@@ -8,14 +10,11 @@ import { getCategoriesList } from 'src/app/admin/dashboard/store/category/catego
   templateUrl: './book-layout.component.html',
   styleUrls: ['./book-layout.component.scss']
 })
-export class BookLayoutComponent implements OnInit {
+export class BookLayoutComponent {
 
   constructor(private store: Store<any>) {
     this.store.dispatch(getBookList());
     this.store.dispatch(getCategoriesList());
-  }
-
-  ngOnInit() {
   }
 
 }

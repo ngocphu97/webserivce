@@ -23,6 +23,7 @@ export class ClientDashboardComponent {
     private store: Store<any>,
     private router: Router,
   ) {
+
     this.store.dispatch(getTopSearchBooksByTime({ time: 90 }));
     this.topSearchBooks$ = this.store.pipe(select(selectTopSearch));
 

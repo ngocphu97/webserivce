@@ -4,6 +4,7 @@ import { Book, AddBook } from '../../models/book.model';
 import { BookCover } from '../../models';
 import { BookLocation, BookLocationEntity } from '../../models/book-location.model';
 import { Proposal } from '../../models/proposal.model';
+import { HistorySearchBook } from '../../models/history-search-book.model';
 
 export const getBookList = createAction(
 	'[Book] Get Book List'
@@ -237,6 +238,20 @@ export const getBookLocationListSuccess = createAction(
 
 export const getBookLocationListFail = createAction(
   '[Book Location] Get Book Location List Fail',
+  props<{ error: any }>()
+);
+
+export const addBookHistorySearch = createAction(
+  '[Book History] Add Book History Search',
+  props<{ historySearchBook: HistorySearchBook }>()
+);
+
+export const addBookHistorySearchSuccess = createAction(
+  '[Book History] Add Book History Search Success',
+);
+
+export const addBookHistorySearchFail = createAction(
+  '[Book History] Add Book History Search Fail',
   props<{ error: any }>()
 );
 

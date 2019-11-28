@@ -4,14 +4,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { Book } from '../../models/book.model';
+import { MatDialog } from '@angular/material';
+
+import { ConfirmDialogComponent } from '@app/shared/dialog';
+
 import { State } from '../../store/reducers';
-import { deleteBook, getBookById, getBookList, updateBookById, updateBookCover, getBookLocationList, updateBookEntityLocation } from '../../store/actions';
+import { Book } from '../../models/book.model';
 import { selectCurrentBook, selectBookLoction } from '../../store/selector';
 import { getCategoriesList } from 'src/app/admin/dashboard/store/category/category.actions';
 import { selectCategoriesList } from 'src/app/admin/dashboard/store/category/category.selector';
-import { ConfirmDialogComponent } from '@app/shared/dialog';
-import { MatDialog } from '@angular/material';
+import { deleteBook, getBookById, getBookList, updateBookCover, getBookLocationList, updateBookEntityLocation, updateBookById } from '../../store/actions';
 
 @Component({
   selector: 'app-detail-product-page',
@@ -50,8 +52,8 @@ export class DetailProductPageComponent {
       .open(ConfirmDialogComponent, {
         width: '500px',
         data: {
-          title: 'Delete book',
-          message: 'Are you sure to delete this book?'
+          title: 'Xóa sách',
+          message: 'Bạn có chắc muốn xóa sách ?'
         }
       })
       .afterClosed()
@@ -64,16 +66,14 @@ export class DetailProductPageComponent {
   }
 
   onEditBook(book) {
-    console.log('Log Message: DetailProductPageComponent -> onEditBook -> book', book);
-    // this.store.dispatch(updateBookById({ book: { ...book, id: this.bookId } }));
-    
+    this.store.dispatch(updateBookById({ book }));
+
     this.store.dispatch(updateBookEntityLocation({
       bookLocationEntity: {
         bookId: this.bookId,
         bookshelfId: book.bookshelfId
       }
     }));
-    
   }
 
   onEditCoverPhoto(coverPhoto) {

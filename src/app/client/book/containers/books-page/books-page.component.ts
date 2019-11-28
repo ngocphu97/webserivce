@@ -1,8 +1,10 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { Observable} from 'rxjs';
-import { selectBookList } from 'src/app/admin/product/store/selector';
 import { Router } from '@angular/router';
+
+import { Observable } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+
+import { selectBookList } from 'src/app/admin/product/store/selector';
 
 @Component({
   selector: 'app-books-page',
@@ -17,7 +19,10 @@ export class BooksPageComponent {
   books$: Observable<any>;
   bookLocation$: Observable<any>;
 
-  constructor(private store: Store<any>, private router: Router) {
+  constructor(
+    private store: Store<any>,
+    private router: Router
+  ) {
     this.books$ = this.store.pipe(select(selectBookList));
   }
 

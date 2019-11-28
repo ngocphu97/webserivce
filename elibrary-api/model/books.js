@@ -89,7 +89,6 @@ function Books() {
   };
 
   this.searchBooks = (fieldData, response) => {
-    console.log('Log Message: this.searchBooks -> query.searchKey', fieldData);
     const bookQuery =
       'SELECT books.id, sku, name, author, cost, retailPrice, amount, distributor, language, size, totalPage, translator, publishDate, description, cover.photo '
       + 'FROM books '
@@ -111,6 +110,11 @@ function Books() {
         LIMIT 5 `;
 
     queryDB(connection, response, bookQuery, reqeset.num_days);
+  };
+
+  this.createHistorySearch = (fieldData, response) => {
+    const bookQuery = 'insert into history_search set ?'
+    queryDB(connection, response, bookQuery, [fieldData.bookHistorySearch]);
   };
 
   this.getLocationFromSKU = (reqeset, response) => {
@@ -168,14 +172,60 @@ function Books() {
     queryDB(connection, response, bookQuery, [request.photo, request.bookId]);
   }
 
-  this.updateBookCoverPhoto = (request, response) => {
-    const bookQuery = 'update cover set photo = ? where bookId = ?';
-    queryDB(connection, response, bookQuery, [request.photo, request.bookId]);
-  }
-
   this.getBookCover = (request, response) => {
     const bookQuery = 'select * from cover where bookId = ?';
     queryDB(connection, response, bookQuery, request.bookId);
+  }
+
+  this.updateBookCoverPhoto = (request, response) => {
+    console.log('Log Message: this.updateBookCoverPhoto -> request', request);
+
+    const bookQuery = 'update cover set photo = ? where bookId = ?';
+
+    connection.acquire((error, connection) => {
+      if (error) {
+        response.send(error);
+      } else {
+        connection.query(bookQuery, [request.photo, request.bookId], (error, result) => {
+          if (error) {
+            response.send(error);
+          } else {
+            console.log('Log Message: this.updateBookCoverPhoto -> result', result.affectedRows);
+            if (result.affectedRows === 0) {
+              insertCover(request.photo, request.bookId, response);
+            } else {
+              connection.release();
+              response.send(result);
+            }
+          }
+        }, (error) => {
+          response.send(error);
+        });
+      }
+    });
+
+  }
+
+  function insertCover(photo, bookId, response) {
+
+    connection.acquire((error, connection) => {
+      if (error) {
+        response.send(error);
+      } else {
+        connection.query('insert into cover set photo = ?, bookId = ?', [photo, bookId], (error, result) => {
+          if (error) {
+            response.send(error);
+          } else {
+            connection.release();
+            console.log('Log Message: insertCover -> result', result);
+            response.send(result);
+          }
+        }, (error) => {
+          response.send(error);
+        });
+      }
+
+    });
   }
 }
 

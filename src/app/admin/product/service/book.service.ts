@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { BookCover } from '../models';
 import { Proposal } from '../models/proposal.model';
 import { BookLocationEntity } from '../models/book-location.model';
+import { HistorySearchBook } from '../models/history-search-book.model';
 
 @Injectable()
 export class BookService {
@@ -24,6 +25,15 @@ export class BookService {
 
   getBookByKeyword(keyword: string): Observable<any> {
     return this.http.post(`${this.baseUrl}/books/search`, { searchKey: keyword });
+  }
+
+  addBookHistorySearch(bookHistorySearch: HistorySearchBook): Observable<any> {
+    const historySearch = {
+      sku: bookHistorySearch.sku,
+      name: bookHistorySearch.name,
+      date_search: bookHistorySearch.dateSearch
+    }
+    return this.http.post(`${this.baseUrl}/books/historysearch`, { bookHistorySearch: historySearch });
   }
 
   getBookListWithCover(): Observable<any> {
@@ -51,7 +61,7 @@ export class BookService {
   }
 
   deleteBookById(bookId: string): Observable<Book> {
-    return this.http.delete<Book>(`${this.baseUrl}/books/${bookId}`);
+    return this.http.post<Book>(`${this.baseUrl}/books/deleteBook`, { id: bookId });
   }
 
   updateBookById(book: Book): Observable<Book> {
@@ -59,7 +69,7 @@ export class BookService {
   }
 
   updateBookCover(bookCover: BookCover): Observable<any> {
-    return this.http.put(`${this.baseUrl}/books/${bookCover.id}/cover`, bookCover);
+    return this.http.put(`${this.baseUrl}/books/${bookCover.bookId}/cover`, bookCover);
   }
 
   addBookCover(photo: string, bookId: string): Observable<any> {

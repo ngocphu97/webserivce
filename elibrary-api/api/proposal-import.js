@@ -25,9 +25,8 @@ router
   })
 
   .put('/:id/', (request, response) => {
-    tryCall(proposalImport.updateProposalImport(request.body, response))
+    tryCall(proposalImport.updateProposalImport(request.body, response));
   })
 
-  
 
 module.exports = router;

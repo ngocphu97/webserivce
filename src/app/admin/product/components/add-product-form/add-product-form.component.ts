@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { takeUntilDestroy } from '@app/core/destroyable';

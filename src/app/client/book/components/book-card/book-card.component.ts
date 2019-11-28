@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-book-card',

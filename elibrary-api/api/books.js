@@ -48,12 +48,12 @@ router
     tryCall(books.createBook(request.body, response));
   })
   
-  .post('/createHistorySearch', (request, response) => {
+  .post('/historysearch', (request, response) => {
     tryCall(books.createHistorySearch(request.body, response));
   })
 
   .post('/deleteBook', (request, response) => {
-    tryCall(books.deleteBook(request.body, response));
+    tryCall(books.deleteBook(request.body, response));  
   })
 
   .post('/uploadcover', (request, response) => {

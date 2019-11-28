@@ -65,8 +65,12 @@ function proposalImport() {
               });
               connection.release();
             } else if (result[0].status.toString() === 'false') {
-              
+
+              console.log(1, '=>', result[0].status);
+
               const proposalImportQuery = 'update proposal_import set ? where id = ?';
+
+              updateBookAmount(fieldData.amount, fieldData.bookId, response);
 
               connection.query(proposalImportQuery, [fieldData, fieldData.id], (error, result) => {
                 if (error) {
@@ -76,6 +80,7 @@ function proposalImport() {
                   response.send(result);
                 }
               });
+
             }
           }
         }, (error) => {
@@ -85,7 +90,36 @@ function proposalImport() {
     });
 
   };
+
+
+  function updateBookAmount(amount, id, response) {
+
+    connection.acquire((error, connection) => {
+      if (error) {
+        response.send(error);
+      } else {
+        connection.query('select amount from books where id = ?', id, (error, result) => {
+          if (error) {
+            response.send(error);
+          } else {
+            const newAmount = parseInt(result[0].amount, 0) + amount;
+            connection.query('update books set amount = ? where id = ?', [newAmount, id], (error, _result) => {
+              if (error) {
+                response.send(error);
+              } else {
+                connection.release();
+              }
+            }, (error) => { 
+              response.send(error);
+            });
+          }
+        }, (error) => {
+          response.send(error);
+        });
+      }
+
+    });
+  }
 }
 
 module.exports = new proposalImport();
-
