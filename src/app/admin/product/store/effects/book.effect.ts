@@ -111,7 +111,6 @@ export class BookEffect {
     ofType(bookActions.deleteBook),
     map((action: any) => action.book),
     exhaustMap((book) => {
-      console.log('Log Message: BookEffect -> book', book);
       return this.bookService.deleteBookById(book.id).pipe(
         map(() => {
           this.openSnackBar('Đã xóa thành công', ' ');

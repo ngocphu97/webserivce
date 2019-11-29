@@ -16,6 +16,8 @@ export class AddProductFormComponent implements OnInit {
   form: FormGroup;
   formErrors: any;
 
+  languages = ['Tiếng Việt, Tiếng Anh, Tiếng Trung'];
+
   constructor(
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<AddProductFormComponent>,

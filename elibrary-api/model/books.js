@@ -146,8 +146,11 @@ function Books() {
   };
 
   this.deleteBook = (fieldData, response) => {
+    console.log('Log Message: this.deleteBook -> fieldData', fieldData);
+    deleteCover(fieldData.id, response);
     const bookQuery = 'delete from books where id = ?';
     queryDB(connection, response, bookQuery, fieldData.id);
+
   };
 
   this.uploadBookCover = (request, response) => {
@@ -178,7 +181,6 @@ function Books() {
   }
 
   this.updateBookCoverPhoto = (request, response) => {
-    console.log('Log Message: this.updateBookCoverPhoto -> request', request);
 
     const bookQuery = 'update cover set photo = ? where bookId = ?';
 
@@ -190,7 +192,6 @@ function Books() {
           if (error) {
             response.send(error);
           } else {
-            console.log('Log Message: this.updateBookCoverPhoto -> result', result.affectedRows);
             if (result.affectedRows === 0) {
               insertCover(request.photo, request.bookId, response);
             } else {
@@ -217,7 +218,6 @@ function Books() {
             response.send(error);
           } else {
             connection.release();
-            console.log('Log Message: insertCover -> result', result);
             response.send(result);
           }
         }, (error) => {
@@ -226,6 +226,35 @@ function Books() {
       }
 
     });
+  }
+
+  function deleteCover(bookId, response) {
+    console.log('Log Message: deleteCover -> bookId', bookId);
+
+    const queries = [
+      `delete from cover where bookId = ${bookId}; `,
+      `delete from bookshelf_location_entity where book_id = ${bookId}; `,
+      `delete from proposal_import where bookId = ${bookId}`
+    ]
+
+    queries.forEach(query => {
+
+      connection.acquire((error, connection) => {
+        if (error) {
+          response.send(error);
+        } else {
+          connection.query(query, (_error, _results, _fields) => {
+            console.log(_results);
+            console.log(_error);
+            console.log(_fields);
+            connection.release();
+          });
+        }
+      });
+
+    });
+
+
   }
 }
 

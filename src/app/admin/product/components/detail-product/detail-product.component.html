@@ -27,7 +27,7 @@
         <input *ngIf="!isEdit" matInput placeholder="Vị trí" formControlName="locationName" #bookName>
 
         <ng-container *ngIf="isEdit">
-          <mat-label>Thể loại</mat-label>
+          <mat-label>Vị trí</mat-label>
           <mat-select formControlName="bookshelfId">
             <mat-option *ngFor="let bookshelf of bookshelfLoctions" [value]="bookshelf.locationId">
               {{bookshelf.name}} - {{bookshelf.description}}

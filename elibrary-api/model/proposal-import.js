@@ -66,8 +66,6 @@ function proposalImport() {
               connection.release();
             } else if (result[0].status.toString() === 'false') {
 
-              console.log(1, '=>', result[0].status);
-
               const proposalImportQuery = 'update proposal_import set ? where id = ?';
 
               updateBookAmount(fieldData.amount, fieldData.bookId, response);
