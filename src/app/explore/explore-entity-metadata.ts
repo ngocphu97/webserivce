@@ -13,5 +13,5 @@ export const entityConfig = {
 
 export const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: 'https://graph.facebook.com',
-  timeout: 3000, // request timeout
+  timeout: 3000,
 }

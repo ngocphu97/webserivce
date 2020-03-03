@@ -1,3 +1,7 @@
+.explore-page {
+  margin-bottom: 1.5rem;
+}
+
 .loading-spinner {
   text-align: center;
 
@@ -13,12 +17,18 @@
 
 .tool-bar {
   background: #ffffff !important;
+  position: relative;
 
   .gudjob-logo {
     width: 200px;
     display: flex;
     align-items: center;
   }
+}
+
+.menu {
+  position: absolute;
+  right: 5px;
 }
 
 @media(max-width: 640px) {

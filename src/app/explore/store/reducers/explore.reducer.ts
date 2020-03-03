@@ -1,13 +1,14 @@
 import { Action, createReducer, on } from '@ngrx/store';
 
 import * as ExploreAction from '../actions/explore.action';
-import { Search, ExploreModel } from '../../models';
+import { Search, ExploreModel, AdSuggestion } from '../../models';
 
 export interface ExploreState {
   error: any | null;
   pending: boolean;
   search: Search | null;
   exploredList: Array<ExploreModel> | null;
+  adSuggestionList: Array<AdSuggestion> | null;
   totalExplore: number | null;
 }
 
@@ -16,23 +17,38 @@ export const initialState: ExploreState = {
   pending: false,
   search: undefined,
   exploredList: undefined,
-  totalExplore: undefined
+  adSuggestionList: undefined,
+  totalExplore: 0
 };
 
 const exploreReducer = createReducer(
   initialState,
-  on(ExploreAction.getExploreList, (state, { search }) => ({
-    ...state,
-    error: null,
-    pending: true,
-    search: search
-  })),
+
+  on(
+    ExploreAction.getExploreList,
+    ExploreAction.getAdSuggestionList,
+    (state, { search }) => ({
+      ...state,
+      error: null,
+      pending: true,
+      search: search
+    })),
+
   on(ExploreAction.getExploreListSuccessfully, (state, { exploredList }) => ({
     ...state,
     error: null,
     pending: false,
-    exploredList: exploredList
-  }))
+    exploredList: exploredList,
+    totalExplore: exploredList.length
+  })),
+
+  on(ExploreAction.getAdSuggestionListSuccessfully, (state, { adSuggestionList }) => ({
+    ...state,
+    error: null,
+    pending: false,
+    adSuggestionList: adSuggestionList,
+    totalExplore: adSuggestionList.length
+  })),
 );
 
 export function reducer(state: ExploreState | undefined, action: Action) {

@@ -1,11 +1,34 @@
 <div class="explore-page">
   <mat-toolbar class="tool-bar mat-elevation-z1">
     <span><img class="gudjob-logo" src="/assets/gudjob-logo-1.png" alt=""></span>
+
+    <button class="menu" mat-icon-button [matMenuTriggerFor]="menu" >
+      <mat-icon>more_vert</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="logout()">
+        <mat-icon [color]="'primary'">thumb_up_alt</mat-icon>
+        <span>Log out</span>
+      </button>
+      <a mat-menu-item routerLink="./admin">
+        <mat-icon [color]="'primary'">thumb_up_alt</mat-icon>
+        <span>Account</span>
+      </a>
+    </mat-menu>
+
   </mat-toolbar>
 
   <div class="list-item">
-    <app-explore-table [exploredList]="exploredList$ | async" [pending]="pending$ | async"
-      (exploredKeyword)="onSearch($event)" (select)="onSelectInterest($event)">
+    <app-explore-table
+      [exploredList]="exploredList$ | async"
+      [suggestionList]="adSuggestionList$ | async"
+      [pending]="pending$ | async"
+      [totalExplore]="totalInterest$ | async"
+
+      (exploredKeyword)="onSearch($event)"
+      (getSuggestionList)="getAdSuggestionList($event)"
+      (select)="onSelectInterest($event)">
     </app-explore-table>
   </div>
 

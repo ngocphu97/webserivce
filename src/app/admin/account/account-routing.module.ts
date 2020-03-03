@@ -4,7 +4,7 @@ import { SettingsPageComponent } from './settings-page/settings-page.component';
 
 const routes: Routes = [
   {
-    path: 'settings',
+    path: '',
     component: SettingsPageComponent
   }
 ];

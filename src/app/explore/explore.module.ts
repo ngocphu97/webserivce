@@ -18,7 +18,8 @@ import {
   MatToolbarModule,
   MatCheckboxModule,
   MatChipsModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatMenuModule
 } from '@angular/material';
 
 import { ExploreRoutingModule } from './explore-routing.module';
@@ -48,7 +49,8 @@ const MAT_MODULES = [
   MatToolbarModule,
   MatCheckboxModule,
   MatChipsModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatMenuModule
 ];
 
 @NgModule({

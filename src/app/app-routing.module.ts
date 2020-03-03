@@ -6,16 +6,21 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'client'
+    redirectTo: 'explore'
   },
   {
     path: 'admin',
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   },
   {
     path: 'client',
     loadChildren: () => import('./client/client.module').then(m => m.ClientModule)
+  },
+  {
+    path: 'explore',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./explore/explore.module').then(m => m.ExploreModule)
   }
 ];
 

@@ -31,7 +31,6 @@ import {
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { MatFileUploadModule } from 'angular-material-fileupload';
 
 import { CONTAINERS } from './containers';
 import { DialogModule } from '@app/shared/dialog';
@@ -73,8 +72,6 @@ const MAT_MODULES = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-
-    MatFileUploadModule,
 
     FlexLayoutModule,
     ProductRoutingModule,

@@ -4,7 +4,7 @@ import { FormControl } from '@angular/forms';
 import { MatSort, MatPaginator, MatInput, MatTableDataSource, MatSnackBar } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 
-import { ExploreModel, Search, countries } from '../../models';
+import { ExploreModel, Search, countries, AdSuggestion } from '../../models';
 import { Country } from '../../models/country.model.';
 
 @Component({
@@ -16,8 +16,12 @@ import { Country } from '../../models/country.model.';
 export class ExploreTableComponent implements OnInit, OnChanges {
 
   @Input() exploredList: Array<ExploreModel>;
+  @Input() suggestionList: Array<AdSuggestion>;
+  @Input() totalExplore: number;
   @Input() pending: boolean;
+
   @Output() exploredKeyword: EventEmitter<Search>;
+  @Output() getSuggestionList: EventEmitter<Search>;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -30,14 +34,17 @@ export class ExploreTableComponent implements OnInit, OnChanges {
   displayConutries: Array<Country> = countries;
   dataSource: MatTableDataSource<any>;
 
-  displayedColumns: string[] = ['select', 'name', 'audience_size', 'keyword', 'search'];
+  displayedColumns: string[] = ['select', 'name', 'audience_size', 'keyword', 'type', 'search'];
   value = '';
   selectionMessage = 'Click interests below to add them to your selection.'
   facebookLink = 'https://www.facebook.com/search/pages/?q=';
   googleLink = 'https://www.google.com/search?q=';
+  removable = true;
+  adType = 'adInterest';
 
   constructor(private snackBar: MatSnackBar) {
     this.exploredKeyword = new EventEmitter();
+    this.getSuggestionList = new EventEmitter();
     this.country = new FormControl(this.displayConutries[0].code);
   }
 
@@ -46,11 +53,19 @@ export class ExploreTableComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes) {
-      this.dataSource = new MatTableDataSource(this.exploredList);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
+    if (changes && changes.exploredList) {
+      this.setUpDataSource(this.exploredList);
     }
+
+    if (changes && changes.suggestionList) {
+      this.setUpDataSource(this.suggestionList);
+    }
+  }
+
+  setUpDataSource(listData) {
+    this.dataSource = new MatTableDataSource(listData);
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   applyFilter(filterValue: string): void {
@@ -62,10 +77,16 @@ export class ExploreTableComponent implements OnInit, OnChanges {
       keyword: keyword,
       country: this.country.value
     }
-    this.exploredKeyword.emit(search);
+
+    if(this.adType === 'adInterest') {
+      this.exploredKeyword.emit(search);
+    } else {
+      this.getSuggestionList.emit(search);
+    }
+
   }
 
-  clearInput() {
+  clearInput(): void {
     this.value = ''
   }
 
@@ -74,6 +95,7 @@ export class ExploreTableComponent implements OnInit, OnChanges {
     if (this.selection.isSelected(row)) {
       return this.interestList.push(row.name);
     }
+
     return this.interestList = this.interestList.filter(x => x !== row.name);
   }
 
@@ -106,9 +128,19 @@ export class ExploreTableComponent implements OnInit, OnChanges {
   checkboxLabel(row?: ExploreModel): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-    } else {
-      return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
     }
+
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
+  }
+
+  removeChip(chip: string): void {
+    this.interestList = this.interestList.filter(interest => interest !== chip);
+    const row = this.selection.selected.find(selected => selected.name === chip);
+    this.selection.toggle(row);
+  }
+
+  selectAll(): void {
+    this.masterToggle();
   }
 
   copyToClipBoard(): void {
@@ -131,4 +163,20 @@ export class ExploreTableComponent implements OnInit, OnChanges {
       duration: 2000,
     });
   }
+
+  adInterestSelect() {
+    this.adType = 'adInterest';
+    this.setUpDataSource(this.exploredList);
+  }
+
+  adInterestSuggestionSelect(keyword: string) {
+    this.adType = 'adInterestSuggestion';
+    const search: Search = {
+      keyword: keyword,
+      country: this.country.value
+    }
+
+    this.getSuggestionList.emit(search);
+  }
+
 }

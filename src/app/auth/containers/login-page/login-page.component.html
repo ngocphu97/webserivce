@@ -4,11 +4,16 @@
 
     <mat-card-content>
 
-      <h1 class="mat-h1 text-center">Đăng nhập</h1>
+      <h1 class="mat-h1 text-center">Login</h1>
 
-      <p class="mat-error" *ngIf="error$ | async as error">{{error.message}}</p>
+      <p class="mat-error" *ngIf="error$ | async as error">
+        {{error.message}}
+      </p>
 
-      <app-login-form class="form" [pending]="pending$ | async" (loginUser)="onLogin($event)">
+      <app-login-form 
+          class="form" 
+          [pending]="pending$ | async" 
+          (loginUser)="onLogin($event)">
       </app-login-form>
     </mat-card-content>
   </mat-card>

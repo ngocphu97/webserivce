@@ -1,13 +1,18 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import { ExploreState } from '..';
-import { ExploreModel } from '../../models';
+import { ExploreModel, AdSuggestion } from '../../models';
 
 export const selectExploreState = createFeatureSelector<ExploreState>('explore');
 
 export const selectAllExplore = createSelector(
   selectExploreState,
   (state): Array<ExploreModel> => state.exploredList
+);
+
+export const selectAllAdSuggestionList = createSelector(
+  selectExploreState,
+  (state): Array<AdSuggestion> => state.adSuggestionList
 );
 
 export const selectTotalExplore = createSelector(

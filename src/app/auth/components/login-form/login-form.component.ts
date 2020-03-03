@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Credential } from '@app/auth';
@@ -8,7 +8,7 @@ import { Credential } from '@app/auth';
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss', '../auth-from.scss']
 })
-export class LoginFormComponent implements OnInit {
+export class LoginFormComponent {
 
   @Input() pending: boolean;
   @Output() loginUser: EventEmitter<Credential>;
@@ -27,18 +27,11 @@ export class LoginFormComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
-
   onSubmit(): void {
     if (!this.form.valid) {
       return;
     }
     this.loginUser.emit(this.form.value);
   }
-
-  loginGG() { }
-
-  loginFB() { }
-
 
 }

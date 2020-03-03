@@ -13,18 +13,45 @@ export class ExploreEffect {
 
   getExploredList$ = createEffect(() => this.actions$.pipe(
     ofType(exploreActions.getExploreList),
-    map((action: any) => action.search),
+    map((action) => action.search),
     exhaustMap((search: Search) => {
-      return this.userService.getExploreList(search.keyword, search.country).pipe(
-        map((res: any) => exploreActions.getExploreListSuccessfully({ exploredList: res.data })),
+      return this.exploreService.getExploreList(search.keyword, search.country).pipe(
+        map((res: any) => {
+
+          const exploredList = res.data.map(explore => {
+            return {
+              ...explore,
+              type: 'adInterest'
+            }
+          })
+
+          return exploreActions.getExploreListSuccessfully({
+            exploredList: exploredList
+          })
+        }),
         catchError(error => of(exploreActions.getExploreListFailure({ error: error })))
+      );
+    })
+  ));
+
+  getAdSuggestionList$ = createEffect(() => this.actions$.pipe(
+    ofType(exploreActions.getAdSuggestionList),
+    map((action) => action.search),
+    exhaustMap((search: Search) => {
+      return this.exploreService.getAdinterestSuggestion(search.keyword).pipe(
+        map((res: any) => {
+          return exploreActions.getAdSuggestionListSuccessfully({
+            adSuggestionList: res.data
+          })
+        }),
+        catchError(error => of(exploreActions.getAdSuggestionListFailure({ error: error })))
       );
     })
   ));
 
   constructor(
     private actions$: Actions,
-    private userService: ExploreService
+    private exploreService: ExploreService
   ) { }
 
 }

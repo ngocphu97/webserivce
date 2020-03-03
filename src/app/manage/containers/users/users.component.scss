@@ -1,0 +1,76 @@
+.explore-page {
+  margin-bottom: 1.5rem;
+}
+
+.loading-spinner {
+  text-align: center;
+
+  mat-spinner {
+    display: inline-block;
+  }
+}
+
+.lonely-here {
+  text-align: center;
+  margin-top: 100px;
+}
+
+.tool-bar {
+  background: #ffffff !important;
+  position: relative;
+
+  .gudjob-logo {
+    width: 200px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.menu {
+  position: absolute;
+  right: 5px;
+}
+
+table {
+  width: 75%;
+}
+
+.list-item {
+  margin: 15px;
+  overflow-x: auto;
+}
+
+.action {
+  display: flex;
+  justify-content: flex-start;
+}
+
+@media(max-width: 640px) {
+  .tool-bar {
+    display: flex;
+    justify-content: center;
+  }
+
+  .list-item {
+    margin: 10px;
+  }
+
+  table {
+    width: 100%;
+  }
+}
+
+@media(max-width: 685px) {
+  .tool-bar {
+    display: flex;
+    justify-content: center;
+  }
+
+  .list-item {
+    margin: 10px;
+  }
+
+  table {
+    width: 100%;
+  }
+}
