@@ -7,48 +7,38 @@ import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 
-import { Credential, UserProfile } from '../models';
+import { Credential } from '../models';
 import { AuthService } from '../services';
 import { LoginPageActions, AuthApiActions, AuthActions, ResetPasswordActions } from '../actions';
 import { LogoutConfirmationDialogComponent } from '../components';
-import { HttpError } from '@app/core/exception';
 
 @Injectable()
 export class AuthEffects {
 
-  // login$ = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(LoginPageActions.login),
-  //     map(action => action.credential),
-  //     exhaustMap((auth: Credential) => {
-  //       return this.authService.login(auth).pipe(
-  //         map((response: any) => {
-  //           if(response && response.status === 200 && response.result ) {
-  //             const user: UserProfile = {
-  //               id: response.result[0].id,
-  //               username: response.result[0].email,
-  //               password: response.result[0].password,
-  //             }
-  //             return AuthApiActions.loginSuccess({ user });
-  //           } else {
-  //             const error: HttpError = {
-  //               message: response.message,
-  //               status: response.status,
-  //               statusText: response.statusText,
-  //             };
-  //             return AuthApiActions.loginFailure({ error });
-  //           }
-  //         }),
-  //         catchError(error => {
-  //           return of(AuthApiActions.l oginFailure({ error }));
-  //         })
-  //     )}) 
-  // ));
+  loginCloudFireStore$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(LoginPageActions.login),
+      map(action => action.credential),
+      exhaustMap((auth: Credential) => {
+        return this.authService.loginStore(auth.email, auth.password).pipe(
+          map((response) => {
+            if (response && response.empty) {
+              return AuthApiActions.loginFailure({ error: response.empty });
+            }
+
+            return AuthApiActions.loginSuccess({ user: response });
+          }),
+          catchError(error => {
+            return of(AuthApiActions.loginFailure({ error }));
+          })
+        )
+      })
+    ));
 
   loginSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthApiActions.loginSuccess),
-      tap(() => this.router.navigate(['/admin']))
+      tap(() => this.router.navigate(['/explore']))
     ),
     { dispatch: false }
   );
@@ -126,44 +116,10 @@ export class AuthEffects {
     })
   ));
 
-  loginFireStore$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(LoginPageActions.login),
-      map(action => action.credential),
-      exhaustMap((auth: Credential) => {
-        return this.authService.getListData().pipe(
-          map((response: Array<any>) => {
-
-            const validUser = response.find(user => user.email === auth.email && user.password === auth.password)
-            
-            if(validUser) {
-              const user: UserProfile = {
-                id: validUser.email,
-                username: validUser.username,
-                password: validUser.password,
-              }
-              return AuthApiActions.loginSuccess({ user });
-            } else {
-              const error: HttpError = {
-                message: 'Email or password incorrect, please check again',
-                status: 400,
-                statusText: '',
-              };
-              return AuthApiActions.loginFailure({ error });
-            }
-          }),
-          catchError(error => {
-            return of(AuthApiActions.loginFailure({ error }));
-          })
-        )
-      })
-    ));
-
   constructor(
     private router: Router,
     private dialog: MatDialog,
     private actions$: Actions,
     private authService: AuthService,
-  ) { 
-  }
+  ) { }
 }

@@ -9,7 +9,7 @@ const destroy$ = Symbol('componentDestroy$');
  *  this.pending$.pipe(
  *     takeUntilDestroy(this)
  *  ).subscribe((pending) => {
- *     console.log('pending: ', pending)
+ *     // your code here
  *  });
  *
  * @param() component

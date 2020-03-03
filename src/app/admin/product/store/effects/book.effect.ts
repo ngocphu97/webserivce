@@ -72,11 +72,11 @@ export class BookEffect {
         map((res) => {
 
           if (book.photo) {
-            this.bookService.addBookCover(book.photo, res.insertId).subscribe(res => console.log(res));
+            this.bookService.addBookCover(book.photo, res.insertId).subscribe();
           } else {
             this.bookService.addBookCover(
-              'https://www.blueinkreview.com/wp-content/uploads/2016/07/nocover-1.jpg', 
-              res.insertId).subscribe(res => console.log(res));
+              'https://www.blueinkreview.com/wp-content/uploads/2016/07/nocover-1.jpg',
+              res.insertId).subscribe();
           }
 
           if (res.insertId) {

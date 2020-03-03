@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import * as fromStore from '../../store';
 import { ExploreModel, Search, AdSuggestion } from '../../models';
 import { AuthActions } from '@app/auth';
+import { selectLoggedInUser } from 'src/app/auth/selectors/auth.selector';
 
 @Component({
   selector: 'app-explore-page',
@@ -20,6 +21,8 @@ export class ExplorePageComponent {
 
   selectedInterest: ExploreModel = null;
 
+  loggedInUser$: Observable<any>;
+
   constructor(private store: Store<fromStore.ExploreState>) {
     this.exploredList$ = this.store.pipe(select(fromStore.selectAllExplore));
     this.pending$ = this.store.pipe(select(fromStore.selectExplorePending));
@@ -28,6 +31,10 @@ export class ExplorePageComponent {
 
     this.exploredList$ = this.store.pipe(select(fromStore.selectAllExplore));
     this.adSuggestionList$ = this.store.pipe(select(fromStore.selectAllAdSuggestionList));
+
+    this.loggedInUser$ = this.store.pipe(select(selectLoggedInUser));
+    this.loggedInUser$.subscribe(x => console.log('loggedInUser0', x));
+
   }
 
   onSelectInterest(interest: ExploreModel) {

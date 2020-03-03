@@ -36,6 +36,25 @@ const manageReducer = createReducer(
     error,
     pending: false
   })),
+
+  on(manageAction.updateUser, (state) => ({
+    ...state,
+    pending: true
+  })),
+
+  on(manageAction.updateUserSuccess, (state, { user }) => {
+    const newUsers = [...state.users];
+    let index = newUsers.findIndex(u => u.id === user.id);
+    newUsers[index] = user;
+
+    return {
+      ...state,
+      users: [...newUsers],
+      pending: false
+    }
+  }),
+
+
 );
 
 export function reducer(state: ManageState | undefined, action: Action) {
