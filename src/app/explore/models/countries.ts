@@ -8,17 +8,17 @@ export const countries: Array<Country> = [
   },
   {
     name: 'United State',
-    code: 'en-us',
+    code: 'en',
     flag: 'us',
   },
   {
     name: 'France',
-    code: 'fr-fr',
+    code: 'fr',
     flag: 'fr',
   },
   {
     name: 'Germany',
-    code: 'de-de',
+    code: 'de',
     flag: 'de',
   },
   {
@@ -38,7 +38,7 @@ export const countries: Array<Country> = [
   },
   {
     name: 'Singapore',
-    code: 'zh-sg',
+    code: 'zh',
     flag: 'sg',
   }
 ]
