@@ -7,6 +7,10 @@ import * as fromStore from '../../store';
 import { ExploreModel, Search, AdSuggestion } from '../../models';
 import { AuthActions } from '@app/auth';
 import { selectLoggedInUser } from 'src/app/auth/selectors/auth.selector';
+import { EditProfileDialogComponent } from '@app/shared/dialog/edit-profile-dialog/edit-profile-dialog.component';
+import { MatDialog } from '@angular/material';
+import { User } from 'src/app/manage/models/user.model';
+import { updateUser } from 'src/app/manage/store';
 
 @Component({
   selector: 'app-explore-page',
@@ -22,8 +26,12 @@ export class ExplorePageComponent {
   selectedInterest: ExploreModel = null;
 
   loggedInUser$: Observable<any>;
+  loggedUser: any;
 
-  constructor(private store: Store<fromStore.ExploreState>) {
+  constructor(
+    private store: Store<fromStore.ExploreState>,
+    private dialog: MatDialog
+  ) {
     this.exploredList$ = this.store.pipe(select(fromStore.selectAllExplore));
     this.pending$ = this.store.pipe(select(fromStore.selectExplorePending));
 
@@ -33,7 +41,7 @@ export class ExplorePageComponent {
     this.adSuggestionList$ = this.store.pipe(select(fromStore.selectAllAdSuggestionList));
 
     this.loggedInUser$ = this.store.pipe(select(selectLoggedInUser));
-    this.loggedInUser$.subscribe(x => console.log('loggedInUser0', x));
+    this.loggedInUser$.subscribe(user => this.loggedUser = user);
 
   }
 
@@ -51,5 +59,26 @@ export class ExplorePageComponent {
 
   logout() {
     this.store.dispatch(AuthActions.logoutConfirmation());
+  }
+
+  editProfile() {
+    this.dialog.open(EditProfileDialogComponent, {
+      data: {
+        email: this.loggedUser.email,
+        username: this.loggedUser.username,
+        password: this.loggedUser.password
+      }
+    }).afterClosed().subscribe((res) => {
+      if (res) {
+        const user: User = {
+          id: this.loggedUser.id,
+          username: res.username,
+          email: res.email,
+          password: res.password
+        };
+
+        this.store.dispatch(updateUser({ user }));
+      }
+    });
   }
 }

@@ -9,14 +9,18 @@
     </button>
 
     <mat-menu #menu="matMenu">
+      <a mat-menu-item (click)="editProfile()">
+        <mat-icon [color]="'primary'">people</mat-icon>
+        <span>Profile</span>
+      </a>
+      <a mat-menu-item routerLink="./admin">
+        <mat-icon [color]="'primary'">people</mat-icon>
+        <span>Account manage</span>
+      </a>
       <button mat-menu-item (click)="logout()">
         <mat-icon [color]="'primary'">thumb_up_alt</mat-icon>
         <span>Log out</span>
       </button>
-      <a mat-menu-item routerLink="./admin">
-        <mat-icon [color]="'primary'">people</mat-icon>
-        <span>Account</span>
-      </a>
     </mat-menu>
 
   </mat-toolbar>
@@ -33,29 +37,26 @@
 
       <ng-container matColumnDef="userName">
         <th mat-header-cell *matHeaderCellDef> User Name </th>
-        <td mat-cell *matCellDef="let element">
+        <td style="width: 45% !important" mat-cell *matCellDef="let element">
 
           <span *ngIf="isSelectedId !== element.id">{{element.username}}</span>
 
           <mat-form-field *ngIf="isSelectedId === element.id">
             <mat-label>User name</mat-label>
-            <input #usernameInput matInput placeholder="User name"
-            [(ngModel)]="updateUserName"
-            value="{{updateUserName}}">
+            <input #usernameInput matInput placeholder="User name" [(ngModel)]="updateUserName"
+              value="{{updateUserName}}">
           </mat-form-field>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="email">
         <th mat-header-cell *matHeaderCellDef> Email </th>
-        <td mat-cell *matCellDef="let element">
+        <td style="width: 45% !important" mat-cell *matCellDef="let element">
           <span *ngIf="isSelectedId !== element.id">{{element.email}}</span>
 
           <mat-form-field *ngIf="isSelectedId === element.id">
             <mat-label>Email</mat-label>
-            <input #emailInput matInput placeholder="Email" value="{{element.email}}"
-             [(ngModel)]="updateEmail"
-            >
+            <input #emailInput matInput placeholder="Email" value="{{element.email}}" [(ngModel)]="updateEmail">
           </mat-form-field>
 
         </td>
@@ -65,23 +66,16 @@
         <th mat-header-cell *matHeaderCellDef> </th>
         <td mat-cell *matCellDef="let element" style="margin-right: 0; padding-right: 0; text-align: right;">
           <div class="action">
-            <button mat-icon-button
-              *ngIf="isSelectedId !== element.id"
-              [color]="'primary'"
-              (click)="editUser(element)"
-            >
+            <button mat-icon-button *ngIf="isSelectedId !== element.id" [color]="'primary'" (click)="editUser(element)">
               <mat-icon>edit</mat-icon>
             </button>
 
-            <button mat-icon-button
-                *ngIf="isSelectedId === element.id"
-                [color]="'primary'"
-                (click)="saveUser(element.id)"
-              >
+            <button mat-icon-button *ngIf="isSelectedId === element.id" [color]="'primary'"
+              (click)="saveUser(element.id)">
               <mat-icon>save</mat-icon>
             </button>
 
-            <button mat-icon-button  *ngIf="isSelectedId === element.id" [color]="'warn'" (click)="cancel()">
+            <button mat-icon-button *ngIf="isSelectedId === element.id" [color]="'warn'" (click)="cancel()">
               <mat-icon>clear</mat-icon>
             </button>
           </div>
@@ -89,7 +83,7 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns" class="table-head"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr style="line-height: 70px;" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
   </div>

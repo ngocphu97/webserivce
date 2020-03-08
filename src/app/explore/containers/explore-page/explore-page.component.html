@@ -13,7 +13,7 @@
         <span>Accounts manage</span>
       </a>
 
-      <a mat-menu-item routerLink="/admin/manage" >
+      <a mat-menu-item (click)="editProfile()">
         <mat-icon [color]="'primary'">emoji_people</mat-icon>
         <span>Profile</span>
       </a>

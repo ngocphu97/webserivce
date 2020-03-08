@@ -1,6 +1,6 @@
 :host {
   display: block;
-  width: 200px;
+  width: 230px;
   // max-width: 300px;
 }
 
@@ -10,5 +10,5 @@ mat-dialog-content {
 
 mat-dialog-actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }

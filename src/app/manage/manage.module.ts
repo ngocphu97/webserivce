@@ -20,6 +20,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 // import { EntityDataModule, DefaultDataServiceConfig } from '@ngrx/data';
 import { ManageService } from './store/services';
+import { DialogModule } from '@app/shared/dialog';
 
 const MAT_MODULES = [
   MatProgressSpinnerModule,
@@ -49,19 +50,15 @@ const MAT_MODULES = [
     FormsModule,
     ReactiveFormsModule,
     ManageRoutingModule,
+    DialogModule,
 
     MAT_MODULES,
 
     StoreModule.forFeature('manage', reducer),
-    EffectsModule.forFeature([ManageEffect]),
-    // EntityDataModule.forRoot(entityConfig),
+    EffectsModule.forFeature([ManageEffect])
   ],
   providers: [
-    ManageService,
-    // {
-    //   provide: DefaultDataServiceConfig,
-    //   useValue: defaultDataServiceConfig
-    // }
+    ManageService
   ]
 })
 export class ManageModule { }

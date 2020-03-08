@@ -33,6 +33,7 @@ import { ExploreService } from './store/services';
 import * as fromExplore from './store/reducers/explore.reducer';
 import { entityConfig, defaultDataServiceConfig } from './explore-entity-metadata';
 import { EntityDataModule, DefaultDataServiceConfig } from '@ngrx/data';
+import { DialogModule } from '@app/shared/dialog';
 
 const MAT_MODULES = [
   MatProgressSpinnerModule,
@@ -60,6 +61,7 @@ const MAT_MODULES = [
     MAT_MODULES,
     ExploreRoutingModule,
     ReactiveFormsModule,
+    DialogModule,
 
     StoreModule.forFeature('explore', fromExplore.reducer),
     EffectsModule.forFeature([ExploreEffect]),

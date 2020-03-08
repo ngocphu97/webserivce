@@ -1,0 +1,34 @@
+<h2 mat-dialog-title>
+  Change profile detail
+</h2>
+
+<mat-dialog-content>
+  <mat-form-field class="w-100">
+    <mat-label>User name</mat-label>
+    <input #usernameInput matInput placeholder="User name"
+    [(ngModel)]="data.username" value="{{data.username}}">
+  </mat-form-field>
+
+  <mat-form-field class="w-100">
+    <mat-label>Email</mat-label>
+    <input #emailInput matInput placeholder="User name"
+    [(ngModel)]="data.email" value="{{data.email}}">
+  </mat-form-field>
+
+  <mat-form-field class="w-100">
+    <mat-label>Password</mat-label>
+    <input #emailInput matInput placeholder="User name"
+    [(ngModel)]="data.password" value="{{data.password}}">
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button class="btn-rounded" mat-raised-button color="warn"
+    [mat-dialog-close]="false">
+    Cancel
+  </button>
+  <button class="btn-rounded" mat-raised-button color="primary"
+  [mat-dialog-close]="data">
+    Ok
+  </button>
+</mat-dialog-actions>
