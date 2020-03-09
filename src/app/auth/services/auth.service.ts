@@ -3,8 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 declare var db: any;
+declare const firebase: any;
 
 import { AUTH_CONFIGURATION, AuthConfiguration } from '../auth.config';
+import { AlertDialogComponent } from '@app/shared/dialog/alert-dialog/alert-dialog.component';
 @Injectable()
 export class AuthService {
 
@@ -84,5 +86,52 @@ export class AuthService {
         });
 
     })
+  }
+
+
+  loginWithGG(): Observable<any> {
+    return new Observable((observer) => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+
+      firebase.auth().signInWithPopup(provider)
+        .then((result) => {
+          const loginUser = {
+            id: result.additionalUserInfo.profile.id,
+            profile: result.additionalUserInfo.profile,
+            isNewUser: result.additionalUserInfo.isNewUser
+          }
+          observer.next(loginUser);
+          observer.complete();
+        })
+    })
+  }
+
+  loginFB(): Observable<any> {
+    return new Observable((observer) => {
+      const provider = new firebase.auth.FacebookAuthProvider();
+      firebase.auth().signInWithPopup(provider)
+        .then((result) => {
+
+          const loginUser = {
+            id: result.additionalUserInfo.profile.id,
+            profile: result.additionalUserInfo.profile,
+            isNewUser: result.additionalUserInfo.isNewUser
+          };
+
+          observer.next(loginUser);
+          observer.complete();
+        });
+    });
+  }
+
+  logout(): Observable<any> {
+    return new Observable((observer) => {
+      firebase.auth().signOut().then(() => {
+        observer.next({ error: null });
+      }).catch(function (error) {
+        observer.next({ error: error });
+        observer.complete();
+      });
+    });
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 
@@ -35,13 +35,13 @@ export class AuthEffects {
       })
     ));
 
-  loginSuccess$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AuthApiActions.loginSuccess),
-      tap(() => this.router.navigate(['/explore']))
-    ),
-    { dispatch: false }
-  );
+  // loginSuccess$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(AuthApiActions.loginSuccess),
+  //     tap(() => this.router.navigate(['/explore']))
+  //   ),
+  //   { dispatch: false }
+  // );
 
   loginRedirect$ = createEffect(() =>
     this.actions$.pipe(
@@ -57,17 +57,13 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.logoutConfirmation),
       exhaustMap(() => {
-        const dialogRef = this.dialog.open<
-          LogoutConfirmationDialogComponent,
-          undefined,
-          boolean
-        >(LogoutConfirmationDialogComponent);
+        const dialogRef = this.dialog.open(LogoutConfirmationDialogComponent);
 
         return dialogRef.afterClosed();
       }),
       map(result => result
-            ? AuthActions.logout()
-            : AuthActions.logoutConfirmationDismiss()
+        ? AuthActions.logout()
+        : AuthActions.logoutConfirmationDismiss()
       )
     )
   );
@@ -83,6 +79,49 @@ export class AuthEffects {
     { dispatch: false }
   );
 
+  loginGoogle$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(LoginPageActions.loginGoogle),
+      exhaustMap(() => {
+        return this.authService.loginWithGG().pipe(
+          map((response) => {
+            console.log('Log Message: AuthEffects -> response', response);
+
+            this.ngZone.run(() => {
+              this.router.navigate(['/explore']);
+            });
+
+            return AuthApiActions.loginSuccess({ user: response });
+          }),
+          catchError(error => {
+            return of(AuthApiActions.loginFailure({ error }));
+          }));
+      })
+    )
+  );
+
+  loginFacebook$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(LoginPageActions.loginFacebook),
+      exhaustMap(() => {
+        return this.authService.loginFB().pipe(
+          map((response) => {
+
+            console.log('Log Message: AuthEffects -> response', response);
+
+
+            this.ngZone.run(() => {
+              this.router.navigate(['/explore']);
+            });
+
+            return AuthApiActions.loginSuccess({ user: response });
+          }),
+          catchError(error => {
+            return of(AuthApiActions.loginFailure({ error }));
+          }))
+      })),
+  );
+
   resetEmailPassword$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ResetPasswordActions.resetPasswordEmail),
@@ -90,9 +129,9 @@ export class AuthEffects {
       exhaustMap((email: string) =>
         this.authService.getListAdmin().pipe(
           map((adminList: Array<any>) => {
-            if (adminList.some(admin => admin.email === email )) {
+            if (adminList.some(admin => admin.email === email)) {
               const admin = adminList.find(admin => admin.email === email);
-              return ResetPasswordActions.resetPasswordEmailVaild({admin});
+              return ResetPasswordActions.resetPasswordEmailVaild({ admin });
             } else {
               return ResetPasswordActions.resetPasswordEmailInvalid({ error: 'Email incorrect' })
             }
@@ -121,5 +160,6 @@ export class AuthEffects {
     private dialog: MatDialog,
     private actions$: Actions,
     private authService: AuthService,
+    private ngZone: NgZone,
   ) { }
 }

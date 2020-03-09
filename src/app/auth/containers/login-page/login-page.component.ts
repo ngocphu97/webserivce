@@ -5,7 +5,6 @@ import { AuthState } from '../../reducers';
 import { Credential } from '../../models';
 import { LoginPageActions } from '../../actions';
 import { LoginPageSelectors } from '../../selectors';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login-page',
@@ -26,5 +25,13 @@ export class LoginPageComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.store.dispatch(LoginPageActions.leavePage());
+  }
+
+  loginGG() {
+    this.store.dispatch(LoginPageActions.loginGoogle());
+  }
+
+  loginFB() {
+    this.store.dispatch(LoginPageActions.loginFacebook());
   }
 }

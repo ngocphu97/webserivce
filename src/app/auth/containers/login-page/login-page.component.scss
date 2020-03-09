@@ -1,3 +1,40 @@
 .auth-page {
   padding: 1.5rem;
 }
+
+.logo-section {
+  text-align: center;
+  margin-bottom: 1rem;
+
+  .logo {
+    width: 200px;
+  }
+}
+
+
+.login {
+  text-align: center;
+  font-weight: bold;
+  font-family: Montserrat, sans-serif !important;
+}
+
+.social {
+  display: flex;
+  justify-content: space-between;
+}
+
+.social-button {
+  float: left;
+  width: 48%;
+}
+
+.social-button button,
+.login-button {
+  height: 40px;
+  width: 100%;
+}
+
+.icon {
+  font-size: x-large;
+  margin-right: 0.5rem;
+}

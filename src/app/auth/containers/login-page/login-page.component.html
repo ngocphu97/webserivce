@@ -4,17 +4,31 @@
 
     <mat-card-content>
 
-      <h1 class="mat-h1 text-center">Login</h1>
+      <div class="logo-section">
+        <img class="logo" src="./assets/app-logo.png" />
+      </div>
+
+      <h1 class="mat-h1 text-center login">Login</h1>
 
       <p class="mat-error" *ngIf="error$ | async as error">
         {{error.message}}
       </p>
 
-      <app-login-form 
-          class="form" 
-          [pending]="pending$ | async" 
-          (loginUser)="onLogin($event)">
+      <app-login-form class="form" [pending]="pending$ | async" (loginUser)="onLogin($event)">
       </app-login-form>
+
+      <div class="social">
+        <div class="social-button">
+          <button mat-raised-button [color]="'warn'" (click)="loginGG()">
+            <i class="fa fa-google icon"></i> Google</button>
+        </div>
+        <div class="social-button">
+          <button mat-raised-button [color]="'primary'" (click)="loginFB()">
+            <i class="fa fa-facebook icon"></i> Facebook</button>
+        </div>
+
+      </div>
+
     </mat-card-content>
   </mat-card>
 </div>

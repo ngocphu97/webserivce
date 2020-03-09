@@ -10,3 +10,11 @@ export const login = createAction(
 export const leavePage = createAction(
   '[Login Page] leave page'
 );
+
+export const loginGoogle = createAction(
+  '[Auth] Login Google'
+);
+
+export const loginFacebook = createAction(
+  '[Auth] Login Facebook'
+);
