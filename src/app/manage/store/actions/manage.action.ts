@@ -45,18 +45,18 @@ export const addUserFail = createAction(
   props<{ error: any }>()
 );
 
-export const lockUser = createAction(
-  '[Manage] Lock User ',
+export const removeUser = createAction(
+  '[Manage] Remove User ',
   props<{ user: User }>()
 );
 
-export const lockUserSuccess = createAction(
-  '[Manage] Lock User Success',
+export const removeUserSuccess = createAction(
+  '[Manage] Remove User Success',
   props<{ user: User }>()
 );
 
-export const lockUserFail = createAction(
-  '[Manage] Lock User Fail',
+export const removeUserFail = createAction(
+  '[Manage] Remove User Fail',
   props<{ error: any }>()
 );
 

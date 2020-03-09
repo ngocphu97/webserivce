@@ -40,6 +40,13 @@ table {
   font-size: larger;
 }
 
+.title-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 1.5rem;
+}
+
 .title {
   margin: 1.5rem;
 }

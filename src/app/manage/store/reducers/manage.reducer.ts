@@ -54,7 +54,39 @@ const manageReducer = createReducer(
     }
   }),
 
+  on(manageAction.addUser, (state) => ({
+    ...state,
+    pending: true
+  })),
 
+  on(manageAction.addUserSuccess, (state, { user }) => ({
+    ...state,
+    users: [
+      ...state.users,
+      user
+    ],
+    pending: false
+  })),
+
+  on(manageAction.addUserFail, (state, { error }) => ({
+    ...state,
+    error,
+    pending: true
+  })),
+
+  on(manageAction.removeUser, (state) => {
+    return {
+      ...state,
+      pending: true
+    }
+  }),
+
+  on(manageAction.removeUserSuccess, manageAction.removeUserFail, (state) => {
+    return {
+      ...state,
+      pending: false
+    }
+  })
 );
 
 export function reducer(state: ManageState | undefined, action: Action) {

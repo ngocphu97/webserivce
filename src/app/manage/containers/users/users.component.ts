@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { ManageState, getUserList, selectUsers, updateUser, selectPending } from '../../store';
+import { ManageState, getUserList, selectUsers, updateUser, selectPending, addUser, removeUser } from '../../store';
 import { Observable } from 'rxjs';
 import { User } from '../../models/user.model';
 import { logoutConfirmation } from 'src/app/auth/actions/auth.action';
 import { MatDialog } from '@angular/material';
 import { selectLoggedInUser } from 'src/app/auth/selectors/auth.selector';
 import { EditProfileDialogComponent } from '@app/shared/dialog/edit-profile-dialog/edit-profile-dialog.component';
+import { ConfirmDialogComponent } from '@app/shared/dialog/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-users',
@@ -56,7 +57,7 @@ export class UsersComponent implements OnInit {
         password: this.loggedUser.password
       }
     }).afterClosed().subscribe((res) => {
-      if(res) {
+      if (res) {
         const user: User = {
           id: this.loggedUser.id,
           username: res.username,
@@ -87,6 +88,40 @@ export class UsersComponent implements OnInit {
     };
 
     this.store.dispatch(updateUser({ user }));
+  }
+
+  addNewUser() {
+    this.dialog.open(EditProfileDialogComponent, {
+      data: {
+        email: '',
+        username: '',
+        password: ''
+      }
+    }).afterClosed().subscribe((res) => {
+      if (res) {
+        const newUser = {
+          username: res.username,
+          email: res.email,
+          password: res.password,
+          role: 'user'
+        };
+
+        this.store.dispatch(addUser({ user: newUser }));
+      }
+    });
+  }
+
+  removeUser(user) {
+    this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Confirm delete user',
+        message: 'Are you sure you want to delete this user'
+      }
+    }).afterClosed().subscribe((res) => {
+      if (res) {
+        this.store.dispatch(removeUser({ user }));
+      }
+    });
   }
 
   cancel() {

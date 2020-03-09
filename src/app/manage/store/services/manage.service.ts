@@ -61,8 +61,16 @@ export class ManageService {
     });
   }
 
-  removeUser(removeUser: User) {
-
+  removeUser(removeUser: User): Observable<User> {
+    return new Observable((observer) => {
+      db.collection('users')
+        .doc(removeUser.id)
+        .delete()
+        .then(() => {
+          observer.next(removeUser);
+          observer.complete();
+        });
+    });
   }
 
 }

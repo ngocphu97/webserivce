@@ -25,7 +25,13 @@
 
   </mat-toolbar>
 
-  <h2 class="title">Users</h2>
+  <div class="title-section">
+    <h2 class="title">Users</h2>
+    <button (click)="addNewUser()" mat-raised-button color="primary">
+      <mat-icon>add</mat-icon> Add user
+    </button>
+  </div>
+
 
   <div class="list-item mat-elevation-z2">
 
@@ -77,6 +83,10 @@
 
             <button mat-icon-button *ngIf="isSelectedId === element.id" [color]="'warn'" (click)="cancel()">
               <mat-icon>clear</mat-icon>
+            </button>
+
+            <button mat-icon-button [color]="'warn'" (click)="removeUser(element)">
+              <mat-icon>delete</mat-icon>
             </button>
           </div>
         </td>

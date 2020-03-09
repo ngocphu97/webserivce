@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { map, catchError, exhaustMap } from 'rxjs/operators';
+import { map, catchError, exhaustMap, mapTo } from 'rxjs/operators';
 
 import * as manageActions from '../actions'
 import { ManageService } from '../services';
@@ -45,6 +45,23 @@ export class ManageEffect {
         catchError(error => of(manageActions.addUserFail({ error: error }))
         ));
     })
+  ));
+
+  removeUser$ = createEffect(() => this.actions$.pipe(
+    ofType(manageActions.removeUser),
+    exhaustMap((action) => {
+      return this.manageService.removeUser(action.user).pipe(
+        map((user: User) => {
+          return manageActions.removeUserSuccess({ user });
+        }),
+        catchError(error => of(manageActions.removeUserFail({ error: error }))
+        ));
+    })
+  ));
+
+  removeUserSuccess$ = createEffect(() => this.actions$.pipe(
+    ofType(manageActions.removeUserSuccess),
+    mapTo(manageActions.getUserList())
   ));
 
   constructor(

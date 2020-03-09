@@ -1,5 +1,9 @@
-<h2 mat-dialog-title>
+<h2 mat-dialog-title *ngIf="data.username">
   Change profile detail
+</h2>
+
+<h2 mat-dialog-title *ngIf="!data.username">
+  Add new user
 </h2>
 
 <mat-dialog-content>
