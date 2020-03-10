@@ -17,7 +17,7 @@ export const initialState: State = {
     expiresIn: undefined,
   },
   loggedInUser: undefined,
-  error: undefined
+  error: undefined,
 };
 
 export const reducer = createReducer(
@@ -31,7 +31,7 @@ export const reducer = createReducer(
       expiresIn: 9999
     }
   })),
-  
+
   on(AuthApiActions.loginInvalid, (state, { error }) => ({
     ...state,
     error: error

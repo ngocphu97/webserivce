@@ -16,8 +16,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
-import { authFeatureKey, AUTH_CONFIGURATION, AuthConfiguration, } from './auth.config';
-import { AuthGuard } from './guards';
+import { AUTH_CONFIGURATION, AuthConfiguration, authFeatureKey } from './auth.config';
+import { AuthGuard, IsApproveGuard } from './guards';
 import { AuthService } from './services';
 import { AuthInterceptor } from './interceptors';
 import { authReducer } from './reducers';
@@ -71,7 +71,8 @@ export class AuthModule {
           multi: true
         },
         AuthService,
-        AuthGuard
+        AuthGuard,
+        IsApproveGuard
       ]
     };
   }

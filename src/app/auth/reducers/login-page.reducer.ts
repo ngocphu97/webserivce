@@ -8,11 +8,13 @@ export const loginPageFeatureKey = 'loginPage';
 export interface State {
   error: HttpError;
   pending: boolean;
+  isApproved: boolean;
 }
 
 export const initialState: State = {
   error: null,
   pending: false,
+  isApproved: false
 };
 
 export const reducer = createReducer(
@@ -22,6 +24,19 @@ export const reducer = createReducer(
     ...state,
     error: null,
     pending: true,
+  })),
+
+  on(LoginPageActions.checkApprovedSuccess, (state, { isApproved }) => ({
+    ...state,
+    isApproved,
+    error: null,
+    pending: false,
+  })),
+
+  on(LoginPageActions.checkApprovedFail, (state, { error}) => ({
+    ...state,
+    error: error,
+    pending: false,
   })),
 
   on(LoginPageActions.leavePage, state => ({
@@ -52,3 +67,4 @@ export const reducer = createReducer(
 
 export const getError = (state: State) => state.error;
 export const getPending = (state: State) => state.pending;
+export const getIsApproved = (state: State) => state.isApproved;

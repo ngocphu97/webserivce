@@ -17,3 +17,8 @@ export const selectLoginPagePending = createSelector(
   selectLoginPageState,
   fromLoginPage.getPending
 );
+
+export const selectIsApproved = createSelector(
+  selectLoginPageState,
+  fromLoginPage.getIsApproved
+);

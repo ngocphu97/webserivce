@@ -35,14 +35,6 @@ export class AuthEffects {
       })
     ));
 
-  // loginSuccess$ = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(AuthApiActions.loginSuccess),
-  //     tap(() => this.router.navigate(['/explore']))
-  //   ),
-  //   { dispatch: false }
-  // );
-
   loginRedirect$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.loginRedirect, AuthActions.logout),
@@ -68,24 +60,12 @@ export class AuthEffects {
     )
   );
 
-  lock$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(AuthActions.lock),
-        tap(() => {
-          this.router.navigate(['/lock']);
-        })
-      ),
-    { dispatch: false }
-  );
-
   loginGoogle$ = createEffect(() =>
     this.actions$.pipe(
       ofType(LoginPageActions.loginGoogle),
       exhaustMap(() => {
         return this.authService.loginWithGG().pipe(
           map((response) => {
-            console.log('Log Message: AuthEffects -> response', response);
 
             this.ngZone.run(() => {
               this.router.navigate(['/explore']);
@@ -106,9 +86,6 @@ export class AuthEffects {
       exhaustMap(() => {
         return this.authService.loginFB().pipe(
           map((response) => {
-
-            console.log('Log Message: AuthEffects -> response', response);
-
 
             this.ngZone.run(() => {
               this.router.navigate(['/explore']);
