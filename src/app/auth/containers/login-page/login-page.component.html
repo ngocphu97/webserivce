@@ -1,6 +1,5 @@
 <div class="auth-page" fxLayout="row" fxLayoutAlign="center center">
   <mat-card class="auth-card">
-    <mat-progress-bar mode="indeterminate" *ngIf="pending$ | async"></mat-progress-bar>
 
     <mat-card-content>
 
@@ -8,23 +7,29 @@
         <img class="logo" src="./assets/app-logo.png" />
       </div>
 
-      <h1 class="mat-h1 text-center login">Login</h1>
+      <h1 class="mat-h1 text-center login">
+        Login
+        <mat-spinner *ngIf="(pending$ | async)" strokeWidth="3" [diameter]="30"></mat-spinner>
+      </h1>
 
-      <p class="mat-error" *ngIf="error$ | async as error">
-        {{error.message}}
+      <p class="mat-error" *ngIf="error$ | async">
+        {{(error$ | async).message}}
       </p>
 
-      <app-login-form class="form" [pending]="pending$ | async" (loginUser)="onLogin($event)">
-      </app-login-form>
+      <!-- <app-login-form class="form" [pending]="pending$ | async" (loginUser)="onLogin($event)">
+      </app-login-form> -->
 
       <div class="social">
         <div class="social-button">
           <button mat-raised-button [color]="'warn'" (click)="loginGG()">
-            <i class="fa fa-google icon"></i> Google</button>
+            <i class="fa fa-google icon"></i> Google
+          </button>
+
         </div>
         <div class="social-button">
           <button mat-raised-button [color]="'primary'" (click)="loginFB()">
-            <i class="fa fa-facebook icon"></i> Facebook</button>
+            <i class="fa fa-facebook icon"></i> Facebook
+          </button>
         </div>
 
       </div>

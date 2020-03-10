@@ -13,9 +13,16 @@
 
 
 .login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   font-weight: bold;
   font-family: Montserrat, sans-serif !important;
+
+  mat-spinner {
+    margin-left: 1rem;
+  }
 }
 
 .social {

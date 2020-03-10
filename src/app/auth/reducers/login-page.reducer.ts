@@ -20,11 +20,29 @@ export const initialState: State = {
 export const reducer = createReducer(
   initialState,
 
-  on(LoginPageActions.login, state => ({
-    ...state,
-    error: null,
-    pending: true,
-  })),
+  on(LoginPageActions.login,
+    state => ({
+      ...state,
+      error: null,
+      pending: true,
+    })
+  ),
+
+  on(LoginPageActions.checkApproved,
+    state => ({
+      ...state,
+      error: null,
+      pending: true,
+    })
+  ),
+
+  on(LoginPageActions.loginFacebook,
+    state => ({
+      ...state,
+      error: null,
+      pending: true,
+    })
+  ),
 
   on(LoginPageActions.checkApprovedSuccess, (state, { isApproved }) => ({
     ...state,
@@ -33,11 +51,16 @@ export const reducer = createReducer(
     pending: false,
   })),
 
-  on(LoginPageActions.checkApprovedFail, (state, { error}) => ({
-    ...state,
-    error: error,
-    pending: false,
-  })),
+  on(LoginPageActions.checkApprovedFail, (state, { error }) => {
+    console.log('Log Message: error', error);
+    console.log('state.pending', state.pending);
+
+    return {
+      ...state,
+      error: error,
+      pending: false,
+    }
+  }),
 
   on(LoginPageActions.leavePage, state => ({
     ...state,
@@ -50,11 +73,15 @@ export const reducer = createReducer(
     pending: false,
   })),
 
-  on(AuthApiActions.loginFailure, (state, { error }) => ({
-    ...state,
-    error,
-    pending: false,
-  })),
+  on(AuthApiActions.loginFailure, (state, { error }) => {
+    console.log('Log Message: error', error);
+
+    return {
+      ...state,
+      error,
+      pending: false,
+    }
+  }),
 
   on(AuthApiActions.loginInvalid, (state, { error }) => ({
     ...state,

@@ -11,6 +11,9 @@ import { Credential } from '../models';
 import { AuthService } from '../services';
 import { LoginPageActions, AuthApiActions, AuthActions, ResetPasswordActions } from '../actions';
 import { LogoutConfirmationDialogComponent } from '../components';
+import { checkApprovedSuccess, checkApprovedFail, checkApproved } from '../actions/login-page.action';
+import { Store } from '@ngrx/store';
+import { HttpError } from '@app/core/exception';
 
 @Injectable()
 export class AuthEffects {
@@ -66,12 +69,26 @@ export class AuthEffects {
       exhaustMap(() => {
         return this.authService.loginWithGG().pipe(
           map((response) => {
+            this.store.dispatch(checkApproved({ id: response.id }));
 
-            this.ngZone.run(() => {
-              this.router.navigate(['/explore']);
-            });
+            if (response.isApproved) {
+              this.ngZone.run(() => {
+                this.router.navigate(['/explore']);
+              });
 
-            return AuthApiActions.loginSuccess({ user: response });
+              return checkApprovedSuccess({
+                isApproved: response.isApproved
+              });
+
+            }
+
+            const error: HttpError = {
+              message: 'Your account is not approved. Please contact your manager',
+              status: 404,
+              statusText: ''
+            }
+
+            return checkApprovedFail({ error });
           }),
           catchError(error => {
             return of(AuthApiActions.loginFailure({ error }));
@@ -86,12 +103,26 @@ export class AuthEffects {
       exhaustMap(() => {
         return this.authService.loginFB().pipe(
           map((response) => {
+            this.store.dispatch(checkApproved({ id: response.id }));
 
-            this.ngZone.run(() => {
-              this.router.navigate(['/explore']);
-            });
+            if (response.isApproved) {
+              this.ngZone.run(() => {
+                this.router.navigate(['/explore']);
+              });
 
-            return AuthApiActions.loginSuccess({ user: response });
+              return checkApprovedSuccess({
+                isApproved: response.isApproved
+              });
+
+            }
+
+            const error: HttpError = {
+              message: 'Your account is not approved. Please contact your manager',
+              status: 404,
+              statusText: ''
+            }
+
+            return checkApprovedFail({ error });
           }),
           catchError(error => {
             return of(AuthApiActions.loginFailure({ error }));
@@ -138,5 +169,6 @@ export class AuthEffects {
     private actions$: Actions,
     private authService: AuthService,
     private ngZone: NgZone,
+    private store: Store<any>
   ) { }
 }

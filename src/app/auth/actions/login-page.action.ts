@@ -8,6 +8,14 @@ export const login = createAction(
   props<{ credential: Credential }>()
 );
 
+export const loginGoogle = createAction(
+  '[Auth] Login Google'
+);
+
+export const loginFacebook = createAction(
+  '[Auth] Login Facebook'
+);
+
 export const checkApproved = createAction(
   '[Login Page] Check is approved',
   props<{ id: number }>()
@@ -27,10 +35,3 @@ export const leavePage = createAction(
   '[Login Page] leave page'
 );
 
-export const loginGoogle = createAction(
-  '[Auth] Login Google'
-);
-
-export const loginFacebook = createAction(
-  '[Auth] Login Facebook'
-);

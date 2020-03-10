@@ -6,7 +6,6 @@ declare var db: any;
 declare const firebase: any;
 
 import { AUTH_CONFIGURATION, AuthConfiguration } from '../auth.config';
-import { AlertDialogComponent } from '@app/shared/dialog/alert-dialog/alert-dialog.component';
 @Injectable()
 export class AuthService {
 
@@ -51,8 +50,7 @@ export class AuthService {
     return new Observable((observer) => {
       let users = db.collection('users');
       const query = users
-        .where('email', '==', email)
-        .where('password', '==', password)
+        .where('id', '==', email)
         .get()
         .then(snapshot => {
           if (snapshot.empty) {
@@ -95,6 +93,7 @@ export class AuthService {
 
       firebase.auth().signInWithPopup(provider)
         .then((result) => {
+
           const loginUser = {
             id: result.additionalUserInfo.profile.id,
             profile: result.additionalUserInfo.profile,
@@ -108,20 +107,72 @@ export class AuthService {
 
   loginFB(): Observable<any> {
     return new Observable((observer) => {
+
+      let loginUser;
+
       const provider = new firebase.auth.FacebookAuthProvider();
       firebase.auth().signInWithPopup(provider)
         .then((result) => {
 
-          const loginUser = {
+          loginUser = {
             id: result.additionalUserInfo.profile.id,
             profile: result.additionalUserInfo.profile,
             isNewUser: result.additionalUserInfo.isNewUser
           };
 
-          observer.next(loginUser);
+          this.checkUser(loginUser).then(user => {
+            if (user) {
+              loginUser = user;
+            }
+          });
+
+          if (loginUser && loginUser.id) {
+            observer.next(loginUser);
+            observer.complete();
+          }
+
+        })
+
+    });
+  }
+
+  async checkUser(loginUser: any) {
+    let users = db.collection('users');
+    return await users
+      .where('id', '==', loginUser.id)
+      .get()
+      .then(snapshot => {
+        if (snapshot.empty) {
+          db.collection('users')
+            .add({ ...loginUser, isApproved: false })
+
+          return { ...loginUser, isApproved: false };
+        };
+
+        let user = {};
+        snapshot.forEach((doc) => {
+          user = {
+            id: doc.id,
+            ...doc.data()
+          }
+        });
+
+        return user;
+      });
+  }
+
+  addNewUser(newUser): Observable<any> {
+    return new Observable((observer) => {
+      db.collection('users')
+        .add(newUser)
+        .then((ref) => {
+          observer.next({
+            ...newUser,
+            id: ref.id
+          });
           observer.complete();
         });
-    });
+    })
   }
 
   logout(): Observable<any> {

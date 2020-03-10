@@ -9,7 +9,8 @@ import {
   MatInputModule,
   MatCardModule,
   MatProgressBarModule,
-  MatDialogModule
+  MatDialogModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -34,7 +35,8 @@ const MAT_MODULES = [
   MatIconModule,
   MatCardModule,
   MatDialogModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatProgressSpinnerModule
 ];
 @NgModule({
   imports: [
