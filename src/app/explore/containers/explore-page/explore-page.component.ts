@@ -41,7 +41,9 @@ export class ExplorePageComponent {
     this.adSuggestionList$ = this.store.pipe(select(fromStore.selectAllAdSuggestionList));
 
     this.loggedInUser$ = this.store.pipe(select(selectLoggedInUser));
-    this.loggedInUser$.subscribe(user => this.loggedUser = user);
+    this.loggedInUser$.subscribe(user => {
+      this.loggedUser = user
+    });
 
   }
 

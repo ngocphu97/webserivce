@@ -1,7 +1,8 @@
 <div class="container">
 
   <mat-form-field class="discover-field" [color]="'primary'">
-    <input #search="matInput" matInput type="text" placeholder="Search to discover" [(ngModel)]="value"
+    <mat-label>Search to discover</mat-label>
+    <input #search="matInput" matInput type="text" placeholder="Ex.Games" [(ngModel)]="value"
       (keyup.enter)="searchExplore(search.value)">
     <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="clearInput()">
       <mat-icon>close</mat-icon>
@@ -30,10 +31,10 @@
 
 <div *ngIf="exploredList && exploredList.length > 0" class="display-center selection">
   <h3 class="selection-title">Selection</h3>
-  <div *ngIf="interestList && interestList.length === 0" class="mat-elevation-z2 filter-field selection-filter">
+  <div *ngIf="interestList && interestList.length === 0" class="mat-elevation-z1 filter-field selection-filter">
     <span>{{selectionMessage}}</span>
   </div>
-  <div *ngIf="interestList && interestList.length > 0" class="mat-elevation-z2 filter-field selection-filter">
+  <div *ngIf="interestList && interestList.length > 0" class="mat-elevation-z1 filter-field selection-filter">
     <mat-chip-list aria-label="Fish selection">
       <mat-chip *ngFor="let interest of interestList" [removable]="removable" (removed)="removeChip(interest)"
         [color]="'primary'" selected>

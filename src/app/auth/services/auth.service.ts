@@ -88,19 +88,32 @@ export class AuthService {
 
 
   loginWithGG(): Observable<any> {
+
+    let loginUser;
+
     return new Observable((observer) => {
       const provider = new firebase.auth.GoogleAuthProvider();
-
+      provider.addScope('email');
       firebase.auth().signInWithPopup(provider)
         .then((result) => {
+          console.log('Log Message: AuthService -> result', result);
 
-          const loginUser = {
+          this.checkUser({
             id: result.additionalUserInfo.profile.id,
             profile: result.additionalUserInfo.profile,
-            isNewUser: result.additionalUserInfo.isNewUser
-          }
-          observer.next(loginUser);
-          observer.complete();
+            isNewUser: result.additionalUserInfo.isNewUser,
+            email: result.user.email
+          }).then(user => {
+            if (user) {
+              loginUser = {
+                ...user
+              };
+              console.log('Log Message: AuthService -> loginUser', loginUser);
+
+              observer.next(loginUser);
+              observer.complete();
+            }
+          });
         })
     })
   }
@@ -111,26 +124,23 @@ export class AuthService {
       let loginUser;
 
       const provider = new firebase.auth.FacebookAuthProvider();
+
       firebase.auth().signInWithPopup(provider)
         .then((result) => {
-
-          loginUser = {
+          this.checkUser({
             id: result.additionalUserInfo.profile.id,
             profile: result.additionalUserInfo.profile,
             isNewUser: result.additionalUserInfo.isNewUser
-          };
-
-          this.checkUser(loginUser).then(user => {
+          }).then(user => {
             if (user) {
-              loginUser = user;
+              loginUser = {
+                ...user
+              };
+
+              observer.next(loginUser);
+              observer.complete();
             }
           });
-
-          if (loginUser && loginUser.id) {
-            observer.next(loginUser);
-            observer.complete();
-          }
-
         })
 
     });
@@ -145,15 +155,19 @@ export class AuthService {
         if (snapshot.empty) {
           db.collection('users')
             .add({ ...loginUser, isApproved: false })
+            .then((ref) => {
+              loginUser.id = ref.id
+              return { ...loginUser, isApproved: false };
+            });
 
-          return { ...loginUser, isApproved: false };
         };
 
         let user = {};
         snapshot.forEach((doc) => {
+          console.log('Log Message: AuthService -> checkUser -> doc', doc.data());
           user = {
+            ...doc.data(),
             id: doc.id,
-            ...doc.data()
           }
         });
 

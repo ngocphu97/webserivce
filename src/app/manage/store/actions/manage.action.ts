@@ -17,7 +17,7 @@ export const getUserListFail = createAction(
 
 export const updateUser = createAction(
   '[Manage] Upadate User ',
-  props<{ user: User }>()
+  props<{ user: any }>()
 );
 
 export const updateUserSuccess = createAction(

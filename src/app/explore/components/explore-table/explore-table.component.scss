@@ -139,6 +139,29 @@ mat-option {
   background-color: #005af0 !important;
 }
 
+@media(max-width: 1870px) {
+  .display-center {
+    margin: 1rem 1.5rem;
+  }
+
+  .discover-field {
+    width: 81% !important;
+    margin-right: 1rem;
+  }
+}
+
+@media(max-width: 1070px) {
+  .display-center {
+    margin: 1rem 0.5rem;
+  }
+}
+
+@media(max-width: 685px) {
+  .discover-field {
+    width: 100% !important;
+  }
+}
+
 @media(max-width: 685px) {
 
   .container {
@@ -178,6 +201,11 @@ mat-option {
   .custom-panel.mat-select-panel {
     min-width: calc(100% + 0px) !important;
   }
+
+  .display-center {
+    margin: 1rem 0.5rem;
+  }
+
 }
 
 @media(max-width: 1020px) {

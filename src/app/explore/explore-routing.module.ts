@@ -9,7 +9,7 @@ const routes: Routes = [
   {
     path: '',
     component: UsersPageComponent,
-    canActivate: [IsApproveGuard],
+    // canActivate: [IsApproveGuard],
   },
   {
     path: 'pending-account',

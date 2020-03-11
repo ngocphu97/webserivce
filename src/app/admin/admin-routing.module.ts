@@ -13,15 +13,13 @@ const routes: Routes = [
       },
       {
         path: 'manage',
-        loadChildren: () =>
-          import('../manage/manage.module')
-            .then(m => m.ManageModule),
+        loadChildren:
+          () => import('../manage/manage.module').then(m => m.ManageModule),
       },
       {
         path: 'explore',
-        loadChildren: () =>
-          import('../explore/explore.module')
-            .then(m => m.ExploreModule),
+        loadChildren:
+          () => import('../explore/explore.module').then(m => m.ExploreModule),
       },
       {
         path: '**',

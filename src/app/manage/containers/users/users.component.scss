@@ -36,8 +36,8 @@ table {
 }
 
 .table-head th {
-  color: #5c5a5a !important;
-  font-size: larger;
+  font-size: initial;
+  font-weight: bold;
 }
 
 .title-section {
@@ -59,6 +59,17 @@ table {
 .action {
   display: flex;
   justify-content: flex-start;
+}
+
+.picture {
+  display: flex;
+  align-items: center;
+
+  .picture-profile {
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+  }
 }
 
 @media(max-width: 640px) {

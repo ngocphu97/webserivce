@@ -22,7 +22,7 @@ export class UsersComponent implements OnInit {
   loggedUser: any;
 
   dataSource: any;
-  displayedColumns = ['userName', 'email', 'actions'];
+  displayedColumns = ['picture', 'userName', 'email', 'type', 'actions'];
 
   isEdit = false;
   isSelectedId: string;
@@ -38,6 +38,7 @@ export class UsersComponent implements OnInit {
 
     this.users$ = this.store.pipe(select(selectUsers));
     this.users$.subscribe(users => {
+      console.log('Log Message: UsersComponent -> constructor -> users', users);
       this.dataSource = users;
     });
   }
@@ -47,27 +48,6 @@ export class UsersComponent implements OnInit {
 
   logout() {
     this.store.dispatch(logoutConfirmation());
-  }
-
-  editProfile() {
-    this.dialog.open(EditProfileDialogComponent, {
-      data: {
-        email: this.loggedUser.email,
-        username: this.loggedUser.username,
-        password: this.loggedUser.password
-      }
-    }).afterClosed().subscribe((res) => {
-      if (res) {
-        const user: User = {
-          id: this.loggedUser.id,
-          username: res.username,
-          email: res.email,
-          password: res.password
-        };
-
-        this.store.dispatch(updateUser({ user }));
-      }
-    });
   }
 
   editUser(element) {
@@ -122,6 +102,17 @@ export class UsersComponent implements OnInit {
         this.store.dispatch(removeUser({ user }));
       }
     });
+  }
+
+  approveUser(user) {
+    const approveUser = {
+      ...user,
+      isApproved: true
+    };
+
+    console.log('Log Message: UsersComponent -> approveUser -> approveUser', approveUser);
+
+    this.store.dispatch(updateUser({ user: approveUser }));
   }
 
   cancel() {

@@ -19,8 +19,8 @@ export class ManageService {
           const users = [];
           querySnapshot.forEach((doc) => {
             users.push({
-              id: doc.id,
               ...doc.data(),
+              id: doc.id,
             });
           });
           observer.next(users);
@@ -44,16 +44,10 @@ export class ManageService {
   }
 
   updateUser(updateUser: User): Observable<User> {
-
-    const user = {
-      email: updateUser.email,
-      username: updateUser.username
-    }
-
     return new Observable((observer) => {
       db.collection('users')
         .doc(updateUser.id)
-        .update(user)
+        .update(updateUser)
         .then(() => {
           observer.next(updateUser);
           observer.complete();

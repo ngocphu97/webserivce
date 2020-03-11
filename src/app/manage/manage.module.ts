@@ -11,7 +11,8 @@ import {
   MatIconModule, MatButtonModule, MatSelectModule,
   MatPaginatorModule, MatProgressBarModule, MatToolbarModule,
   MatCheckboxModule, MatChipsModule, MatSnackBarModule,
-  MatMenuModule
+  MatMenuModule,
+  MatTooltipModule
 } from '@angular/material';
 import { reducer } from './store/reducers/manage.reducer';
 import { ManageEffect } from './store/effects';
@@ -38,7 +39,8 @@ const MAT_MODULES = [
   MatCheckboxModule,
   MatChipsModule,
   MatSnackBarModule,
-  MatMenuModule
+  MatMenuModule,
+  MatTooltipModule
 ];
 
 @NgModule({

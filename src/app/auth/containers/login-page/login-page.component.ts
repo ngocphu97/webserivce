@@ -1,4 +1,4 @@
-import { Component, OnDestroy, NgZone } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 
 import { AuthState } from '../../reducers';
@@ -10,7 +10,8 @@ import { selectLoginPagePending, selectLoginPageError } from '../../selectors/lo
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.scss', '../auth-page.scss']
+  styleUrls: ['./login-page.component.scss', '../auth-page.scss'],
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginPageComponent implements OnDestroy {
 
@@ -23,17 +24,6 @@ export class LoginPageComponent implements OnDestroy {
   constructor(private store: Store<AuthState>) {
     this.pending$ = this.store.pipe(select(selectLoginPagePending));
     this.error$ = this.store.pipe(select(selectLoginPageError));
-
-    this.pending$.subscribe(pending => {
-      this.pending = pending;
-      console.log('pending ', this.pending)
-    });
-
-    this.error$.subscribe(error => {
-      this.error = error.message;
-      console.log('Log Message: LoginPageComponent -> constructor -> this.error ', this.error);
-    });
-
   }
 
   onLogin(credential: Credential) {
@@ -41,7 +31,6 @@ export class LoginPageComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('destroyt');
     this.store.dispatch(LoginPageActions.leavePage());
   }
 

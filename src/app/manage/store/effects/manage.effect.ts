@@ -7,6 +7,7 @@ import { map, catchError, exhaustMap, mapTo } from 'rxjs/operators';
 import * as manageActions from '../actions'
 import { ManageService } from '../services';
 import { User } from '../../models/user.model';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable()
 export class ManageEffect {
@@ -27,11 +28,14 @@ export class ManageEffect {
     ofType(manageActions.updateUser),
     exhaustMap((action) => {
       return this.manageService.updateUser(action.user).pipe(
-        map((user: User) => {
+        map((user: any) => {
           return manageActions.updateUserSuccess({ user });
         }),
-        catchError(error => of(manageActions.updateUserFail({ error: error }))
-        ));
+        catchError(error => {
+          this.openSnackBar('Something went wrong', 'Error');
+          return of(manageActions.updateUserFail({ error: error }));
+        })
+      );
     })
   ));
 
@@ -66,7 +70,14 @@ export class ManageEffect {
 
   constructor(
     private actions$: Actions,
-    private manageService: ManageService
+    private manageService: ManageService,
+    private snackBar: MatSnackBar
   ) { }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
 
 }
