@@ -70,7 +70,6 @@ export class AuthEffects {
       exhaustMap(() => {
         return this.authService.loginWithGG().pipe(
           map((response) => {
-            console.log('Log Message: AuthEffects -> response', response);
             this.store.dispatch(checkApproved({ id: response.id }));
 
             if (response.isApproved) {
@@ -105,7 +104,6 @@ export class AuthEffects {
       exhaustMap(() => {
         return this.authService.loginFB().pipe(
           map((response) => {
-            console.log('Log Message: AuthEffects -> response', response);
             this.store.dispatch(checkApproved({ id: response.id }));
 
             if (response.isApproved) {
@@ -121,7 +119,7 @@ export class AuthEffects {
 
             } else {
               const error: HttpError = {
-                message: 'Your account is not approved. Please contact your manager',
+                message: 'Your account is awaiting approval.',
                 status: 404,
                 statusText: ''
               }

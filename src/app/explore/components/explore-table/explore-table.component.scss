@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0.5rem;
+  padding: 1.5rem;
   margin-top: 1.5rem;
 
   .discover-field {
@@ -140,6 +140,8 @@ mat-option {
 }
 
 @media(max-width: 1870px) {
+
+
   .display-center {
     margin: 1rem 1.5rem;
   }
@@ -154,6 +156,11 @@ mat-option {
   .display-center {
     margin: 1rem 0.5rem;
   }
+
+  .container {
+    padding: 1rem;
+  }
+
 }
 
 @media(max-width: 685px) {
@@ -166,6 +173,7 @@ mat-option {
 
   .container {
     display: block;
+    padding: 0.5rem;
 
     .discover-field,
     .country-field {
@@ -211,5 +219,9 @@ mat-option {
 @media(max-width: 1020px) {
   .display-center {
     margin: 1rem 1.5rem;
+  }
+
+  .container {
+    padding: 1rem;
   }
 }

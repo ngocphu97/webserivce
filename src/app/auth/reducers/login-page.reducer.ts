@@ -52,10 +52,7 @@ export const reducer = createReducer(
   })),
 
   on(LoginPageActions.checkApprovedFail, (state, { error }) => {
-    console.log('Log Message: error', error);
-    console.log('state.pending', state.pending);
-
-    return {
+   return {
       ...state,
       error: error,
       pending: false,
@@ -74,7 +71,6 @@ export const reducer = createReducer(
   })),
 
   on(AuthApiActions.loginFailure, (state, { error }) => {
-    console.log('Log Message: error', error);
 
     return {
       ...state,

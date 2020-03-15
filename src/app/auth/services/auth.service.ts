@@ -96,8 +96,6 @@ export class AuthService {
       provider.addScope('email');
       firebase.auth().signInWithPopup(provider)
         .then((result) => {
-          console.log('Log Message: AuthService -> result', result);
-
           this.checkUser({
             id: result.additionalUserInfo.profile.id,
             profile: result.additionalUserInfo.profile,
@@ -108,7 +106,6 @@ export class AuthService {
               loginUser = {
                 ...user
               };
-              console.log('Log Message: AuthService -> loginUser', loginUser);
 
               observer.next(loginUser);
               observer.complete();
@@ -164,7 +161,6 @@ export class AuthService {
 
         let user = {};
         snapshot.forEach((doc) => {
-          console.log('Log Message: AuthService -> checkUser -> doc', doc.data());
           user = {
             ...doc.data(),
             id: doc.id,

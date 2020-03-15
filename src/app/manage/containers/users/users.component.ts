@@ -38,7 +38,6 @@ export class UsersComponent implements OnInit {
 
     this.users$ = this.store.pipe(select(selectUsers));
     this.users$.subscribe(users => {
-      console.log('Log Message: UsersComponent -> constructor -> users', users);
       this.dataSource = users;
     });
   }
@@ -109,8 +108,6 @@ export class UsersComponent implements OnInit {
       ...user,
       isApproved: true
     };
-
-    console.log('Log Message: UsersComponent -> approveUser -> approveUser', approveUser);
 
     this.store.dispatch(updateUser({ user: approveUser }));
   }
