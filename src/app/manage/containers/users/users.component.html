@@ -105,6 +105,24 @@
               <mat-icon>thumb_up_alt</mat-icon>
             </button>
 
+            <button *ngIf="element.role === 'admin'"
+              matTooltip="Admin"
+              [matTooltipPosition]="'above'"
+              mat-icon-button
+              (click)="approveRole(element, 'user')"
+              [color]="'primary'">
+              <mat-icon>supervisor_account</mat-icon>
+            </button>
+
+            <button *ngIf="!element.role  || element.role !== 'admin'"
+              matTooltip="User"
+              [matTooltipPosition]="'above'"
+              mat-icon-button
+              [color]="'warn'"
+              (click)="approveRole(element, 'admin')">
+              <mat-icon>supervisor_account</mat-icon>
+            </button>
+
             <button *ngIf="!element.isApproved"
               matTooltip="User isn't approved"
               [matTooltipPosition]="'left'"
@@ -112,7 +130,10 @@
               <mat-icon>thumb_up_alt</mat-icon>
             </button>
 
-            <button mat-icon-button [color]="'warn'" (click)="removeUser(element)">
+            <button mat-icon-button [color]="'warn'"
+              matTooltip="Remove user"
+              [matTooltipPosition]="'above'"
+              (click)="removeUser(element)">
               <mat-icon>delete</mat-icon>
             </button>
           </div>

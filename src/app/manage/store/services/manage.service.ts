@@ -20,6 +20,7 @@ export class ManageService {
           querySnapshot.forEach((doc) => {
             users.push({
               ...doc.data(),
+              email: doc.data().profile.email,
               id: doc.id,
             });
           });

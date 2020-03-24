@@ -174,7 +174,10 @@ export class AuthService {
   addNewUser(newUser): Observable<any> {
     return new Observable((observer) => {
       db.collection('users')
-        .add(newUser)
+        .add({
+          ...newUser,
+          role: 'user'
+        })
         .then((ref) => {
           observer.next({
             ...newUser,

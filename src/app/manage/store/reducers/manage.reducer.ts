@@ -71,7 +71,7 @@ const manageReducer = createReducer(
   on(manageAction.addUserFail, (state, { error }) => ({
     ...state,
     error,
-    pending: true
+    pending: false
   })),
 
   on(manageAction.removeUser, (state) => {

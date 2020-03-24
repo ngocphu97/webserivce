@@ -112,6 +112,15 @@ export class UsersComponent implements OnInit {
     this.store.dispatch(updateUser({ user: approveUser }));
   }
 
+  approveRole(user: any, role: string) {
+    const approveUser = {
+      ...user,
+      role
+    };
+
+    this.store.dispatch(updateUser({ user: approveUser }));
+  }
+
   cancel() {
     this.isEdit = false;
     this.isSelectedId = null;
