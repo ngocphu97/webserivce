@@ -1,10 +1,5 @@
 {
   "Toaster": {
-    "zero": "",
-    "one": "",
-    "two": "",
-    "few": "",
-    "many": "",
     "other": ""
   },
   "Header": {
@@ -541,9 +536,9 @@
   },
   "General": {
     "Yes": "",
-    "Cancel": "إلغاء",
-    "Delete": "حذف",
-    "SelectPageSize": "مقاس الصفحه",
+    "Cancel": "",
+    "Delete": "",
+    "SelectPageSize": "",
     "RequiredField": ""
   },
   "Actions": {
@@ -589,9 +584,9 @@
     "DraftInvoiceDeletedNotification": "",
     "ProductDeletedNotification": "",
     "BankAccountDeletedNotification": "",
-    "Period": "الفتره",
+    "Period": "",
     "Notification": {
-      "GetEventsLogFail": "تعذر استرداد سجل الأحداث. يرجى المحاولة مرة أخرى أو المحاولة لاحقًا."
+      "GetEventsLogFail": ""
     }
   }
 }
