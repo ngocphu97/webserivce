@@ -14,12 +14,8 @@ const routes: Routes = [
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   },
   {
-    path: 'client',
-    loadChildren: () => import('./client/client.module').then(m => m.ClientModule)
-  },
-  {
     path: 'explore',
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     loadChildren: () => import('./explore/explore.module').then(m => m.ExploreModule)
   }
 ];
