@@ -14,7 +14,7 @@ declare var FB: any;
 @Injectable()
 export class ExploreService extends EntityCollectionServiceBase<ExploreModel> {
 
-  appToken = 'EAAHhLYu93q0BAELFuqKbWHvDyxGT5cLS1BJiuehCYZAwwZBr4svXLRTza30D9rhDnW8i3jZAPXgYSmcALDEadstlPc5wdG4fuu37jZAoK1TuCoE5M9j7FQUaWW47ZBGeHBnzJintcgP06yind8xxHd4dOmFtwaqAkR4x9bpTmEJeNffjkayYA';
+  appToken = 'EAAiuHmVRhiQBAETPAbSpLHi9muBtpv179pVIZBNZCSr7vooiykQm93IyJr6X2O62qqZCIjQCdY0zqH4hzpqGSbBQEHHbZAgyw7mnBsaAtDH54AwJxppFxtZCtZAZC6bzCPCrxnw3ZCLdub6bNUcnxS3cxgSZCVQaUXn0lQcTdeTSsHAZDZD';
 
   constructor(
     private http: HttpClient,
