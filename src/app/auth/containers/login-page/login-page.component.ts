@@ -10,8 +10,7 @@ import { selectLoginPagePending, selectLoginPageError } from '../../selectors/lo
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.scss', '../auth-page.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./login-page.component.scss', '../auth-page.scss']
 })
 export class LoginPageComponent implements OnDestroy {
 

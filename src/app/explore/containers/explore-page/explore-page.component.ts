@@ -2,15 +2,16 @@ import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 
 import { Observable } from 'rxjs';
+import { MatDialog } from '@angular/material';
 
 import * as fromStore from '../../store';
-import { ExploreModel, Search, AdSuggestion } from '../../models';
+import { ExploreModel, Search, AdSuggestion } from '../../models' ;
+
+import { updateUser } from 'src/app/manage/store';
+import { User } from 'src/app/manage/models/user.model';
 import { AuthActions } from '@app/auth';
 import { selectLoggedInUser } from 'src/app/auth/selectors/auth.selector';
 import { EditProfileDialogComponent } from '@app/shared/dialog/edit-profile-dialog/edit-profile-dialog.component';
-import { MatDialog } from '@angular/material';
-import { User } from 'src/app/manage/models/user.model';
-import { updateUser } from 'src/app/manage/store';
 
 @Component({
   selector: 'app-explore-page',
@@ -18,36 +19,29 @@ import { updateUser } from 'src/app/manage/store';
   styleUrls: ['./explore-page.component.scss']
 })
 export class ExplorePageComponent {
-  exploredList$: Observable<Array<ExploreModel>>;
-  adSuggestionList$: Observable<Array<AdSuggestion>>;
   pending$: Observable<boolean>;
   totalInterest$: Observable<number>;
+  exploredList$: Observable<Array<ExploreModel>>;
+  adSuggestionList$: Observable<Array<AdSuggestion>>;
 
+  loggedUser: any;
+  loggedInUser$: Observable<any>;
   selectedInterest: ExploreModel = null;
 
-  loggedInUser$: Observable<any>;
-  loggedUser: any;
-
   constructor(
-    private store: Store<fromStore.ExploreState>,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private store: Store<fromStore.ExploreState>
   ) {
-    this.exploredList$ = this.store.pipe(select(fromStore.selectAllExplore));
     this.pending$ = this.store.pipe(select(fromStore.selectExplorePending));
-
-    this.totalInterest$ = this.store.pipe(select(fromStore.selectTotalExplore));
-
     this.exploredList$ = this.store.pipe(select(fromStore.selectAllExplore));
+    this.totalInterest$ = this.store.pipe(select(fromStore.selectTotalExplore));
     this.adSuggestionList$ = this.store.pipe(select(fromStore.selectAllAdSuggestionList));
 
     this.loggedInUser$ = this.store.pipe(select(selectLoggedInUser));
-    this.loggedInUser$.subscribe(user => {
-      this.loggedUser = user
-    });
-
+    this.loggedInUser$.subscribe(user => { this.loggedUser = user; });
   }
 
-  onSelectInterest(interest: ExploreModel) {
+  onSelectInterest(interest: ExploreModel): void {
     this.selectedInterest = interest;
   }
 
@@ -59,28 +53,31 @@ export class ExplorePageComponent {
     this.store.dispatch(fromStore.getAdSuggestionList({ search: search }));
   }
 
-  logout() {
+  logout(): void {
     this.store.dispatch(AuthActions.logoutConfirmation());
   }
 
-  editProfile() {
-    this.dialog.open(EditProfileDialogComponent, {
-      data: {
-        email: this.loggedUser.email,
-        username: this.loggedUser.username,
-        password: this.loggedUser.password
-      }
-    }).afterClosed().subscribe((res) => {
-      if (res) {
-        const user: User = {
-          id: this.loggedUser.id,
-          username: res.username,
-          email: res.email,
-          password: res.password
-        };
+  editProfile(): void {
+    this.dialog
+      .open(EditProfileDialogComponent, {
+        data: {
+          email: this.loggedUser.email,
+          username: this.loggedUser.username,
+          password: this.loggedUser.password
+        }
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          const user: User = {
+            id: this.loggedUser.id,
+            username: res.username,
+            email: res.email,
+            password: res.password
+          };
 
-        this.store.dispatch(updateUser({ user }));
-      }
-    });
+          this.store.dispatch(updateUser({ user }));
+        }
+      });
   }
 }

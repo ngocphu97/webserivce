@@ -2,45 +2,54 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { ManageRoutingModule } from './manage-routing.module';
-import { containers } from './containers';
-
 import {
-  MatProgressSpinnerModule, MatTableModule, MatCardModule,
-  MatFormFieldModule, MatInputModule, MatSortModule,
-  MatIconModule, MatButtonModule, MatSelectModule,
-  MatPaginatorModule, MatProgressBarModule, MatToolbarModule,
-  MatCheckboxModule, MatChipsModule, MatSnackBarModule,
-  MatMenuModule,
-  MatTooltipModule
-} from '@angular/material';
-import { reducer } from './store/reducers/manage.reducer';
-import { ManageEffect } from './store/effects';
-import { entityConfig, defaultDataServiceConfig } from './manage-entity-metadata';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-// import { EntityDataModule, DefaultDataServiceConfig } from '@ngrx/data';
-import { ManageService } from './store/services';
-import { DialogModule } from '@app/shared/dialog';
-
-const MAT_MODULES = [
-  MatProgressSpinnerModule,
-  MatTableModule,
   MatCardModule,
-  MatFormFieldModule,
-  MatInputModule,
   MatSortModule,
   MatIconModule,
+  MatMenuModule,
+  MatTableModule,
+  MatInputModule,
+  MatChipsModule,
   MatButtonModule,
   MatSelectModule,
-  MatPaginatorModule,
-  MatProgressBarModule,
+  MatTooltipModule,
   MatToolbarModule,
-  MatCheckboxModule,
-  MatChipsModule,
   MatSnackBarModule,
+  MatCheckboxModule,
+  MatPaginatorModule,
+  MatFormFieldModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
+} from '@angular/material';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+
+import { containers } from './containers';
+import { DialogModule } from '@app/shared/dialog';
+import { ManageRoutingModule } from './manage-routing.module';
+
+import { reducer } from './store/reducers';
+import { ManageEffect } from './store/effects';
+import { ManageService } from './store/services';
+
+const MAT_MODULES = [
+  MatCardModule,
+  MatSortModule,
+  MatIconModule,
   MatMenuModule,
-  MatTooltipModule
+  MatTableModule,
+  MatInputModule,
+  MatChipsModule,
+  MatButtonModule,
+  MatSelectModule,
+  MatTooltipModule,
+  MatToolbarModule,
+  MatSnackBarModule,
+  MatCheckboxModule,
+  MatPaginatorModule,
+  MatFormFieldModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
 ];
 
 @NgModule({
@@ -51,10 +60,10 @@ const MAT_MODULES = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    ManageRoutingModule,
-    DialogModule,
 
     MAT_MODULES,
+    DialogModule,
+    ManageRoutingModule,
 
     StoreModule.forFeature('manage', reducer),
     EffectsModule.forFeature([ManageEffect])
