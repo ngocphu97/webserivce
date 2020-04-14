@@ -1,12 +1,9 @@
 import { ExplorePageComponent } from './explore-page/explore-page.component';
-import { PenddingAccountComponent } from './pendding-account/pendding-account.component';
 
 export const CONTAINERS = [
-  ExplorePageComponent,
-  PenddingAccountComponent
+  ExplorePageComponent
 ];
 
 export {
-  ExplorePageComponent as UsersPageComponent,
-  PenddingAccountComponent
+  ExplorePageComponent
 };

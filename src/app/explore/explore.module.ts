@@ -1,39 +1,38 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import {
-  MatProgressSpinnerModule,
-  MatTableModule,
-  MatCardModule,
-  MatFormFieldModule,
-  MatInputModule,
   MatSortModule,
+  MatCardModule,
+  MatMenuModule,
   MatIconModule,
+  MatTableModule,
+  MatInputModule,
+  MatChipsModule,
   MatButtonModule,
   MatSelectModule,
-  MatPaginatorModule,
-  MatProgressBarModule,
   MatToolbarModule,
-  MatCheckboxModule,
-  MatChipsModule,
   MatSnackBarModule,
-  MatMenuModule
+  MatCheckboxModule,
+  MatPaginatorModule,
+  MatFormFieldModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
 } from '@angular/material';
 
+
+import { DialogModule } from '@app/shared/dialog';
 import { ExploreRoutingModule } from './explore-routing.module';
 
 import { CONTAINERS } from './containers';
 import { COMPONENTS } from './components';
 
+import { reducer } from './store/reducers';
 import { ExploreEffect } from './store/effects';
 import { ExploreService } from './store/services';
-
-import * as fromExplore from './store/reducers/explore.reducer';
-import { entityConfig, defaultDataServiceConfig } from './explore-entity-metadata';
-import { EntityDataModule, DefaultDataServiceConfig } from '@ngrx/data';
-import { DialogModule } from '@app/shared/dialog';
 
 const MAT_MODULES = [
   MatProgressSpinnerModule,
@@ -58,22 +57,21 @@ const MAT_MODULES = [
   imports: [
     CommonModule,
     FormsModule,
-    MAT_MODULES,
-    ExploreRoutingModule,
     ReactiveFormsModule,
-    DialogModule,
 
-    StoreModule.forFeature('explore', fromExplore.reducer),
-    EffectsModule.forFeature([ExploreEffect]),
-    EntityDataModule.forRoot(entityConfig),
+    MAT_MODULES,
+    DialogModule,
+    ExploreRoutingModule,
+
+    StoreModule.forFeature('explore', reducer),
+    EffectsModule.forFeature([ExploreEffect])
   ],
   declarations: [
     CONTAINERS,
     COMPONENTS
   ],
   providers: [
-    ExploreService,
-    { provide: DefaultDataServiceConfig, useValue: defaultDataServiceConfig }
+    ExploreService
   ]
 })
 export class ExploreModule { }

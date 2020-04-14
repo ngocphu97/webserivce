@@ -58,18 +58,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "webservice-app:build"
+            "browserTarget": "gudjob-interest-app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "webservice-app:build:production"
+              "browserTarget": "gudjob-interest-app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "webservice-app:build"
+            "browserTarget": "gudjob-interest-app:build"
           }
         },
         "test": {
@@ -106,15 +106,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "webservice-app:serve"
+            "devServerTarget": "gudjob-interest-app:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "webservice-app:serve:production"
+              "devServerTarget": "gudjob-interest-app:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "webservice-app"
+  "defaultProject": "gudjob-interest-app"
 }

@@ -2,8 +2,8 @@ import { Component, Renderer2 } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter, take } from 'rxjs/operators';
 
-declare var FB: any;
-declare var window: any;
+declare let FB: any;
+declare let window: any;
 
 @Component({
   selector: 'app-root',
@@ -26,7 +26,6 @@ export class AppComponent {
     };
 
     this.hideSplashScreen();
-
   }
 
   private hideSplashScreen() {

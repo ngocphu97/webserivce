@@ -21,18 +21,16 @@ const authConfig: AuthConfiguration = {
 @NgModule({
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
 
-    AppRoutingModule,
     CoreModule,
+    AppRoutingModule,
     AuthModule.forRoot(authConfig),
-
   ],
   declarations: [
     AppComponent
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

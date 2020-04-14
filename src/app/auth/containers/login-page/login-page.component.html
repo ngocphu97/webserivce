@@ -16,21 +16,12 @@
         {{(error$ | async).message}}
       </p>
 
-      <!-- <app-login-form class="form" [pending]="pending$ | async" (loginUser)="onLogin($event)">
-      </app-login-form> -->
-
       <div class="social">
-        <!-- <div class="social-button">
-          <button mat-raised-button [color]="'warn'" (click)="loginGG()">
-            <i class="fa fa-google icon"></i> Google
-          </button>
-        </div> -->
         <div class="social-button">
           <button mat-raised-button [color]="'primary'" (click)="loginFB()">
             <i class="fa fa-facebook icon"></i> Login with Facebook
           </button>
         </div>
-
       </div>
 
     </mat-card-content>

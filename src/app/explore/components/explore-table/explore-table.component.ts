@@ -78,12 +78,11 @@ export class ExploreTableComponent implements OnInit, OnChanges {
       country: this.country.value
     }
 
-    if(this.adType === 'adInterest') {
-      this.exploredKeyword.emit(search);
-    } else {
-      this.getSuggestionList.emit(search);
+    if (this.adType === 'adInterest') {
+      return this.exploredKeyword.emit(search);
     }
 
+    return this.getSuggestionList.emit(search);
   }
 
   clearInput(): void {
@@ -92,6 +91,7 @@ export class ExploreTableComponent implements OnInit, OnChanges {
 
   selectRow(row) {
     this.selection.toggle(row);
+
     if (this.selection.isSelected(row)) {
       return this.interestList.push(row.name);
     }
@@ -111,13 +111,13 @@ export class ExploreTableComponent implements OnInit, OnChanges {
 
   masterToggle(): void {
     if (this.isAllSelected()) {
-      this.clearSelection();
-    } else {
-      this.dataSource.data.forEach(row => {
-        this.interestList.push(row.name);
-        this.selection.select(row)
-      });
+      return this.clearSelection();
     }
+
+    return this.dataSource.data.forEach(row => {
+      this.interestList.push(row.name);
+      this.selection.select(row)
+    });
   }
 
   clearSelection(): void {

@@ -24,15 +24,15 @@ export const initialState: ExploreState = {
 const exploreReducer = createReducer(
   initialState,
 
-  on(
-    ExploreAction.getExploreList,
+  on(ExploreAction.getExploreList,
     ExploreAction.getAdSuggestionList,
     (state, { search }) => ({
       ...state,
       error: null,
       pending: true,
       search: search
-    })),
+    })
+  ),
 
   on(ExploreAction.getExploreListSuccessfully, (state, { exploredList }) => ({
     ...state,

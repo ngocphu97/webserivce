@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
-import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, catchError, exhaustMap } from 'rxjs/operators';
+import { Actions, ofType, createEffect } from '@ngrx/effects';
 
 import { ExploreService } from '../services';
 import { Search } from '../../models';
@@ -25,9 +25,7 @@ export class ExploreEffect {
             }
           })
 
-          return exploreActions.getExploreListSuccessfully({
-            exploredList: exploredList
-          })
+          return exploreActions.getExploreListSuccessfully({ exploredList })
         }),
         catchError(error => of(exploreActions.getExploreListFailure({ error: error })))
       );

@@ -31,9 +31,3 @@ export const getAdSuggestionListFailure = createAction(
   '[Explore] Get Ad Interest Suggestion Failure',
   props<{ error: any }>()
 );
-
-export enum ExploreActionTypes {
-  GET_EXPLORE = '[Explore] Get Explore',
-  GET_EXPLORE_SUCCESSFULLY = '[Explore] Get Explore successfully',
-  GET_EXPLORE_FAILURE = '[Explore] Get Explore failure'
-}

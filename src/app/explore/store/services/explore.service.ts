@@ -1,36 +1,31 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
 import { Observable, Subscriber } from 'rxjs';
-import {
-  EntityCollectionServiceBase,
-  EntityCollectionServiceElementsFactory
-} from '@ngrx/data';
 
 import { ExploreModel, AdSuggestion } from '../../models';
 
-declare var FB: any;
+declare let FB: any;
 
 @Injectable()
-export class ExploreService extends EntityCollectionServiceBase<ExploreModel> {
+export class ExploreService {
 
   appToken = 'EAAiuHmVRhiQBAETPAbSpLHi9muBtpv179pVIZBNZCSr7vooiykQm93IyJr6X2O62qqZCIjQCdY0zqH4hzpqGSbBQEHHbZAgyw7mnBsaAtDH54AwJxppFxtZCtZAZC6bzCPCrxnw3ZCLdub6bNUcnxS3cxgSZCVQaUXn0lQcTdeTSsHAZDZD';
 
-  constructor(
-    private http: HttpClient,
-    serviceElementsFactory: EntityCollectionServiceElementsFactory
-  ) {
-    super('Explore', serviceElementsFactory);
-  }
+  constructor() {}
 
-  getExploreList(keyword: string, locale): Observable<Array<ExploreModel>> {
-    return this.http.get<Array<ExploreModel>>
-      (`https://graph.facebook.com/search?type=adinterest&limit=10000&q=[${keyword}]&locale=${locale}&access_token=${this.appToken}`);
-  }
-
-  getAdInterestSuggesstionsList(keyword: string): Observable<Array<AdSuggestion>> {
-    return this.http.get<Array<AdSuggestion>>
-      (`https://graph.facebook.com/search?type=adinterestsuggestion&limit=10000&interest_list=["${keyword}"]&access_token=${this.appToken}`);
+  getExploreList(keyword: string, locale: string): Observable<Array<ExploreModel>> {
+    return new Observable((observer: Subscriber<Array<ExploreModel>>) => {
+      FB.api('/search', 'GET', {
+        type: 'adinterest',
+        access_token: this.appToken,
+        q: [...keyword],
+        locale: locale,
+        limit: 10000
+      }, (response) => {
+        observer.next(response);
+        observer.complete();
+      });
+    })
   }
 
   getAdinterestSuggestion(keyword: string): Observable<Array<AdSuggestion>> {
@@ -40,6 +35,20 @@ export class ExploreService extends EntityCollectionServiceBase<ExploreModel> {
         access_token: this.appToken,
         interest_list: [keyword],
         limit: 10000
+      }, (response) => {
+        observer.next(response);
+        observer.complete();
+      });
+    });
+  }
+
+  exchangeToken(token: string) {
+    return new Observable((observer: Subscriber<Array<AdSuggestion>>) => {
+      FB.api('/oauth', 'GET', {
+        grant_type: 'fb_exchange_token',
+        client_id: '2443245385778724',
+        client_secret: '0b4facb054c87818804b36c561a1c139',
+        fb_exchange_token: token,
       }, (response) => {
         observer.next(response);
         observer.complete();
