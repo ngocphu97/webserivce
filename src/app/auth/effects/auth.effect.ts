@@ -74,13 +74,13 @@ export class AuthEffects {
 
             if (response.isApproved) {
               this.ngZone.run(() => {
+                this.store.dispatch(loginSuccess({ user: response }));
                 this.router.navigate(['/explore']);
               });
 
               return checkApprovedSuccess({
                 isApproved: response.isApproved
               });
-
             }
 
             const error: HttpError = {
@@ -103,7 +103,7 @@ export class AuthEffects {
       ofType(LoginPageActions.loginFacebook),
       exhaustMap(() => {
         return this.authService.loginFB().pipe(
-          map((response) => {
+          map((response: any) => {
             this.store.dispatch(checkApproved({ id: response.id }));
 
             if (response.isApproved) {
@@ -144,9 +144,9 @@ export class AuthEffects {
             if (adminList.some(admin => admin.email === email)) {
               const admin = adminList.find(admin => admin.email === email);
               return ResetPasswordActions.resetPasswordEmailVaild({ admin });
-            } else {
-              return ResetPasswordActions.resetPasswordEmailInvalid({ error: 'Email incorrect' })
             }
+
+            return ResetPasswordActions.resetPasswordEmailInvalid({ error: 'Email incorrect' })
           }),
           catchError(error => of(ResetPasswordActions.resetPasswordFailure({ error })))
         )
