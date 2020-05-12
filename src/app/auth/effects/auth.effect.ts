@@ -72,7 +72,7 @@ export class AuthEffects {
           map((response) => {
             this.store.dispatch(checkApproved({ id: response.id }));
 
-            if (response.isApproved) {
+            // if (response.isApproved) {
               this.ngZone.run(() => {
                 this.store.dispatch(loginSuccess({ user: response }));
                 this.router.navigate(['/explore']);
@@ -81,15 +81,15 @@ export class AuthEffects {
               return checkApprovedSuccess({
                 isApproved: response.isApproved
               });
-            }
+            // }
 
-            const error: HttpError = {
-              message: 'Your account is not approved. Please contact your manager',
-              status: 404,
-              statusText: ''
-            }
+            // const error: HttpError = {
+            //   message: 'Your account is not approved. Please contact your manager',
+            //   status: 404,
+            //   statusText: ''
+            // }
 
-            return checkApprovedFail({ error });
+            // return checkApprovedFail({ error });
           }),
           catchError(error => {
             return of(AuthApiActions.loginFailure({ error }));
