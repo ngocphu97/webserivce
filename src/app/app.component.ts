@@ -16,14 +16,21 @@ export class AppComponent {
     private router: Router
   ) {
 
-    window.fbAsyncInit = function () {
-      FB.init({
-        appId: '2443245385778724',
-        autoLogAppEvents: true,
-        xfbml: true,
-        version: 'v6.0'
-      });
-    };
+    // window.fbAsyncInit = function () {
+    //   // FB.init({
+    //   //   appId: '2443245385778724',
+    //   //   autoLogAppEvents: true,
+    //   //   xfbml: true,
+    //   //   version: 'v6.0'
+    //   // });
+    //   FB.init({
+    //     appId: '1924433384326231',
+    //     cookie: true,
+    //     autoLogAppEvents: true,
+    //     xfbml: true,
+    //     version: 'v6.0',
+    //   });
+    // };
 
     this.hideSplashScreen();
   }

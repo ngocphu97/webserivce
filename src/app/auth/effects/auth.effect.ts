@@ -72,24 +72,24 @@ export class AuthEffects {
           map((response) => {
             this.store.dispatch(checkApproved({ id: response.id }));
 
-            if (response.isApproved) {
-              this.ngZone.run(() => {
-                this.router.navigate(['/explore']);
-              });
+            // if (response.isApproved) {
+            this.ngZone.run(() => {
+              this.store.dispatch(loginSuccess({ user: response }));
+              this.router.navigate(['/explore']);
+            });
 
-              return checkApprovedSuccess({
-                isApproved: response.isApproved
-              });
+            return checkApprovedSuccess({
+              isApproved: response.isApproved
+            });
+            // }
 
-            }
+            // const error: HttpError = {
+            //   message: 'Your account is not approved. Please contact your manager',
+            //   status: 404,
+            //   statusText: ''
+            // }
 
-            const error: HttpError = {
-              message: 'Your account is not approved. Please contact your manager',
-              status: 404,
-              statusText: ''
-            }
-
-            return checkApprovedFail({ error });
+            // return checkApprovedFail({ error });
           }),
           catchError(error => {
             return of(AuthApiActions.loginFailure({ error }));
@@ -103,11 +103,10 @@ export class AuthEffects {
       ofType(LoginPageActions.loginFacebook),
       exhaustMap(() => {
         return this.authService.loginFB().pipe(
-          map((response) => {
+          map((response: any) => {
             this.store.dispatch(checkApproved({ id: response.id }));
 
             if (response.isApproved) {
-
               this.ngZone.run(() => {
                 this.store.dispatch(loginSuccess({ user: response }))
                 this.router.navigate(['/explore']);
@@ -117,16 +116,15 @@ export class AuthEffects {
                 isApproved: response.isApproved
               });
 
-            } else {
-              const error: HttpError = {
-                message: 'Your account is awaiting approval.',
-                status: 404,
-                statusText: ''
-              }
-
-              return checkApprovedFail({ error });
             }
 
+            const error: HttpError = {
+              message: 'Your account is awaiting approval.',
+              status: 404,
+              statusText: ''
+            }
+
+            return checkApprovedFail({ error });
           }),
           catchError(error => {
             return of(AuthApiActions.loginFailure({ error }));
@@ -144,9 +142,9 @@ export class AuthEffects {
             if (adminList.some(admin => admin.email === email)) {
               const admin = adminList.find(admin => admin.email === email);
               return ResetPasswordActions.resetPasswordEmailVaild({ admin });
-            } else {
-              return ResetPasswordActions.resetPasswordEmailInvalid({ error: 'Email incorrect' })
             }
+
+            return ResetPasswordActions.resetPasswordEmailInvalid({ error: 'Email incorrect' })
           }),
           catchError(error => of(ResetPasswordActions.resetPasswordFailure({ error })))
         )
@@ -159,9 +157,7 @@ export class AuthEffects {
     map(action => action.admin),
     exhaustMap(admin => {
       return this.authService.resetPassword(admin).pipe(
-        map(res => {
-          return ResetPasswordActions.resetPasswordSuccess(res);
-        }),
+        map((res) => ResetPasswordActions.resetPasswordSuccess(res)),
         catchError(error => of(ResetPasswordActions.resetPasswordFailure({ error })))
       );
     })

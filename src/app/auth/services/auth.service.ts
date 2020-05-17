@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 declare var db: any;
+declare var FB: any;
 declare const firebase: any;
 
 import { AUTH_CONFIGURATION, AuthConfiguration } from '../auth.config';
