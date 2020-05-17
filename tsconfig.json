@@ -24,12 +24,15 @@
       ],
       "@app/core": [
         "src/app/core/index"
-      ], 
+      ],
       "@app/core/*": [
         "src/app/core/*"
       ],
       "@app/auth": [
         "src/app/auth/index"
+      ],
+      "@app/auth/*": [
+        "src/app/auth/*"
       ],
       "@app/layout": [
         "src/app/layout/index"

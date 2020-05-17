@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { StoreModule } from '@ngrx/store';
-
 import {
   MatSidenavModule,
   MatToolbarModule,
@@ -14,13 +12,11 @@ import {
 } from '@angular/material';
 
 import { AdminRoutingModule } from './admin-routing.module';
-import { AdminLayoutComponent, AdminToolbarComponent, AdminSidebarComponent } from './layout';
-import { BookService } from './product/service';
-import { adminReducer } from './reducers';
-import { EffectsModule } from '@ngrx/effects';
-import { CategoriesEffect } from './dashboard/store/category/category.effect';
-import { BookEffect } from './product/store/effects/book.effect';
-import { DashboardService } from './dashboard/services/dashboard.service';
+import {
+  AdminLayoutComponent,
+  AdminToolbarComponent,
+  AdminSidebarComponent
+} from './layout';
 
 const MAT_MODULES = [
   MatSidenavModule,
@@ -35,20 +31,14 @@ const MAT_MODULES = [
 @NgModule({
   imports: [
     CommonModule,
-    MAT_MODULES,
     AdminRoutingModule,
 
-    StoreModule.forFeature('admin', adminReducer),
-    EffectsModule.forFeature([CategoriesEffect, BookEffect]),
+    MAT_MODULES,
   ],
   declarations: [
     AdminLayoutComponent,
     AdminToolbarComponent,
     AdminSidebarComponent
-  ],
-  providers: [
-    BookService,
-    DashboardService
   ],
 })
 export class AdminModule { }
