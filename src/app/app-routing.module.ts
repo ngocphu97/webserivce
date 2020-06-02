@@ -15,7 +15,7 @@ const routes: Routes = [
   },
   {
     path: 'explore',
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     loadChildren: () => import('./explore/explore.module').then(m => m.ExploreModule)
   }
 ];

@@ -9,11 +9,12 @@ declare let FB: any;
 @Injectable()
 export class ExploreService {
 
-  appToken = 'EAAiuHmVRhiQBAETPAbSpLHi9muBtpv179pVIZBNZCSr7vooiykQm93IyJr6X2O62qqZCIjQCdY0zqH4hzpqGSbBQEHHbZAgyw7mnBsaAtDH54AwJxppFxtZCtZAZC6bzCPCrxnw3ZCLdub6bNUcnxS3cxgSZCVQaUXn0lQcTdeTSsHAZDZD';
+  appToken = 'EAAiuHmVRhiQBAGfk3u3GEyNpWvEOHKPLSBbWE1m40AwhOHhEqaEsGrnBYxU5pOLcs6nWEBUvSLQ9PFZBjAZCTcdxeuYFJq7a3prPS5Hl2KDkwuXT0ALBBeYZCYsZBcyOQ9ZAxOJpE4P9SfiZAgRCwkfuuZCNJgxAqg0Gcy7MRSI8gZDZD';
 
   constructor() {}
 
   getExploreList(keyword: string, locale: string): Observable<Array<ExploreModel>> {
+
     return new Observable((observer: Subscriber<Array<ExploreModel>>) => {
       FB.api('/search', 'GET', {
         type: 'adinterest',

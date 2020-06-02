@@ -5,18 +5,19 @@ import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material';
 
 import * as fromStore from '../../store';
-import { ExploreModel, Search, AdSuggestion } from '../../models' ;
+import { ExploreModel, Search, AdSuggestion } from '../../models';
 
 import { updateUser } from 'src/app/manage/store';
 import { User } from 'src/app/manage/models/user.model';
 import { AuthActions } from '@app/auth';
 import { selectLoggedInUser } from 'src/app/auth/selectors/auth.selector';
 import { EditProfileDialogComponent } from '@app/shared/dialog/edit-profile-dialog/edit-profile-dialog.component';
+import { getName } from '../../store';
 
 @Component({
   selector: 'app-explore-page',
   templateUrl: './explore-page.component.html',
-  styleUrls: ['./explore-page.component.scss']
+  styleUrls: ['./explore-page.component.scss'],
 })
 export class ExplorePageComponent {
   pending$: Observable<boolean>;
@@ -35,10 +36,13 @@ export class ExplorePageComponent {
     this.pending$ = this.store.pipe(select(fromStore.selectExplorePending));
     this.exploredList$ = this.store.pipe(select(fromStore.selectAllExplore));
     this.totalInterest$ = this.store.pipe(select(fromStore.selectTotalExplore));
+
     this.adSuggestionList$ = this.store.pipe(select(fromStore.selectAllAdSuggestionList));
 
     this.loggedInUser$ = this.store.pipe(select(selectLoggedInUser));
-    this.loggedInUser$.subscribe(user => { this.loggedUser = user; });
+    this.loggedInUser$.subscribe(user => {
+      this.loggedUser = user;
+     });
   }
 
   onSelectInterest(interest: ExploreModel): void {

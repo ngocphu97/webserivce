@@ -3,7 +3,8 @@
   <mat-form-field class="discover-field" [color]="'primary'">
     <mat-label>Search to discover</mat-label>
 
-    <input #search="matInput" matInput type="text" placeholder="Ex.Games" [(ngModel)]="value"
+    <input #search="matInput" matInput type="text"
+      placeholder="Ex.Games" [(ngModel)]="value"
       (keyup.enter)="searchExplore(search.value)">
 
     <button *ngIf="value"

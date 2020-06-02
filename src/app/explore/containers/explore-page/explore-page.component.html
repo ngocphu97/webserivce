@@ -28,6 +28,7 @@
   </mat-toolbar>
 
   <div class="list-item">
+
     <app-explore-table
       [exploredList]="exploredList$ | async"
       [suggestionList]="adSuggestionList$ | async"
@@ -38,6 +39,7 @@
       (getSuggestionList)="getAdSuggestionList($event)"
       (select)="onSelectInterest($event)">
     </app-explore-table>
+
   </div>
 
   <ng-container *ngIf="(totalInterest$ | async) === 0">

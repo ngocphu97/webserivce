@@ -42,6 +42,11 @@ const manageReducer = createReducer(
     pending: true
   })),
 
+  on(manageAction.updateUserFail, (state) => ({
+    ...state,
+    pending: false
+  })),
+
   on(manageAction.updateUserSuccess, (state, { user }) => {
     const newUsers = [...state.users];
     let index = newUsers.findIndex(u => u.id === user.id);

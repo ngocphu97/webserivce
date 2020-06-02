@@ -102,7 +102,7 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(LoginPageActions.loginFacebook),
       exhaustMap(() => {
-        return this.authService.loginFB().pipe(
+        return this.authService.loginTest().pipe(
           map((response: any) => {
             this.store.dispatch(checkApproved({ id: response.id }));
 
@@ -115,7 +115,6 @@ export class AuthEffects {
               return checkApprovedSuccess({
                 isApproved: response.isApproved
               });
-
             }
 
             const error: HttpError = {

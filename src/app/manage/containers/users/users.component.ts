@@ -44,7 +44,9 @@ export class UsersComponent {
     this.pending$ = this.store.pipe(select(selectPending));
     this.loggedInUser$ = this.store.pipe(select(selectLoggedInUser));
 
-    this.users$.pipe().subscribe(users => this.dataSource = users);
+    this.users$.pipe().subscribe(users => {
+      this.dataSource = users
+    });
     this.loggedInUser$.pipe().subscribe(user => this.loggedUser = user);
   }
 

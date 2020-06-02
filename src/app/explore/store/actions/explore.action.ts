@@ -31,3 +31,14 @@ export const getAdSuggestionListFailure = createAction(
   '[Explore] Get Ad Interest Suggestion Failure',
   props<{ error: any }>()
 );
+
+
+export const getName = createAction(
+  '[Explore] Get Name',
+  props<{ name: string }>()
+);
+
+export const getNameSuccess = createAction(
+  '[Explore] Get Name Success',
+  props<{  }>()
+);

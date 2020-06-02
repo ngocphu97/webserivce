@@ -8,7 +8,8 @@ declare let window: any;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+
 })
 export class AppComponent {
   constructor(
@@ -17,12 +18,12 @@ export class AppComponent {
   ) {
 
     // window.fbAsyncInit = function () {
-    //   // FB.init({
-    //   //   appId: '2443245385778724',
-    //   //   autoLogAppEvents: true,
-    //   //   xfbml: true,
-    //   //   version: 'v6.0'
-    //   // });
+      // FB.init({
+      //   appId: '2443245385778724',
+      //   autoLogAppEvents: true,
+      //   xfbml: true,
+      //   version: 'v6.0'
+      // });
     //   FB.init({
     //     appId: '1924433384326231',
     //     cookie: true,

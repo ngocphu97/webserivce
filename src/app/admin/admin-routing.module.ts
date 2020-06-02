@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { IsApproveGuard } from '@app/auth';
 
 const routes: Routes = [
   {
@@ -13,8 +12,7 @@ const routes: Routes = [
       },
       {
         path: 'manage',
-        loadChildren:
-          () => import('../manage/manage.module').then(m => m.ManageModule),
+        loadChildren: () => import('../manage/manage.module').then(m => m.ManageModule),
       },
       {
         path: '**',

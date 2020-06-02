@@ -26,12 +26,14 @@ const exploreReducer = createReducer(
 
   on(ExploreAction.getExploreList,
     ExploreAction.getAdSuggestionList,
-    (state, { search }) => ({
-      ...state,
-      error: null,
-      pending: true,
-      search: search
-    })
+    (state, { search }) => {
+      return {
+        ...state,
+        error: null,
+        pending: true,
+        search: search
+      }
+    }
   ),
 
   on(ExploreAction.getExploreListSuccessfully, (state, { exploredList }) => ({

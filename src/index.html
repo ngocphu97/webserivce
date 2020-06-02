@@ -57,10 +57,14 @@
   <script>
     window.fbAsyncInit = function () {
       FB.init({
-         appId: '1924433384326231',
+        // appId: '1924433384326231',
+        // xfbml: true,
+        // version: 'v6.0',
+        appId: '2443245385778724',
         cookie: true,
+        autoLogAppEvents: true,
         xfbml: true,
-        version: 'v6.0',
+        version: 'v6.0'
       });
 
 
@@ -76,6 +80,10 @@
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
   </script>
+
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous"
+    src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v7.0&appId=2443245385778724&autoLogAppEvents=1"></script>
 
   <app-root></app-root>
 </body>

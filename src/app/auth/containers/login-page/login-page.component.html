@@ -9,17 +9,17 @@
 
       <h1 class="mat-h1 text-center login">
         Login
-        <mat-spinner *ngIf="(pending$ | async)" strokeWidth="3" [diameter]="30"></mat-spinner>
+        <mat-spinner *ngIf="pending && !error" strokeWidth="3" [diameter]="30"></mat-spinner>
       </h1>
 
-      <p class="mat-error" *ngIf="error$ | async">
-        {{(error$ | async).message}}
+      <p class="mat-error" *ngIf="error">
+        {{ error }}
       </p>
 
       <div class="social">
         <div class="social-button">
-          <button mat-raised-button [color]="'primary'" (click)="loginGG()">
-            <i class="fa fa-facebook icon"></i> Login with Facebook
+          <button mat-raised-button [color]="'primary'" (click)="loginFB()">
+            <i class="fa fa-google icon"></i> Login with Facebook
           </button>
         </div>
       </div>

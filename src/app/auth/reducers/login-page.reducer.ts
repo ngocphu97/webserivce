@@ -12,9 +12,9 @@ export interface State {
 }
 
 export const initialState: State = {
-  error: null,
-  pending: false,
-  isApproved: false
+  error: undefined,
+  pending: undefined,
+  isApproved: undefined
 };
 
 export const reducer = createReducer(
@@ -52,10 +52,10 @@ export const reducer = createReducer(
   })),
 
   on(LoginPageActions.checkApprovedFail, (state, { error }) => {
-   return {
+    return {
       ...state,
-      error: error,
       pending: false,
+      error: error
     }
   }),
 

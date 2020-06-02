@@ -41,12 +41,12 @@
                 src="{{element.profile.picture.data.url}}" alt="">
 
               <ng-template #imageProfile>
-                <img class="picture-profile" src="{{element.profile.picture}}" alt="">
+                <img *ngIf="element.profile.picture" class="picture-profile" style="object-fit: cover" src="{{element.profile.picture}}" alt="">
               </ng-template>
             </div>
 
             <ng-template #noImageProfile>
-              <img class="picture-profile" *ngIf="!element.profile" src="assets/gudjob-logo-1.png" alt="">
+              <img class="picture-profile" *ngIf="!element.profile" src="/assets/gudjob-logo-1.png" alt="">
             </ng-template>
 
           </div>
@@ -68,7 +68,8 @@
 
           <mat-form-field *ngIf="isSelectedId === element.id">
             <mat-label>User name</mat-label>
-            <input #usernameInput matInput placeholder="User name" [(ngModel)]="updateUserName"
+            <input #usernameInput matInput placeholder="User name"
+              [(ngModel)]="updateUserName"
               value="{{updateUserName}}">
           </mat-form-field>
         </td>
@@ -95,8 +96,9 @@
       <ng-container matColumnDef="type">
         <th mat-header-cell *matHeaderCellDef> Login with </th>
         <td style="width: 30% !important" mat-cell *matCellDef="let element">
-          <span *ngIf="element.profile && element.profile.picture.data">Facebook</span>
-          <span *ngIf="element.profile && !element.profile.picture.data">Google</span>
+          <!-- <span *ngIf="element.profile && element.profile.picture.data">Facebook</span>
+          <span *ngIf="element.profile && !element.profile.picture.data">Google</span> -->
+          <span>Facebook</span>
         </td>
       </ng-container>
 

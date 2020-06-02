@@ -22,6 +22,38 @@ export class AuthService {
     });
   }
 
+  loginTest(): Observable<any> {
+
+    return new Observable((observer) => {
+      FB.login((response) => {
+        if (response.status === 'connected') {
+          this.checkUser({
+            id: response.authResponse.userID,
+            email: 'ngocphu2320@gmail.com',
+            profile: {
+              family_name: !response.data ? 'Unknow' : response.data.first_name,
+              given_name: !response.data ? 'Unknow' : response.data.last_name,
+              picture: !response.data ? '/assets/gudjob-logo-1.png' : response.data.picture
+            },
+          }).then(user => {
+
+            let loginUser;
+
+            if (user) {
+              loginUser = {
+                ...user
+              };
+
+              observer.next(loginUser);
+              observer.complete();
+            }
+          });
+
+        }
+      }, { scope: 'public_profile' });
+    })
+  }
+
   getListAdmin(): Observable<any> {
     return this.http.get(this.config.loginApiURL);
   }
@@ -62,9 +94,8 @@ export class AuthService {
                 statusText: '',
               }
             });
-            observer.complete();
-            return;
 
+            return observer.complete();
           }
 
           snapshot.forEach((doc) => {
@@ -87,7 +118,6 @@ export class AuthService {
     })
   }
 
-
   loginWithGG(): Observable<any> {
 
     let loginUser;
@@ -97,6 +127,7 @@ export class AuthService {
       provider.addScope('email');
       firebase.auth().signInWithPopup(provider)
         .then((result) => {
+
           this.checkUser({
             id: result.additionalUserInfo.profile.id,
             profile: result.additionalUserInfo.profile,
@@ -130,6 +161,7 @@ export class AuthService {
             profile: result.additionalUserInfo.profile,
             isNewUser: result.additionalUserInfo.isNewUser
           }).then(user => {
+
             if (user) {
               loginUser = {
                 ...user
@@ -152,12 +184,18 @@ export class AuthService {
       .then(snapshot => {
         if (snapshot.empty) {
           db.collection('users')
-            .add({ ...loginUser, isApproved: false })
-            .then((ref) => {
-              loginUser.id = ref.id
-              return { ...loginUser, isApproved: false };
+            .add({
+              ...loginUser,
+              isApproved: false
+            })
+            .then(() => {
+              return {
+                ...loginUser,
+                facebookId: loginUser.id,
+                isApproved: false,
+                role: 'client'
+              };
             });
-
         };
 
         let user = {};
@@ -191,12 +229,16 @@ export class AuthService {
 
   logout(): Observable<any> {
     return new Observable((observer) => {
-      firebase.auth().signOut().then(() => {
-        observer.next({ error: null });
-      }).catch(function (error) {
-        observer.next({ error: error });
-        observer.complete();
-      });
+
+      FB.logout();
+
+
+      // firebase.auth().signOut().then(() => {
+      //   observer.next({ error: null });
+      // }).catch(function (error) {
+      //   observer.next({ error: error });
+      //   observer.complete();
+      // });
     });
   }
 }

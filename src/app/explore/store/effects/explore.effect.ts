@@ -51,5 +51,4 @@ export class ExploreEffect {
     private actions$: Actions,
     private exploreService: ExploreService
   ) { }
-
 }
