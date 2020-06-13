@@ -1,12 +1,14 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, merge, concat, combineLatest } from 'rxjs';
 
 declare var db: any;
 declare var FB: any;
 declare const firebase: any;
 
 import { AUTH_CONFIGURATION, AuthConfiguration } from '../auth.config';
+import { connected } from 'process';
+import { mergeMap } from 'rxjs/operators';
 @Injectable()
 export class AuthService {
 
@@ -26,31 +28,78 @@ export class AuthService {
 
     return new Observable((observer) => {
       FB.login((response) => {
-        if (response.status === 'connected') {
-          this.checkUser({
-            id: response.authResponse.userID,
-            email: 'ngocphu2320@gmail.com',
-            profile: {
-              family_name: !response.data ? 'Unknow' : response.data.first_name,
-              given_name: !response.data ? 'Unknow' : response.data.last_name,
-              picture: !response.data ? '/assets/gudjob-logo-1.png' : response.data.picture
-            },
-          }).then(user => {
-
-            let loginUser;
-
-            if (user) {
-              loginUser = {
-                ...user
-              };
-
-              observer.next(loginUser);
-              observer.complete();
+        if (response && response.status === 'connected') {
+          const userData$: Observable<any> = combineLatest(
+            this.getUserPicture(),
+            this.getProfile(),
+            (profile, picture) => {
+              return {
+                ...profile,
+                ...picture
+              }
             }
-          });
+          );
 
+          userData$.pipe().subscribe(data => {
+            this.checkUser({
+              id: data.id,
+              email: data.email ? data.email : 'No email',
+              profile: {
+                name: data.name,
+                picture: !data.picture ? '/assets/gudjob-logo-1.png' : data.picture
+              },
+            }).then(user => {
+
+              let loginUser;
+
+              if (user) {
+                loginUser = {
+                  ...user
+                };
+
+                observer.next(loginUser);
+                observer.complete();
+              }
+            });
+          })
         }
-      }, { scope: 'public_profile' });
+
+      }, { scope: 'public_profile, email' });
+    })
+  }
+
+  getProfile(): Observable<any> {
+    return new Observable((observer) => {
+      FB.api('/me', (response) => {
+        const userData = {
+          id: response.id,
+          name: response.name
+        }
+
+        observer.next(userData);
+      });
+    })
+  }
+
+  getUserPicture(): Observable<any> {
+    return new Observable((observer) => {
+      FB.api('/me/picture',
+        {
+          'redirect': false,
+          'height': 500,
+          'width': 500,
+          'type': 'large'
+        },
+        function (response) {
+          if (response && !response.error) {
+            const userData = {
+              picture: response.data.url
+            }
+
+            observer.next(userData);
+          }
+        }
+      );
     })
   }
 
@@ -186,7 +235,8 @@ export class AuthService {
           db.collection('users')
             .add({
               ...loginUser,
-              isApproved: false
+              isApproved: false,
+              role: 'client'
             })
             .then(() => {
               return {
