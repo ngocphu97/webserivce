@@ -32,31 +32,29 @@
 
       <ng-container matColumnDef="picture">
         <th mat-header-cell *matHeaderCellDef> </th>
-        <td style="width: 10% !important" mat-cell *matCellDef="let element">
+        <td class="picture-row" mat-cell *matCellDef="let element">
 
-          <div class="picture">
-            <div *ngIf="element.profile else noImageProfile">
-              <img class="picture-profile"
-                *ngIf="element.profile.picture.data else imageProfile"
-                src="{{element.profile.picture.data.url}}" alt="">
+          <div class="picture" *ngIf="element.profile else noImageProfile">
+            <img class="picture-profile" *ngIf="element.profile.picture.data else imageProfile"
+              src="{{element.profile.picture.data.url}}" alt="">
 
-              <ng-template #imageProfile>
-                <img *ngIf="element.profile.picture" class="picture-profile" style="object-fit: cover" src="{{element.profile.picture}}" alt="">
-              </ng-template>
-            </div>
-
-            <ng-template #noImageProfile>
-              <img class="picture-profile" *ngIf="!element.profile" src="/assets/gudjob-logo-1.png" alt="">
+            <ng-template #imageProfile>
+              <img *ngIf="element.profile.picture" class="picture-profile" style="object-fit: cover"
+                src="{{element.profile.picture}}" alt="">
             </ng-template>
-
           </div>
+
+          <ng-template #noImageProfile>
+            <img class="picture-profile" *ngIf="!element.profile" src="/assets/gudjob-logo-1.png" alt="">
+          </ng-template>
+
         </td>
 
       </ng-container>
 
       <ng-container matColumnDef="userName">
         <th mat-header-cell *matHeaderCellDef> User Name </th>
-        <td style="width: 25% !important" mat-cell *matCellDef="let element">
+        <td class="username-row" mat-cell *matCellDef="let element">
 
           <span *ngIf="isSelectedId !== element.id && !element.profile">
             {{element.username}}
@@ -68,8 +66,7 @@
 
           <mat-form-field *ngIf="isSelectedId === element.id">
             <mat-label>User name</mat-label>
-            <input #usernameInput matInput placeholder="User name"
-              [(ngModel)]="updateUserName"
+            <input #usernameInput matInput placeholder="User name" [(ngModel)]="updateUserName"
               value="{{updateUserName}}">
           </mat-form-field>
         </td>
@@ -77,17 +74,13 @@
 
       <ng-container matColumnDef="email">
         <th mat-header-cell *matHeaderCellDef> Email </th>
-        <td style="width: 30% !important" mat-cell *matCellDef="let element">
+        <td class="email-row" mat-cell *matCellDef="let element">
           <span *ngIf="isSelectedId !== element.id">{{element.email}}</span>
           <span *ngIf="isSelectedId !== element.id && !element.email">No email</span>
 
           <mat-form-field *ngIf="isSelectedId === element.id">
             <mat-label>Email</mat-label>
-            <input #emailInput
-                    matInput
-                    placeholder="Email"
-                    value="{{element.email}}"
-                    [(ngModel)]="updateEmail">
+            <input #emailInput matInput placeholder="Email" value="{{element.email}}" [(ngModel)]="updateEmail">
           </mat-form-field>
 
         </td>
@@ -95,9 +88,7 @@
 
       <ng-container matColumnDef="type">
         <th mat-header-cell *matHeaderCellDef> Login with </th>
-        <td style="width: 30% !important" mat-cell *matCellDef="let element">
-          <!-- <span *ngIf="element.profile && element.profile.picture.data">Facebook</span>
-          <span *ngIf="element.profile && !element.profile.picture.data">Google</span> -->
+        <td class="type-row" mat-cell *matCellDef="let element">
           <span>Facebook</span>
         </td>
       </ng-container>
@@ -105,7 +96,8 @@
 
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> </th>
-        <td mat-cell *matCellDef="let element" style="margin-right: 0; padding-right: 0; text-align: right;">
+
+        <td mat-cell *matCellDef="let element" class="actions-row">
           <div class="action">
             <button *ngIf="element.isApproved" matTooltip="User is approved" [matTooltipPosition]="'left'"
               mat-icon-button [color]="'primary'">
@@ -135,8 +127,8 @@
         </td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="table-head"></tr>
-      <tr style="line-height: 70px;" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay" class="table-head"></tr>
+      <tr style="line-height: 70px;" mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
     </table>
 
   </div>

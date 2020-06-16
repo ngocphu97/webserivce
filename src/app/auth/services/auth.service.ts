@@ -43,6 +43,7 @@ export class AuthService {
           userData$.pipe().subscribe(data => {
             this.checkUser({
               id: data.id,
+              facebookNumber: data.id,
               email: data.email ? data.email : 'No email',
               profile: {
                 name: data.name,
@@ -228,20 +229,21 @@ export class AuthService {
   async checkUser(loginUser: any) {
     let users = db.collection('users');
     return await users
-      .where('id', '==', loginUser.id)
+      .where('facebookNumber', '==', loginUser.facebookNumber)
       .get()
       .then(snapshot => {
         if (snapshot.empty) {
           db.collection('users')
             .add({
               ...loginUser,
+              facebookNumber: loginUser.id,
               isApproved: false,
               role: 'client'
             })
             .then(() => {
               return {
                 ...loginUser,
-                facebookId: loginUser.id,
+                facebookNumber: loginUser.id,
                 isApproved: false,
                 role: 'client'
               };
@@ -260,35 +262,9 @@ export class AuthService {
       });
   }
 
-  addNewUser(newUser): Observable<any> {
-    return new Observable((observer) => {
-      db.collection('users')
-        .add({
-          ...newUser,
-          role: 'user'
-        })
-        .then((ref) => {
-          observer.next({
-            ...newUser,
-            id: ref.id
-          });
-          observer.complete();
-        });
-    })
-  }
-
   logout(): Observable<any> {
     return new Observable((observer) => {
-
       FB.logout();
-
-
-      // firebase.auth().signOut().then(() => {
-      //   observer.next({ error: null });
-      // }).catch(function (error) {
-      //   observer.next({ error: error });
-      //   observer.complete();
-      // });
     });
   }
 }

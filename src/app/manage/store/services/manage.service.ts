@@ -21,6 +21,7 @@ export class ManageService {
             users.push({
               ...doc.data(),
               email: doc.data().profile.email,
+              facebookNumber: doc.data().id,
               id: doc.id,
             });
           });
@@ -44,11 +45,15 @@ export class ManageService {
     })
   }
 
-  updateUser(updateUser: User): Observable<User> {
+  updateUser(updateUser: any): Observable<User> {
     return new Observable((observer) => {
       db.collection('users')
         .doc(updateUser.id)
-        .update(updateUser)
+        .update({
+          ...updateUser,
+          email: updateUser.email ? updateUser.email : 'No email',
+          id: updateUser.id
+        })
         .then(() => {
           observer.next(updateUser);
           observer.complete();

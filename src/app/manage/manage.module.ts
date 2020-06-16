@@ -21,6 +21,7 @@ import {
   MatProgressBarModule,
   MatProgressSpinnerModule,
 } from '@angular/material';
+import { LayoutModule } from '@angular/cdk/layout';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
@@ -60,6 +61,7 @@ const MAT_MODULES = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    LayoutModule,
 
     MAT_MODULES,
     DialogModule,

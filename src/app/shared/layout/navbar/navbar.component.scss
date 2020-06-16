@@ -1,0 +1,15 @@
+.tool-bar {
+  background: #ffffff !important;
+  position: relative;
+
+  .menu {
+    position: absolute;
+    right: 5px;
+  }
+
+  .gudjob-logo {
+    width: 200px;
+    display: flex;
+    align-items: center;
+  }
+}

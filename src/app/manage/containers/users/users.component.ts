@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-
-import { Store, select } from '@ngrx/store';
-import { MatDialog } from '@angular/material';
+import { Component, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+import { MatDialog } from '@angular/material';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 import { User } from '../../models/user.model';
 import { logoutConfirmation } from '@app/auth/actions/auth.action';
@@ -19,7 +19,7 @@ import {
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
-export class UsersComponent {
+export class UsersComponent implements OnInit {
 
   users$: Observable<Array<User>>;
   pending$: Observable<boolean>;
@@ -28,6 +28,7 @@ export class UsersComponent {
 
   dataSource: any;
   displayedColumns = ['picture', 'userName', 'email', 'type', 'actions'];
+  columnsToDisplay: string[] = [...this.displayedColumns];
 
   isEdit = false;
   isSelectedId: string;
@@ -36,7 +37,8 @@ export class UsersComponent {
 
   constructor(
     private store: Store<ManageState>,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private breakpointObserver: BreakpointObserver
   ) {
     this.store.dispatch(getUserList());
 
@@ -48,6 +50,34 @@ export class UsersComponent {
       this.dataSource = users
     });
     this.loggedInUser$.pipe().subscribe(user => this.loggedUser = user);
+  }
+
+  ngOnInit(): void {
+    this.breakpointObserver.observe([
+      Breakpoints.XSmall,
+      Breakpoints.Small,
+      Breakpoints.Medium,
+      Breakpoints.Large,
+      Breakpoints.XLarge,
+      '(max-width: 359.99px)'
+    ]).pipe().subscribe(result => {
+
+      if (result.breakpoints['(max-width: 359.99px)']) {
+        return this.columnsToDisplay = ['userName', 'actions'];
+      }
+
+      if (result.breakpoints[Breakpoints.XSmall]) {
+        return this.columnsToDisplay = ['picture', 'userName', 'actions'];
+      }
+
+      if (result.breakpoints[Breakpoints.Large]
+        || result.breakpoints[Breakpoints.XLarge]
+        || result.breakpoints[Breakpoints.Medium]
+        || result.breakpoints[Breakpoints.Small]
+      ) {
+        this.columnsToDisplay = [...this.displayedColumns];
+      }
+    });
   }
 
   logout() {

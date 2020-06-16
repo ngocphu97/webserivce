@@ -33,6 +33,26 @@
 
 table {
   width: 100%;
+
+  .type-row,
+  .email-row {
+    width: 30% !important
+  }
+
+  .username-row {
+    width: 25% !important
+  }
+
+  .picture-row {
+    width: 10% !important;
+  }
+
+  .actions-row {
+    margin-right: 0;
+    padding-right: 0;
+    text-align: right;
+    width: 5% !important;
+  }
 }
 
 .table-head th {
@@ -99,5 +119,26 @@ table {
 
   table {
     width: 100%;
+  }
+}
+
+@media(max-width: 599.99px) {
+  :host.mat-column-actions {
+    width: 5% !important;
+
+    .action {
+      justify-content: flex-end !important;
+    }
+  }
+
+  .username-row {
+    width: 95% !important
+  }
+}
+
+@media(max-width: 319.99px) {
+  :host.mat-icon-button {
+    width: 29px !important;
+    justify-content: flex-end !important;
   }
 }
