@@ -80,8 +80,10 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  logout() {
-    this.store.dispatch(logoutConfirmation());
+  logout(isLogout: boolean) {
+    if (isLogout) {
+      this.store.dispatch(logoutConfirmation());
+    }
   }
 
   removeUser(user) {

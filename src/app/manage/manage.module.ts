@@ -32,6 +32,7 @@ import { ManageRoutingModule } from './manage-routing.module';
 import { reducer } from './store/reducers';
 import { ManageEffect } from './store/effects';
 import { ManageService } from './store/services';
+import { CommonLayoutModule } from '@app/shared/common-layout';
 
 const MAT_MODULES = [
   MatCardModule,
@@ -68,7 +69,9 @@ const MAT_MODULES = [
     ManageRoutingModule,
 
     StoreModule.forFeature('manage', reducer),
-    EffectsModule.forFeature([ManageEffect])
+    EffectsModule.forFeature([ManageEffect]),
+
+    CommonLayoutModule
   ],
   providers: [
     ManageService

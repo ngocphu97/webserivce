@@ -22,4 +22,4 @@ import {
     NavbarComponent
   ]
 })
-export class LayoutModule { }
+export class CommonLayoutModule { }

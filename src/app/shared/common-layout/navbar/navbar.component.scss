@@ -7,9 +7,13 @@
     right: 5px;
   }
 
-  .gudjob-logo {
-    width: 200px;
-    display: flex;
-    align-items: center;
+  .logo {
+    cursor: pointer;
+
+    .gudjob-logo {
+      width: 200px;
+      display: flex;
+      align-items: center;
+    }
   }
 }

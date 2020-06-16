@@ -1,43 +1,12 @@
 <div class="explore-page">
-  <mat-toolbar class="tool-bar mat-elevation-z1">
 
-    <span>
-      <img class="gudjob-logo" src="/assets/app-logo.png" alt="">
-    </span>
-
-    <button class="menu" mat-icon-button [matMenuTriggerFor]="menu">
-      <mat-icon>more_vert</mat-icon>
-    </button>
-
-    <mat-menu #menu="matMenu">
-
-      <a *ngIf="(loggedInUser$ | async).role === 'admin'"
-          mat-menu-item
-          routerLink="/admin/manage">
-        <mat-icon [color]="'primary'">people</mat-icon>
-        <span>Accounts manage</span>
-      </a>
-
-      <button mat-menu-item (click)="logout()">
-        <mat-icon [color]="'primary'">thumb_up_alt</mat-icon>
-        <span>Log out</span>
-      </button>
-
-    </mat-menu>
-
-  </mat-toolbar>
+  <app-navbar [isAdmin]="(loggedInUser$ | async).role === 'admin'" (logout)="logout($event)"> </app-navbar>
 
   <div class="list-item">
 
-    <app-explore-table
-      [exploredList]="exploredList$ | async"
-      [suggestionList]="adSuggestionList$ | async"
-      [pending]="pending$ | async"
-      [totalExplore]="totalInterest$ | async"
-
-      (exploredKeyword)="onSearch($event)"
-      (getSuggestionList)="getAdSuggestionList($event)"
-      (select)="onSelectInterest($event)">
+    <app-explore-table [exploredList]="exploredList$ | async" [suggestionList]="adSuggestionList$ | async"
+      [pending]="pending$ | async" [totalExplore]="totalInterest$ | async" (exploredKeyword)="onSearch($event)"
+      (getSuggestionList)="getAdSuggestionList($event)" (select)="onSelectInterest($event)">
     </app-explore-table>
 
   </div>

@@ -1,5 +1,10 @@
 <div class="explore-page">
-  <mat-toolbar class="tool-bar mat-elevation-z1">
+
+
+  <app-navbar [isAdmin]="true" (logout)="logout($event)"> </app-navbar>
+
+
+  <!-- <mat-toolbar class="tool-bar mat-elevation-z1">
     <a routerLink="/explore">
       <img class="gudjob-logo" src="/assets/app-logo.png" alt="">
     </a>
@@ -20,7 +25,7 @@
       </button>
     </mat-menu>
 
-  </mat-toolbar>
+  </mat-toolbar> -->
 
   <div class="list-item mat-elevation-z2">
 

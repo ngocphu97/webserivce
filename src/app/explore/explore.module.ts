@@ -33,6 +33,7 @@ import { COMPONENTS } from './components';
 import { reducer } from './store/reducers';
 import { ExploreEffect } from './store/effects';
 import { ExploreService } from './store/services';
+import { CommonLayoutModule } from '@app/shared/common-layout';
 
 const MAT_MODULES = [
   MatProgressSpinnerModule,
@@ -64,7 +65,9 @@ const MAT_MODULES = [
     ExploreRoutingModule,
 
     StoreModule.forFeature('explore', reducer),
-    EffectsModule.forFeature([ExploreEffect])
+    EffectsModule.forFeature([ExploreEffect]),
+
+    CommonLayoutModule
   ],
   declarations: [
     CONTAINERS,

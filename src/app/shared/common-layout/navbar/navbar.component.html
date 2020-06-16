@@ -1,0 +1,31 @@
+<mat-toolbar class="tool-bar mat-elevation-z1" routerlink="/explore">
+
+  <mat-toolbar-row>
+    <a class="logo" (click)="gotoExplore()">
+      <img class="gudjob-logo" src="/assets/app-logo.png" alt="">
+    </a>
+
+    <button class="menu" mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+
+      <a *ngIf="isAdmin" mat-menu-item (click)="gotoManage()">
+        <mat-icon [color]="'primary'">people</mat-icon>
+        <span>Account manage</span>
+      </a>
+
+      <button mat-menu-item (click)="onLogout()">
+        <mat-icon [color]="'primary'">thumb_up_alt</mat-icon>
+        <span>Log out</span>
+      </button>
+
+    </mat-menu>
+
+  </mat-toolbar-row>
+
+
+
+
+</mat-toolbar>
