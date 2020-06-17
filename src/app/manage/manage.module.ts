@@ -2,25 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import {
-  MatCardModule,
-  MatSortModule,
-  MatIconModule,
-  MatMenuModule,
-  MatTableModule,
-  MatInputModule,
-  MatChipsModule,
-  MatButtonModule,
-  MatSelectModule,
-  MatTooltipModule,
-  MatToolbarModule,
-  MatSnackBarModule,
-  MatCheckboxModule,
-  MatPaginatorModule,
-  MatFormFieldModule,
-  MatProgressBarModule,
-  MatProgressSpinnerModule,
-} from '@angular/material';
 import { LayoutModule } from '@angular/cdk/layout';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -34,25 +15,24 @@ import { ManageEffect } from './store/effects';
 import { ManageService } from './store/services';
 import { CommonLayoutModule } from '@app/shared/common-layout';
 
-const MAT_MODULES = [
-  MatCardModule,
-  MatSortModule,
-  MatIconModule,
-  MatMenuModule,
-  MatTableModule,
-  MatInputModule,
-  MatChipsModule,
-  MatButtonModule,
-  MatSelectModule,
-  MatTooltipModule,
-  MatToolbarModule,
-  MatSnackBarModule,
-  MatCheckboxModule,
-  MatPaginatorModule,
-  MatFormFieldModule,
-  MatProgressBarModule,
-  MatProgressSpinnerModule,
-];
+import { MatCardModule } from '@angular/material/card';
+import { MatSortModule } from '@angular/material/sort';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input/typings';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 @NgModule({
   declarations: [
@@ -64,7 +44,24 @@ const MAT_MODULES = [
     ReactiveFormsModule,
     LayoutModule,
 
-    MAT_MODULES,
+    MatCardModule,
+    MatSortModule,
+    MatIconModule,
+    MatMenuModule,
+    MatTableModule,
+    MatInputModule,
+    MatChipsModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatTooltipModule,
+    MatToolbarModule,
+    MatSnackBarModule,
+    MatCheckboxModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+
     DialogModule,
     ManageRoutingModule,
 

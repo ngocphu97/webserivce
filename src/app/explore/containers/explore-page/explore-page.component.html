@@ -1,6 +1,7 @@
 <div class="explore-page">
 
-  <app-navbar [isAdmin]="(loggedInUser$ | async).role === 'admin'" (logout)="logout($event)"> </app-navbar>
+  <app-navbar [isAdmin]="(loggedInUser$ | async).role === 'admin'" (logout)="logout($event)">
+  </app-navbar>
 
   <div class="list-item">
 
