@@ -58,7 +58,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   ]
 })
 export class AuthModule {
-  static forRoot(config?: AuthConfiguration): ModuleWithProviders {
+  static forRoot(config?: AuthConfiguration): ModuleWithProviders<AuthModule> {
     return {
       ngModule: AuthModule,
       providers: [
