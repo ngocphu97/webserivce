@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 
 import { Observable } from 'rxjs';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 import * as fromStore from '../../store';
 import { ExploreModel, Search, AdSuggestion } from '../../models';
@@ -57,8 +57,10 @@ export class ExplorePageComponent {
     this.store.dispatch(fromStore.getAdSuggestionList({ search: search }));
   }
 
-  logout(): void {
-    this.store.dispatch(AuthActions.logoutConfirmation());
+  logout(isLogout: boolean): void {
+    if(isLogout) {
+      this.store.dispatch(AuthActions.logoutConfirmation());
+    }
   }
 
   editProfile(): void {

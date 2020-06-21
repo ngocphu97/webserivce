@@ -1,4 +1,4 @@
-import { MatSnackBarConfig } from '@angular/material';
+import { MatSnackBarConfig } from '@angular/material/snack-bar';
 
 export interface NotificationConfig {
   message: string;

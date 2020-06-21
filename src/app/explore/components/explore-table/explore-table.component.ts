@@ -1,7 +1,11 @@
 import { Component, ViewEncapsulation, OnInit, OnChanges, Input, Output, ViewChild, SimpleChanges, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
-import { MatSort, MatPaginator, MatInput, MatTableDataSource, MatSnackBar } from '@angular/material';
+import { MatInput } from '@angular/material/input';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 
 import { ExploreModel, Search, countries, AdSuggestion } from '../../models';

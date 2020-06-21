@@ -7,7 +7,7 @@ import { map, catchError, exhaustMap, mapTo } from 'rxjs/operators';
 import * as manageActions from '../actions'
 import { ManageService } from '../services';
 import { User } from '../../models/user.model';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class ManageEffect {

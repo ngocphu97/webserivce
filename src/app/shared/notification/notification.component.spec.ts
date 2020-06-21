@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatIconModule, MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
+import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar';
 
 import { NotificationComponent } from './notification.component';
 
